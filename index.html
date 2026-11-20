@@ -2,8 +2,8 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DMPixC0UjJ99Kta48beTxTF5nuGWYhMmFmRJ2ivtYLU='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-y6dPgUBcgzqSsOx/H9SrMWprolvzPAUcvXd14LYMNH4='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#EEF2F0">
@@ -31,8 +31,8 @@
   --shadow:none;color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:80px;scroll-padding-bottom:100px}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-variant-ligatures:no-contextual;font-feature-settings:"calt" 0;-webkit-tap-highlight-color:transparent;min-height:100vh}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:calc(var(--stick,64px) + 16px);scroll-padding-bottom:100px;overscroll-behavior-y:contain}
+body{overscroll-behavior-y:contain;margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-variant-ligatures:no-contextual;font-feature-settings:"calt" 0;-webkit-tap-highlight-color:transparent;min-height:100vh}
 body.modal{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
@@ -83,7 +83,7 @@ code{font-size:.9em;background:var(--sf2);border:1px solid var(--ln);border-radi
 
 /* cards */
 .tools{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin:4px 0 -2px}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);margin:10px 0;box-shadow:var(--shadow);overflow:clip}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);margin:10px 0;box-shadow:var(--shadow);overflow:clip;contain:layout style;scroll-margin-top:calc(var(--stick,64px) + 8px)}
 .card.open{border-top:4px solid var(--pri)}
 .card-h{width:100%;display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 14px;border:0;background:none;text-align:left}
 .card-t{font-weight:700;font-size:17px;flex:1;min-width:0}
@@ -206,8 +206,8 @@ input[type=date].in{min-height:48px}
 .dock .btn{min-height:52px}
 
 /* sheets */
-.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(8,18,15,.5);display:flex;align-items:flex-end;justify-content:center;animation:fade .15s ease-out}
-.sheet{background:var(--sf);width:100%;max-width:680px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:12px 16px calc(16px + env(safe-area-inset-bottom));animation:up .2s ease-out;overscroll-behavior:contain}
+.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(8,18,15,.5);display:flex;align-items:flex-end;justify-content:center;animation:fade .15s ease-out;padding-bottom:var(--kb,0px)}
+.sheet{background:var(--sf);width:100%;max-width:680px;max-height:92vh;max-height:calc(92dvh - var(--kb,0px));overflow:auto;border-radius:20px 20px 0 0;padding:12px 16px calc(16px + env(safe-area-inset-bottom));animation:up .2s ease-out;overscroll-behavior:contain}
 @keyframes up{from{transform:translateY(24px);opacity:.6}}
 @keyframes fade{from{opacity:0}}
 .sh-h{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:-12px;background:var(--sf);padding:6px 0;z-index:1}
@@ -252,7 +252,7 @@ body:not([data-view=patient]) .toast{bottom:calc(20px + env(safe-area-inset-bott
 @media (pointer:coarse){body.typing .dock{display:none}}
 
 /* added: lock screen, banners, level 2 CBG flag */
-.lockv{min-height:100vh;display:grid;place-items:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
+.lockv{min-height:100vh;min-height:100dvh;display:grid;place-items:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
 .lock-in{width:100%;max-width:360px;display:flex;flex-direction:column;align-items:stretch;gap:12px;text-align:center}
 .lock-ico{width:64px;height:64px;margin:0 auto 4px;border-radius:18px;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center}
 .lock-ico svg{width:32px;height:32px}
@@ -269,6 +269,42 @@ body:not([data-view=patient]) .toast{bottom:calc(20px + env(safe-area-inset-bott
 .st-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)}
 .st-row span{display:block;color:var(--mut);font-size:13px}
 .in.flag2{border-color:var(--bad);background:var(--bad);color:#fff;font-weight:800}
+
+/* ---- smoothness: tap feedback, motion, jump bar, sticky card headers, sheet gestures ---- */
+button,a,label,select,input,.chip,.card-h{touch-action:manipulation}
+.btn,.chip,.card-h,.jp,.mi,.pt,.lnk,.tick,.star,.now{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.btn,.chip,.tick,.star,.jp,.ib,.mi{transition:transform .08s ease-out,filter .08s ease-out,background-color .15s,border-color .15s,color .15s}
+.btn:active,.chip:active,.tick:active,.star:active,.jp:active,.ib:active,.mi:active,.now:active{transform:scale(.96);filter:brightness(.93)}
+.card-h:active,.pt:active,.med-l:active{background:var(--sf2)}
+.btn.done{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+@keyframes pop{0%{transform:scale(.94)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+.pop{animation:pop .2s cubic-bezier(.2,.8,.2,1)}
+.bar.has-jump{flex-direction:column;align-items:stretch;padding-bottom:0}
+.jump{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 6px 2px;margin:0 -8px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.jump::-webkit-scrollbar{display:none}
+.jp{flex:none;min-height:44px;padding:0 3px;border:0;background:none;color:var(--ink);display:flex;align-items:center}
+.jp span{display:inline-flex;align-items:center;height:34px;padding:0 13px;border-radius:17px;border:1.5px solid var(--ln);background:var(--sf);font-size:14px;font-weight:600;position:relative;transition:background-color .15s,border-color .15s,color .15s}
+.jp.cur span{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.jp.empty span::after{content:"";position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
+.jp:active{transform:none;filter:none}.jp:active span{filter:brightness(.93)}
+.card.open>.card-h{position:sticky;top:var(--stick,64px);z-index:4;background:var(--sf);border-bottom:1px solid var(--ln)}
+.tin{position:relative;display:block}
+.tin .in{padding-right:64px}
+.now{position:absolute;right:2px;top:2px;bottom:2px;min-width:56px;min-height:44px;border:0;border-radius:8px;background:none;color:var(--pri);font-weight:700;font-size:14px}
+.tin .in:not(:placeholder-shown)~.now{display:none}
+.grab{width:40px;height:5px;border-radius:3px;background:var(--ln);margin:2px auto 6px;touch-action:none}
+.sheet .sh-h,.sheet .ask-t{touch-action:none}
+@keyframes down{to{transform:translateY(105%)}}
+@keyframes fadeout{to{opacity:0}}
+.sheet-bg.closing{animation:fadeout .17s ease-in forwards;pointer-events:none}
+.sheet-bg.closing .sheet{animation:down .17s cubic-bezier(.4,0,1,1) forwards}
+::view-transition-old(root){animation:90ms ease-in both fadeout}
+::view-transition-new(root){animation:160ms cubic-bezier(.2,.8,.2,1) both vt-in}
+@keyframes vt-in{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+/* after the font shorthand above, so it is not reset: show "->" exactly as it will be sent */
+pre.msg,.calc.pre{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
 
 </style>
 </head>
@@ -402,7 +438,7 @@ const DEF_SETTINGS = {
   closing: 'Thank you, Doctors.',
   signName: '[SURNAME], IDH',
   fever: '38.0', feverIcu: '38.3', cbgLow: '70', cbgLow2: '54', cbgHigh: '180', uoLow: '0.5', uoHigh: '1.5',
-  theme: 'auto', reqLabel: 'For your input:', initialsNew: false, retainDays: '7', lockMins: '5',
+  theme: 'auto', haptics: true, reqLabel: 'For your input:', initialsNew: false, retainDays: '7', lockMins: '5',
 };
 
 const GROUPS = {
@@ -1434,7 +1470,7 @@ const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.pla
 const isStandalone = () => navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
 
 /* ---------- state ---------- */
-const ui = { view: '', pid: '', g: '', open: {}, med: null, back: '' };
+const ui = { view: '', pid: '', g: '', open: {}, med: null, back: '', scroll: {}, openSeq: 0 };
 let OUT = null, fid = 0;
 const curP = () => db.patients.find(x => x.id === ui.pid);
 const ptName = p => [str(p.surname).toUpperCase(), str(p.first)].filter(Boolean).join(', ') || 'Unnamed patient';
@@ -1465,15 +1501,15 @@ function F(label, path, o = {}) {
   const common = `id="${id}" data-b="${path}"${o.rr ? ` data-rr="${o.rr}"` : ''}`;
   const ph = o.ph ? ` placeholder="${esc(o.ph)}"` : '';
   let inp;
-  if (t === 'num') inp = `<input class="in" type="text" inputmode="decimal" autocomplete="off" ${common} value="${esc(val)}"${ph}>`;
-  else if (t === 'time') inp = `<input class="in" type="text" inputmode="numeric" autocomplete="off" data-k="time" ${common} value="${esc(fmtTime(val))}" placeholder="${esc(o.ph || '24h, e.g. 2130')}">`;
+  if (t === 'num') inp = `<input class="in" type="text" inputmode="decimal" enterkeyhint="next" autocomplete="off" ${common} value="${esc(val)}"${ph}>`;
+  else if (t === 'time') return `<div class="fld${o.cls ? ' ' + o.cls : ''}"><label class="lb" for="${id}">${esc(label)}</label><span class="tin"><input class="in" type="text" inputmode="numeric" enterkeyhint="next" autocomplete="off" data-k="time" ${common} value="${esc(fmtTime(val))}" placeholder="${esc(o.ph || 'e.g. 2130')}"><button type="button" class="now" data-act="now" tabindex="-1" aria-label="Use the current time">Now</button></span></div>`;
   else if (t === 'date') inp = `<input class="in" type="date" ${common} value="${esc(val)}">`;
   else if (t === 'area') inp = `<textarea class="in" rows="${o.rows || 3}" ${common}${ph}>${esc(val)}</textarea>`;
   else if (t === 'sel') inp = `<select class="in" ${common}>${o.opts.map(x => { const [v, l] = Array.isArray(x) ? x : [x, x]; return `<option value="${esc(v)}"${String(v) === String(val) ? ' selected' : ''}>${esc(l === '' ? '—' : l)}</option>`; }).join('')}</select>`;
-  else inp = `<input class="in" type="text" autocomplete="off" autocapitalize="${o.cap || 'sentences'}"${o.list ? ` list="${o.list}"` : ''} ${common} value="${esc(val)}"${ph}>`;
+  else inp = `<input class="in" type="text" enterkeyhint="next" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="${o.cap || 'sentences'}"${o.list ? ` list="${o.list}"` : ''} ${common} value="${esc(val)}"${ph}>`;
   return `<label class="fld${o.cls ? ' ' + o.cls : ''}" for="${id}"><span class="lb">${esc(label)}${o.unit ? ` <i>${esc(o.unit)}</i>` : ''}</span>${inp}</label>`;
 }
-const INP = (path, ph, label) => `<input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="${path}" value="${esc(getv(path))}" placeholder="${esc(ph)}" aria-label="${esc(label || ph)}">`;
+const INP = (path, ph, label) => `<input class="in" type="text" inputmode="decimal" enterkeyhint="next" autocomplete="off" data-b="${path}" value="${esc(getv(path))}" placeholder="${esc(ph)}" aria-label="${esc(label || ph)}">`;
 const SEL = (path, opts, label) => `<select class="in" data-b="${path}" aria-label="${esc(label || '')}">${opts.map(v => `<option${String(v) === String(getv(path)) ? ' selected' : ''}>${esc(v)}</option>`).join('')}</select>`;
 const PAIR = (label, a, b, unit) => `<div class="fld"><span class="lb">${esc(label)}${unit ? ` <i>${esc(unit)}</i>` : ''}</span><div class="pair">${INP(a, 'low', label + ' low')}<span aria-hidden="true">–</span>${INP(b, 'high', label + ' high')}</div></div>`;
 const CB = (label, path, o = {}) => `<label class="tog${o.cls ? ' ' + o.cls : ''}"><input type="checkbox" data-b="${path}"${getv(path) ? ' checked' : ''}${o.rr ? ` data-rr="${o.rr}"` : ''}><span>${esc(label)}</span></label>`;
@@ -1484,29 +1520,40 @@ const OTH = k => `<div style="margin-top:14px">${F('Others (one bullet per line)
 const BASE = [['1', 'Day 1'], ['0', 'Day 0']];
 
 /* ---------- chips ---------- */
-function chipsHtml(g) {
-  const p = curP(), r = p.rec, G = GROUPS[g], ctx = mkCtx(p, calc(p, db.settings));
-  const items = chipDefs(db, g).map(d => {
-    const st = chipState(r, g, d.id) || {}, on = isOn(d, st, ctx);
-    const auto = d.a ? ` data-auto="${g}:${esc(d.id)}" data-on="${on ? 1 : 0}"` : '';
-    const tag = d.a ? `<i class="auto">${typeof st.manual === 'boolean' ? 'set by you' : 'auto'}</i>` : '';
-    const expand = on && (G.trend || G.star || tplHasFields(d.t));
-    if (!expand) return `<button type="button" class="chip${on ? ' on' : ''}" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${on}"${auto}>${esc(chipLabel(d.t))}${tag}</button>`;
-    const base = `r.chips.${g}.${esc(d.id)}`;
-    const tx = parseTpl(d.t).map(pt => {
-      if (pt.k === 'txt') return `<span>${esc(pt.s)}</span>`;
-      if (pt.k === 'sel') { const cur = st.v && pt.o.includes(st.v[pt.i]) ? st.v[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
-      if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ''} size="${Math.max(pt.n ? 3 : 6, String(val).length + 1)}" autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
-      return `<span class="tok" data-c="tok:${pt.name}"></span>`;
-    }).join('');
-    const ctl = (G.trend ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...TRENDS].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
-      + (G.star ? `<button type="button" class="star${st.star ? ' on' : ''}" data-act="star" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${!!st.star}" aria-label="Also show in General Survey">${st.star ? '★' : '☆'}</button>` : '');
-    return `<div class="chiprow${st.star ? ' starred' : ''}"${auto}>
-      <button type="button" class="tick" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-label="Untick">${ICON.check}</button>
-      <div class="tx">${tx}${tag}</div>${ctl ? `<div class="ctl">${ctl}</div>` : ''}
-      ${G.trend ? `<div class="say" data-c="chip:${g}:${esc(d.id)}"></div>` : ''}</div>`;
+function chipItem(g, d, ctx) {
+  const r = curP().rec, G = GROUPS[g];
+  const st = chipState(r, g, d.id) || {}, on = isOn(d, st, ctx), key = `${g}:${esc(d.id)}`;
+  const auto = d.a ? ` data-auto="${key}" data-on="${on ? 1 : 0}"` : '';
+  const tag = d.a ? `<i class="auto">${typeof st.manual === 'boolean' ? 'set by you' : 'auto'}</i>` : '';
+  const expand = on && (G.trend || G.star || tplHasFields(d.t));
+  if (!expand) return `<button type="button" class="chip${on ? ' on' : ''}" data-chip="${key}" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${on}"${auto}>${esc(chipLabel(d.t))}${tag}</button>`;
+  const base = `r.chips.${g}.${esc(d.id)}`;
+  const tx = parseTpl(d.t).map(pt => {
+    if (pt.k === 'txt') return `<span>${esc(pt.s)}</span>`;
+    if (pt.k === 'sel') { const cur = st.v && pt.o.includes(st.v[pt.i]) ? st.v[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
+    if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ' autocorrect="off" spellcheck="false"'} enterkeyhint="next" size="${Math.max(pt.n ? 3 : 6, String(val).length + 1)}" autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
+    return `<span class="tok" data-c="tok:${pt.name}"></span>`;
   }).join('');
-  return `<div class="chips">${items}</div><div class="chip-edit"><a class="lnk" href="#/chips/${g}" data-act="tochips">Edit these chips</a></div>`;
+  const ctl = (G.trend ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...TRENDS].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
+    + (G.star ? `<button type="button" class="star${st.star ? ' on' : ''}" data-act="star" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${!!st.star}" aria-label="Also show in General Survey">${st.star ? '★' : '☆'}</button>` : '');
+  return `<div class="chiprow${st.star ? ' starred' : ''}" data-chip="${key}"${auto}><button type="button" class="tick" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-label="Untick">${ICON.check}</button><div class="tx">${tx}${tag}</div>${ctl ? `<div class="ctl">${ctl}</div>` : ''}${G.trend ? `<div class="say" data-c="chip:${key}"></div>` : ''}</div>`;
+}
+function chipsHtml(g) {
+  const p = curP(), ctx = mkCtx(p, calc(p, db.settings));
+  return `<div class="chips">${chipDefs(db, g).map(d => chipItem(g, d, ctx)).join('')}</div><div class="chip-edit"><a class="lnk" href="#/chips/${g}" data-act="tochips">Edit these chips</a></div>`;
+}
+// Redraws one chip in place: much less layout work than redrawing the whole card, and the page doesn't jump.
+function updateChip(g, id, pop) {
+  const p = curP(), d = chipDefs(db, g).find(x => x.id === id); if (!d) return;
+  const ctx = mkCtx(p, calc(p, db.settings));
+  $$(`[data-chip="${g}:${id}"]`).forEach(el => {
+    const had = el.contains(document.activeElement), tmp = document.createElement('div');
+    tmp.innerHTML = chipItem(g, d, ctx).trim();
+    const n = tmp.firstElementChild; el.replaceWith(n);
+    if (pop && !reduceMotion()) n.classList.add('pop');
+    if (had) { const f = n.matches('button') ? n : $('.tick', n); if (f) f.focus({ preventScroll: true }); }
+  });
+  refresh();
 }
 
 /* ---------- card bodies ---------- */
@@ -1523,7 +1570,7 @@ BODY.hdr = () => {
   ${H('Day counters')}${CALC('counters', 'big')}
   <div class="grid" style="margin-top:10px">${F('Admission date', 'p.admit', { t: 'date' })}${F('Admission date counts as', 'p.admitBase', { t: 'sel', opts: BASE })}
     ${F('ICU transfer date', 'p.icu', { t: 'date' })}${F('ICU date counts as', 'p.icuBase', { t: 'sel', opts: BASE })}</div>
-  <div class="rows">${p.counters.map((x, i) => `<div class="row r-ctr">${F('Counter label', `p.counters.${i}.label`, { ph: 'Ictus' })}${F('Start date', `p.counters.${i}.date`, { t: 'date' })}${F('Start date counts as', `p.counters.${i}.base`, { t: 'sel', opts: BASE })}${DEL('p.counters', i, 'hdr')}</div>`).join('')}</div>
+  ${rowsHtml('p.counters')}
   <div class="addrow">${[['Ictus', 0], ['Post-op', 0], ['Intubation', 1], ['', 1]].map(([l, b]) => `<button type="button" class="btn sm" data-act="addctr" data-l="${l}" data-base="${b}">+ ${l || 'Other counter'}</button>`).join('')}</div>
   ${H('Greeting')}${F('Greeting for this patient (leave blank to use the automatic one from Settings)', 'p.greet', { t: 'area', rows: 2, ph: greetingFor(p, db.settings, new Date()) })}`;
 };
@@ -1536,7 +1583,7 @@ BODY.fluid = () => {
   ${CALC('bd')}
   ${H('24-hour urine output')}${CALC('uo', 'big')}${CALC('kdigo')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
   ${H('Void log')}<div class="grid">${F('Collected via', 'r.fl.method', { t: 'sel', opts: URINE_METHODS })}${F('Last void before this log', 'r.fl.lastVoid', { t: 'time' })}</div>
-  <div class="rows">${r.fl.voids.map((x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'mL' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>`).join('')}</div>
+  ${rowsHtml('r.fl.voids')}
   ${ADD('+ Add void', 'r.fl.voids', 'void', 'fluid')}
   <p class="hint">Each rate uses the time since the void before it, and times can cross midnight. The first row gets a rate only if you fill in the last void before the log.</p>
   ${H('Urine appearance')}${chipsHtml('urine')}${OTH('fluid')}`;
@@ -1555,9 +1602,9 @@ function dripRow(d, i) {
 }
 BODY.support = () => {
   const r = curP().rec;
-  return `${H('IV fluids (mainline)')}<div class="rows">${r.ivf.map((x, i) => `<div class="row r-ivf">${F('Fluid', `r.ivf.${i}.name`, { list: 'dl-ivf', ph: 'PNSS', cap: 'characters' })}${F('Rate', `r.ivf.${i}.rate`, { t: 'num', unit: 'cc/hr' })}${DEL('r.ivf', i, 'support')}</div>`).join('')}</div>
+  return `${H('IV fluids (mainline)')}${rowsHtml('r.ivf')}
   ${ADD('+ Add IV fluid', 'r.ivf', 'ivf', 'support')}
-  ${H('Drips')}${r.drips.map(dripRow).join('')}${ADD('+ Add drip', 'r.drips', 'drip', 'support')}
+  ${H('Drips')}${rowsHtml('r.drips')}${ADD('+ Add drip', 'r.drips', 'drip', 'support')}
   <p class="hint">A running vasoactive drip ticks “Still on vasopressor” in the General Survey for you.</p>${OTH('support')}`;
 };
 BODY.resp = () => {
@@ -1601,7 +1648,7 @@ BODY.cv = () => {
   const r = curP().rec;
   return `<div class="grid">${F('Rhythm', 'r.cv.rhythm', { t: 'sel', opts: RHYTHMS, rr: 'cv' })}${r.cv.rhythm === 'Others' ? F('Describe the rhythm', 'r.cv.rhythmOth') : `<div class="fld"><span class="lb">Current HR (from Vital signs)</span><div class="ro" data-c="hrv"></div></div>`}</div>
   ${H('Findings')}${chipsHtml('cv')}
-  ${H('BP trend')}<div class="rows">${r.cv.bp.map((x, i) => `<div class="row r-bp">${F('Time', `r.cv.bp.${i}.t`, { t: 'time' })}${F('SBP', `r.cv.bp.${i}.s`, { t: 'num' })}${F('DBP', `r.cv.bp.${i}.d`, { t: 'num' })}<div class="rate" data-c="bpmap:${i}"></div>${DEL('r.cv.bp', i, 'cv')}</div>`).join('')}</div>
+  ${H('BP trend')}${rowsHtml('r.cv.bp')}
   ${ADD('+ Add BP reading', 'r.cv.bp', 'bp', 'cv')}${OTH('cv')}`;
 };
 BODY.gi = () => `${H('Abdomen')}${chipsHtml('abd')}
@@ -1612,7 +1659,7 @@ BODY.renal = () => `${CALC('renal', 'big')}${H('Findings')}${chipsHtml('renal')}
 BODY.endo = () => {
   const r = curP().rec, S = db.settings;
   return `${F('CBG monitoring frequency', 'r.en.freq', { t: 'sel', opts: CBG_FREQ })}
-  ${H('CBG log')}<div class="rows">${r.en.cbg.map((x, i) => `<div class="row r-cbg">${F('Time', `r.en.cbg.${i}.t`, { t: 'time' })}<label class="fld"><span class="lb">mg/dl</span><input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="r.en.cbg.${i}.v" data-fl="cbg:${i}" value="${esc(x.v)}"></label>${F('Intervention', `r.en.cbg.${i}.iv`, { ph: 'if any' })}<button type="button" class="star${x.star ? ' on' : ''}" data-act="cbgstar" data-i="${i}" aria-pressed="${!!x.star}" aria-label="Add to General Survey">${x.star ? '★' : '☆'}</button>${DEL('r.en.cbg', i, 'endo')}</div>`).join('')}</div>
+  ${H('CBG log')}${rowsHtml('r.en.cbg')}
   ${ADD('+ Add CBG', 'r.en.cbg', 'cbg', 'endo')}${CALC('cbgr', 'big')}
   <p class="hint">Values below ${esc(S.cbgLow)} or above ${esc(S.cbgHigh)} mg/dl are flagged in red, and below ${esc(S.cbgLow2)} (level 2 hypoglycemia) in solid red (change these in Settings). The newest row prints with “-> latest”. Star a row that has an intervention to add it to the General Survey.</p>
   ${CB('Print the 24-hour range', 'r.en.range')}
@@ -1648,6 +1695,17 @@ BODY.meds = () => {
   ${`<button type="button" class="btn sm add" data-act="addmed">+ Add medication</button>`}
   ${CB('Print “Laboratory flow sheet attached”', 'p.labs')}`;
 };
+
+const ROWS = {
+  'p.counters': { card: 'hdr', tpl: 'counter', row: (x, i) => `<div class="row r-ctr">${F('Counter label', `p.counters.${i}.label`, { ph: 'Ictus' })}${F('Start date', `p.counters.${i}.date`, { t: 'date' })}${F('Start date counts as', `p.counters.${i}.base`, { t: 'sel', opts: BASE })}${DEL('p.counters', i, 'hdr')}</div>` },
+  'r.fl.voids': { card: 'fluid', tpl: 'void', row: (x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'mL' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>` },
+  'r.ivf': { card: 'support', tpl: 'ivf', row: (x, i) => `<div class="row r-ivf">${F('Fluid', `r.ivf.${i}.name`, { list: 'dl-ivf', ph: 'PNSS', cap: 'characters' })}${F('Rate', `r.ivf.${i}.rate`, { t: 'num', unit: 'cc/hr' })}${DEL('r.ivf', i, 'support')}</div>` },
+  'r.drips': { card: 'support', tpl: 'drip', cls: 'drips', row: (d, i) => dripRow(d, i) },
+  'r.cv.bp': { card: 'cv', tpl: 'bp', row: (x, i) => `<div class="row r-bp">${F('Time', `r.cv.bp.${i}.t`, { t: 'time' })}${F('SBP', `r.cv.bp.${i}.s`, { t: 'num' })}${F('DBP', `r.cv.bp.${i}.d`, { t: 'num' })}<div class="rate" data-c="bpmap:${i}"></div>${DEL('r.cv.bp', i, 'cv')}</div>` },
+  'r.en.cbg': { card: 'endo', tpl: 'cbg', row: (x, i) => `<div class="row r-cbg">${F('Time', `r.en.cbg.${i}.t`, { t: 'time' })}<label class="fld"><span class="lb">mg/dl</span><input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="r.en.cbg.${i}.v" data-fl="cbg:${i}" value="${esc(x.v)}"></label>${F('Intervention', `r.en.cbg.${i}.iv`, { ph: 'if any' })}<button type="button" class="star${x.star ? ' on' : ''}" data-act="cbgstar" data-i="${i}" aria-pressed="${!!x.star}" aria-label="Add to General Survey">${x.star ? '★' : '☆'}</button>${DEL('r.en.cbg', i, 'endo')}</div>` },
+};
+const rowsHtml = path => { const R = ROWS[path]; return `<div class="${R.cls || 'rows'}" data-rows="${path}">${getv(path).map(R.row).join('')}</div>`; };
+function rerenderRows(path) { const el = $(`[data-rows="${path}"]`), R = ROWS[path]; if (!el || !R) return false; el.innerHTML = getv(path).map(R.row).join(''); refresh(); return true; }
 
 /* ---------- calculated text ---------- */
 function isEmptySec(k, p, out) {
@@ -1734,12 +1792,11 @@ function doRefresh() {
   $$('[data-c]').forEach(el => { const t = calcText(el.dataset.c, p, OUT); if (el.textContent !== t) el.textContent = t; });
   $$('[data-c^="sum:"]').forEach(el => el.classList.toggle('empty', isEmptySec(el.dataset.c.slice(4), p, OUT)));
   $$('[data-fl^="cbg:"]').forEach(el => { const x = OUT.calc.cbg[+el.dataset.fl.split(':')[1]]; el.classList.toggle('flag', !!x && (x.low || x.high) && !x.low2); el.classList.toggle('flag2', !!x && x.low2); });
-  const stale = new Set();
+  $$('.jp').forEach(b => b.classList.toggle('empty', isEmptySec(b.dataset.k, p, OUT)));
   $$('[data-auto]').forEach(el => {
     const [g, id] = el.dataset.auto.split(':'), d = chipDefs(db, g).find(x => x.id === id);
-    if (d && (isOn(d, chipState(p.rec, g, id), OUT.ctx) ? '1' : '0') !== el.dataset.on) stale.add(GROUPS[g].sec);
+    if (d && (isOn(d, chipState(p.rec, g, id), OUT.ctx) ? '1' : '0') !== el.dataset.on) setTimeout(() => updateChip(g, id), 0);
   });
-  stale.forEach(k => rerender(k));
   updatePreview();
 }
 
@@ -1788,6 +1845,25 @@ function cardHtml(k) {
     <button type="button" class="card-h" data-act="card" data-k="${k}" aria-expanded="${open}"><span class="card-t">${esc(CARD_TITLE[k])}</span><span class="card-s" data-c="sum:${k}"></span><span class="chev" aria-hidden="true"></span></button>
     <div class="card-b">${open ? BODY[k]() : ''}</div></section>`;
 }
+const reduceMotion = () => !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const UI_KEY = APP_KEY + '-ui';
+function loadUi() { try { const o = JSON.parse(localStorage.getItem(UI_KEY) || '{}'); if (o && o.open && typeof o.open === 'object') ui.open = o.open; } catch (e) { /* ignore */ } }
+let uiT = 0;
+function saveUi() {
+  clearTimeout(uiT);
+  uiT = setTimeout(() => {
+    if (!LOCK.locked) Object.keys(ui.open).forEach(id => { if (!db.patients.some(p => p.id === id)) delete ui.open[id]; });
+    try { localStorage.setItem(UI_KEY, JSON.stringify({ open: ui.open })); } catch (e) { /* ignore */ }
+  }, 300);
+}
+// Opening fades and slides the content in using only opacity and transform, which the GPU animates
+// without re-measuring the page. Closing is instant, so the tap responds straight away.
+function animateCard(card) {
+  const b = $('.card-b', card);
+  if (reduceMotion() || !b.animate) return;
+  b.animate([{ opacity: 0, transform: 'translateY(-8px)' }, { opacity: 1, transform: 'none' }], { duration: 200, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+const afterPaint = fn => requestAnimationFrame(() => setTimeout(fn, 0));
 function rerender(k) {
   const el = $(`[data-card="${k}"]`); if (!el) return;
   const open = isOpen(k);
@@ -1796,10 +1872,38 @@ function rerender(k) {
   $('.card-b', el).innerHTML = open ? BODY[k]() : '';
   refresh();
 }
+const SHORT = { hdr: 'Patient', gs: 'Survey', fluid: 'I&O', support: 'Support', resp: 'Resp', vitals: 'Vitals', neuro: 'Neuro', pulm: 'Pulmo', cv: 'CVS', gi: 'GI', renal: 'Renal', endo: 'Endo', id: 'ID', heme: 'Heme', pend: 'Pending', meds: 'Meds', ar: 'A/R' };
+let io = null;
+function setCur(k) {
+  const strip = $('.jump'); if (!strip) return;
+  $$('.jp', strip).forEach(b => b.classList.toggle('cur', b.dataset.k === k));
+  const b = $(`.jp[data-k="${k}"]`, strip);
+  if (b) strip.scrollTo({ left: b.offsetLeft - strip.clientWidth / 2 + b.offsetWidth / 2, behavior: reduceMotion() ? 'auto' : 'smooth' });
+}
+let stickPx = 0;
+const seen = new Map();
+function afterRender() {
+  if (io) { io.disconnect(); io = null; }
+  seen.clear();
+  afterPaint(() => {
+    const hdr = $('header.bar'), h = hdr ? hdr.offsetHeight : 0;
+    if (h !== stickPx) { stickPx = h; document.documentElement.style.setProperty('--stick', h + 'px'); }
+    if (ui.view !== 'patient' || !('IntersectionObserver' in window)) return;
+    // Highlight the top-most card that is in the upper part of the screen.
+    io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) seen.set(e.target.dataset.card, e.target); else seen.delete(e.target.dataset.card); });
+      if (Date.now() < (ui.jumpHold || 0)) return;
+      const order = cardKeys(curP() || { on: {} }), first = order.find(k => seen.has(k));
+      if (first) setCur(first);
+    }, { rootMargin: `-${h + 24}px 0px -45% 0px` });
+    $$('.card').forEach(c => io.observe(c));
+  });
+}
 function vPatient() {
   const p = curP();
   if (!ui.open[p.id]) ui.open[p.id] = { hdr: !str(p.surname) };
-  return bar(`<a class="ib" href="#/" aria-label="All patients">${ICON.back}</a><div class="bar-t"><b data-c="title"></b><small data-c="subtitle"></small></div><button type="button" class="ib" data-act="pmenu" aria-label="Patient menu">${ICON.more}</button>`) +
+  return `<header class="bar has-jump"><div class="bar-in"><a class="ib" href="#/" aria-label="All patients">${ICON.back}</a><div class="bar-t"><b data-c="title"></b><small data-c="subtitle"></small></div><button type="button" class="ib" data-act="pmenu" aria-label="Patient menu">${ICON.more}</button></div>
+    <nav class="jump" aria-label="Jump to a section">${cardKeys(p).map(k => `<button type="button" class="jp" data-act="jump" data-k="${k}"><span>${esc(SHORT[k] || k)}</span></button>`).join('')}</nav></header>` +
   `<main class="wrap">
     <div class="tools"><button type="button" class="lnk" data-act="openall">Open all</button><button type="button" class="lnk" data-act="closeall">Close all</button><button type="button" class="lnk" data-act="sections">Sections on/off</button></div>
     ${cardKeys(p).map(cardHtml).join('')}
@@ -1831,6 +1935,7 @@ function vSettings() {
   `<main class="wrap">
   <section class="card plain"><div class="card-b">
     ${H('Appearance')}${F('Theme', 's.theme', { t: 'sel', opts: [['auto', 'Match the phone'], ['light', 'Light'], ['dark', 'Dark']] })}
+    ${CB('Vibrate briefly on taps (Android phones)', 's.haptics')}
     ${H('Greeting and sign-off')}${F('Greeting ({time} becomes morning, afternoon or evening)', 's.greeting', { t: 'area', rows: 3 })}
     <div class="grid" style="margin-top:10px">${F('Closing line', 's.closing')}${F('Your name and hospital', 's.signName', { ph: 'DELA CRUZ, IDH' })}</div>
     <div class="grid" style="margin-top:10px">${F('Label before requests', 's.reqLabel', { ph: 'For your input:' })}${F('Delete reminder after', 's.retainDays', { t: 'num', unit: 'days without an update' })}</div>
@@ -1887,7 +1992,11 @@ function render() {
   else if (a === 'settings') v = 'settings';
   else if (a === 'chips' && GROUPS[b]) { v = 'chips'; ui.g = b; }
   const key = v + ':' + (b || '');
-  const changed = key !== ui.key;
+  const changed = key !== ui.key, prevKey = ui.key;
+  if (changed && prevKey) ui.scroll[prevKey] = window.scrollY;
+  const my = ++rseq;
+  const swap = () => {
+  if (my !== rseq) return; // a newer navigation already drew the screen
   ui.view = v; ui.key = key;
   $$('.sheet-bg').forEach(x => x.remove());
   document.body.classList.remove('modal');
@@ -1898,8 +2007,17 @@ function render() {
     const el = $('#persist'); if (!el) return;
     el.textContent = on ? 'Storage protection: on. The browser won’t clear this app’s data to free up space.' : `Storage protection: off.${isStandalone() ? '' : ' Install the app (browser menu, then Add to Home screen or Install app) so the browser protects its data.'}`;
   }).catch(() => {});
-  if (changed) { window.scrollTo(0, 0); if (Date.now() - toastAt > 600) hideToast(); }
+  if (changed) { window.scrollTo(0, ui.scroll[key] || 0); if (Date.now() - toastAt > 600) hideToast(); }
+  afterRender();
+  };
+  // Screen changes cross-fade where the browser supports view transitions (Chrome 111+, Safari 18+, Firefox 144+).
+  if (changed && prevKey && prevKey !== 'lock' && !vtBusy && document.startViewTransition && !reduceMotion()) {
+    vtBusy = true;
+    const t = document.startViewTransition(swap);
+    t.finished.finally(() => { vtBusy = false; });
+  } else swap();
 }
+let rseq = 0, vtBusy = false;
 window.addEventListener('hashchange', render);
 const go = h => { if (popSkip > 0) { pendingGo = h; return; } if (location.hash === h) render(); else location.hash = h; };
 
@@ -1909,7 +2027,7 @@ let popSkip = 0, popTimer = 0, pendingGo = null;
 function sheet(inner, kind, onClose) {
   const bg = document.createElement('div');
   bg.className = 'sheet-bg';
-  bg.innerHTML = `<div class="sheet" data-kind="${kind}" role="dialog" aria-modal="true">${inner}</div>`;
+  bg.innerHTML = `<div class="sheet" data-kind="${kind}" role="dialog" aria-modal="true"><div class="grab" aria-hidden="true"></div>${inner}</div>`;
   bg._onClose = onClose;
   bg.addEventListener('click', e => { if (e.target === bg) closeSheet(bg); });
   $('#sheets').appendChild(bg);
@@ -1920,22 +2038,46 @@ function sheet(inner, kind, onClose) {
   return $('.sheet', bg);
 }
 function popDone() { popSkip = 0; clearTimeout(popTimer); if (pendingGo) { const h = pendingGo; pendingGo = null; go(h); } }
+const liveSheets = () => $$('.sheet-bg:not(.closing)');
 function closeSheet(el, silent, fromPop, keepState) {
   const bg = el.classList.contains('sheet-bg') ? el : el.closest('.sheet-bg');
-  if (!bg || !bg.parentNode) return;
-  bg.remove();
-  if (!$('.sheet-bg')) document.body.classList.remove('modal');
-  const stillPushed = $$('.sheet-bg').some(x => x._pushed);
+  if (!bg || !bg.parentNode || bg.classList.contains('closing')) return;
+  if (reduceMotion()) bg.remove();
+  else { bg.classList.add('closing'); setTimeout(() => bg.remove(), 170); }
+  if (!liveSheets().length) document.body.classList.remove('modal');
+  const stillPushed = liveSheets().some(x => x._pushed);
   if (bg._pushed && !fromPop && !keepState && !stillPushed && history.state && history.state.sheet) { popSkip++; clearTimeout(popTimer); popTimer = setTimeout(popDone, 700); history.back(); }
   if (!silent && bg._onClose) bg._onClose();
 }
 window.addEventListener('popstate', () => {
   if (popSkip > 0) { popSkip--; if (!popSkip) popDone(); return; }
-  $$('.sheet-bg').reverse().forEach(b => closeSheet(b, false, true));
+  liveSheets().reverse().forEach(b => closeSheet(b, false, true));
 });
 // keepState: a new sheet is about to open, so keep the shared history entry instead of going back.
-const closeSheets = keepState => $$('.sheet-bg').forEach(b => closeSheet(b, false, false, keepState));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { const all = $$('.sheet-bg'); if (all.length) closeSheet(all[all.length - 1]); } });
+const closeSheets = keepState => liveSheets().forEach(b => closeSheet(b, false, false, keepState));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { const all = liveSheets(); if (all.length) closeSheet(all[all.length - 1]); } });
+// Drag a sheet down by its handle or title to close it.
+document.addEventListener('pointerdown', e => {
+  const h = e.target.closest('.sheet .grab, .sheet .sh-h, .sheet .ask-t');
+  if (!h || e.target.closest('button, input, select, textarea, a')) return;
+  const sh = h.closest('.sheet'), bg = sh.parentElement, y0 = e.clientY, t0 = performance.now();
+  let dy = 0;
+  try { h.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+  sh.style.transition = 'none';
+  const mv = ev => { dy = Math.max(0, ev.clientY - y0); sh.style.transform = `translateY(${dy}px)`; };
+  const up = () => {
+    h.removeEventListener('pointermove', mv); h.removeEventListener('pointerup', up); h.removeEventListener('pointercancel', up);
+    const v = dy / Math.max(1, performance.now() - t0);
+    if (dy > 90 || (dy > 30 && v > 0.5)) closeSheet(bg);
+    else { sh.style.transition = 'transform .18s cubic-bezier(.2,.8,.2,1)'; sh.style.transform = ''; }
+  };
+  h.addEventListener('pointermove', mv); h.addEventListener('pointerup', up); h.addEventListener('pointercancel', up);
+});
+// iPhone keeps fixed sheets behind the keyboard; lift them by the keyboard's height (Android resizes the page instead).
+if (window.visualViewport) {
+  const kb = () => document.documentElement.style.setProperty('--kb', Math.max(0, innerHeight - visualViewport.height - visualViewport.offsetTop) + 'px');
+  visualViewport.addEventListener('resize', kb); visualViewport.addEventListener('scroll', kb);
+}
 // onOk runs inside the tap itself, which iPhone Safari needs for clipboard, share and file saving.
 function ask({ title, body = '', html = '', ok = 'OK', cancel = 'Cancel', alt = '', danger = false, fields = [], onOk = null }) {
   return new Promise(res => {
@@ -1979,11 +2121,16 @@ function openPreview() {
   refresh(true);
 }
 function updatePreview() {
-  const s = $('.sheet[data-kind="preview"]'); if (!s || !OUT) return;
+  const s = $('.sheet-bg:not(.closing) .sheet[data-kind="preview"]'); if (!s || !OUT) return;
   const m = $('[data-pv="msg"]', s); if (m.textContent !== OUT.text) m.textContent = OUT.text;
   $('[data-pv="warn"]', s).innerHTML = OUT.warnings.length
     ? `<div class="warns"><b>Check before sending (${OUT.warnings.length})</b><ul>${warnList(OUT.warnings)}</ul><small>Tap a warning to jump to it. Warnings don’t stop you from copying.</small></div>`
     : `<p class="okmsg">Pre-send check: nothing to flag.</p>`;
+}
+// Short vibration on Android when the setting is on; iPhone browsers have no vibration API, so this does nothing there.
+function haptic(ms) { if (db.settings.haptics === false || !navigator.vibrate) return; try { navigator.vibrate(ms || 8); } catch (e) { /* ignore */ } }
+function flashBtn(sel, label) {
+  $$(sel).forEach(b => { if (!b._label) b._label = b.innerHTML; b.classList.add('done'); b.textContent = label; clearTimeout(b._t); b._t = setTimeout(() => { b.classList.remove('done'); b.innerHTML = b._label; b._label = null; refresh(); }, 1600); });
 }
 function legacyCopy(t) {
   const ta = document.createElement('textarea');
@@ -2000,7 +2147,7 @@ function copyText(t) {
 }
 function finishCopy(p, text, okMsg) {
   return copyText(text).then(okc => {
-    if (okc) { archive(p, db, text); flush(); toast(okMsg || 'Copied. Paste it into Viber or Messenger.', okMsg ? 4500 : 2800); }
+    if (okc) { archive(p, db, text); flush(); haptic(12); flashBtn('[data-act="copy"], [data-act="pcopy"]', 'Copied \u2713'); if (okMsg) toast(okMsg, 4500); else toast('Copied. Paste it into Viber or Messenger.', 2200); }
     else toast('Couldn’t copy automatically. Open Preview, then press and hold the message to select and copy it.', 5000);
   });
 }
@@ -2128,7 +2275,7 @@ async function doClearAll() {
   const v = await ask({ title: 'Clear all data?', body: 'This deletes every patient, all history, your custom chips and your settings from this phone. It can\u2019t be undone. Export a backup first if you might need any of it.', fields: [{ label: 'Type DELETE to confirm', cap: 'characters' }], ok: 'Clear all data', danger: true });
   if (v === false) return;
   if (v[0] !== 'DELETE') { toast('Nothing was deleted. Type DELETE in capitals to confirm.', 4000); return; }
-  try { localStorage.removeItem(APP_KEY); } catch (e) { /* ignore */ }
+  try { localStorage.removeItem(APP_KEY); localStorage.removeItem(UI_KEY); } catch (e) { /* ignore */ }
   db = freshDB(); ui.open = {}; flush(); applyTheme(); go('#/'); toast('All data cleared.');
 }
 
@@ -2165,7 +2312,7 @@ document.addEventListener('change', e => {
   const m = /^r\.drips\.(\d+)\.drug$/.exec(path);
   if (m) { const d = curP().rec.drips[+m[1]]; d.amtU = (DRUGS[d.drug] || {}).amtU || 'mg'; }
   if (path === 's.theme') applyTheme();
-  if (path.startsWith('p.on.') && path !== 'p.on.nihss' && !$('.sheet[data-kind="sections"]')) render();
+  if (path.startsWith('p.on.') && path !== 'p.on.nihss' && !$('.sheet-bg:not(.closing) .sheet[data-kind="sections"]')) render();
   save();
   if (el.dataset.rr) rerender(el.dataset.rr);
   else if (ui.view === 'patient') refresh();
@@ -2173,6 +2320,38 @@ document.addEventListener('change', e => {
 document.addEventListener('focusin', e => { if (e.target.matches && e.target.matches('input:not([type=checkbox]):not([type=file]):not([type=date]), textarea')) document.body.classList.add('typing'); });
 document.addEventListener('focusout', () => setTimeout(() => { if (!isTyping()) document.body.classList.remove('typing'); }, 60));
 const isTyping = () => { const a = document.activeElement; return !!a && a.matches('input:not([type=checkbox]), textarea, select'); };
+function addRow(path, item, card) {
+  const arr = getv(path); arr.push(item); save(); haptic();
+  const el = $(`[data-rows="${path}"]`), R = ROWS[path];
+  if (el && R) {
+    el.insertAdjacentHTML('beforeend', R.row(item, arr.length - 1));
+    const n = el.lastElementChild;
+    if (n && n.animate && !reduceMotion()) n.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], { duration: 160, easing: 'ease-out' });
+    refresh();
+    const f = n && $('input, select', n);
+    if (f) { f.focus({ preventScroll: true }); f.scrollIntoView({ block: 'center', behavior: reduceMotion() ? 'auto' : 'smooth' }); }
+  } else { rerender(card); focusNew(card); }
+}
+// Enter on the phone keyboard moves to the next field; on the last field of a log it starts a new row.
+const FIELD_SEL = 'input[data-b]:not([type=checkbox]):not([type=date]):not([type=file]), input.iinp';
+function nextField(el) {
+  const scope = el.closest('.card, .sheet, main') || document;
+  const all = $$(FIELD_SEL, scope).filter(x => x.offsetParent !== null && !x.disabled);
+  return all[all.indexOf(el) + 1] || null;
+}
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' || e.isComposing || e.shiftKey) return;
+  const el = e.target;
+  if (!el.matches || !el.matches(FIELD_SEL) || el.closest('.sheet')) return;
+  e.preventDefault();
+  const rows = el.closest('[data-rows]');
+  if (rows) {
+    const last = rows.lastElementChild, inLast = last && last.contains(el), lastField = inLast && $$(FIELD_SEL, last).pop() === el;
+    if (lastField && $$(FIELD_SEL, last).some(x => x.value.trim())) { const path = rows.dataset.rows, R = ROWS[path]; el.blur(); addRow(path, ROW_TPL[R.tpl](), R.card); return; }
+  }
+  const n = nextField(el);
+  if (n) { n.focus(); if (n.select) n.select(); } else el.blur();
+});
 function focusNew(k) {
   setTimeout(() => {
     const card = $(`[data-card="${k}"]`); if (!card) return;
@@ -2183,9 +2362,43 @@ function focusNew(k) {
 }
 const ensureSt = (g, id) => { const r = curP().rec; r.chips[g] = r.chips[g] || {}; return (r.chips[g][id] = r.chips[g][id] || {}); };
 const ACT = {
-  card: el => { const o = ui.open[ui.pid] = ui.open[ui.pid] || {}, k = el.dataset.k; o[k] = !o[k]; rerender(k); },
-  openall: () => { const p = curP(); cardKeys(p).forEach(k => (ui.open[p.id][k] = true)); render(); },
-  closeall: () => { ui.open[ui.pid] = {}; render(); },
+  card: el => {
+    const o = ui.open[ui.pid] = ui.open[ui.pid] || {}, k = el.dataset.k, card = el.closest('.card');
+    o[k] = !o[k]; saveUi(); haptic();
+    rerender(k);
+    if (o[k]) {
+      animateCard(card);
+      afterPaint(() => { if (card.getBoundingClientRect().top > innerHeight * 0.55) card.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'auto' : 'smooth' }); });
+    }
+  },
+  // Builds the cards a few at a time across frames (nearest to the screen first), so the tap responds at once.
+  openall: () => {
+    const p = curP(), o = ui.open[p.id] = ui.open[p.id] || {}, keys = cardKeys(p).filter(k => !o[k]);
+    keys.forEach(k => (o[k] = true)); saveUi(); haptic();
+    const mid = innerHeight / 2, dist = k => { const c = $(`[data-card="${k}"]`); if (!c) return 1e9; const r = c.getBoundingClientRect(); return Math.abs(r.top - mid); };
+    const queue = keys.map(k => [k, dist(k)]).sort((x, y) => x[1] - y[1]).map(x => x[0]), my = ++ui.openSeq;
+    const step = () => {
+      if (my !== ui.openSeq || ui.view !== 'patient') return;
+      const t0 = performance.now();
+      do { const k = queue.shift(); if (k && o[k]) rerender(k); } while (queue.length && performance.now() - t0 < 10);
+      if (queue.length) requestAnimationFrame(() => setTimeout(step, 0));
+    };
+    step();
+  },
+  closeall: () => { ui.openSeq++; ui.open[ui.pid] = {}; saveUi(); haptic(); render(); },
+  jump: el => {
+    const k = el.dataset.k, o = ui.open[ui.pid] = ui.open[ui.pid] || {};
+    if (!o[k]) { o[k] = true; saveUi(); rerender(k); }
+    const c = $(`[data-card="${k}"]`); if (c) c.scrollIntoView({ block: 'start', behavior: reduceMotion() ? 'auto' : 'smooth' });
+    ui.jumpHold = Date.now() + 1200; setCur(k); haptic();
+  },
+  now: el => {
+    const inp = el.parentElement.querySelector('input'); if (!inp) return;
+    const d = new Date(); inp.value = pad(d.getHours()) + ':' + pad(d.getMinutes());
+    inp.dispatchEvent(new Event('input', { bubbles: true })); inp.dispatchEvent(new Event('change', { bubbles: true }));
+    haptic();
+    const next = nextField(inp); if (next) next.focus();
+  },
   chip: el => {
     const p = curP(), { g, id } = el.dataset, d = chipDefs(db, g).find(x => x.id === id); if (!d) return;
     const st = ensureSt(g, id);
@@ -2193,27 +2406,31 @@ const ACT = {
       const cond = !!mkCtx(p, calc(p, db.settings)).auto(d.a), cur = typeof st.manual === 'boolean' ? st.manual : cond, nv = !cur;
       if (nv === cond) delete st.manual; else st.manual = nv;
     } else st.on = !st.on;
-    save(); rerender(GROUPS[g].sec);
+    save(); haptic(); updateChip(g, id, true);
   },
   star: el => {
     const { g, id } = el.dataset, st = ensureSt(g, id);
     st.star = !st.star; if (st.star) st.at = Date.now();
-    save(); rerender(GROUPS[g].sec);
+    save(); haptic(); updateChip(g, id, true);
     toast(st.star ? 'Added to the General Survey.' : 'Removed from the General Survey.', 1600);
   },
   cbgstar: el => {
     const x = curP().rec.en.cbg[+el.dataset.i]; if (!x) return;
     x.star = !x.star; if (x.star) x.at = Date.now();
-    save(); rerender('endo');
+    save(); haptic();
+    el.classList.toggle('on', x.star); el.setAttribute('aria-pressed', x.star); el.textContent = x.star ? '\u2605' : '\u2606';
+    if (!reduceMotion()) { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+    refresh();
     toast(x.star ? (str(x.iv) ? 'Added to the General Survey.' : 'Starred. Fill in the intervention so it appears in the General Survey.') : 'Removed from the General Survey.', 2400);
   },
-  add: el => { getv(el.dataset.path).push(ROW_TPL[el.dataset.tpl]()); save(); rerender(el.dataset.card); focusNew(el.dataset.card); },
+  add: el => addRow(el.dataset.path, ROW_TPL[el.dataset.tpl](), el.dataset.card),
   del: el => {
-    const pid = ui.pid, path = el.dataset.path, card = el.dataset.card, i = +el.dataset.i, [row] = getv(path).splice(i, 1);
-    save(); rerender(card);
-    withUndo('Row deleted.', () => { ui.pid = pid; getv(path).splice(i, 0, row); });
+    const pid = ui.pid, path = el.dataset.path, card = el.dataset.card, i = +el.dataset.i, rowEl = el.closest('.row, .drip');
+    const finish = () => { const [row] = getv(path).splice(i, 1); save(); if (!rerenderRows(path)) rerender(card); withUndo('Row deleted.', () => { ui.pid = pid; getv(path).splice(i, 0, row); }); };
+    if (rowEl && rowEl.animate && !reduceMotion()) { rowEl.style.overflow = 'hidden'; rowEl.animate([{ opacity: 1, height: rowEl.offsetHeight + 'px' }, { opacity: 0, height: '0px', paddingTop: '0px', paddingBottom: '0px' }], { duration: 140, easing: 'ease-in' }).onfinish = finish; }
+    else finish();
   },
-  addctr: el => { curP().counters.push({ label: el.dataset.l, date: '', base: el.dataset.base }); save(); rerender('hdr'); focusNew('hdr'); },
+  addctr: el => addRow('p.counters', { label: el.dataset.l, date: '', base: el.dataset.base }, 'hdr'),
   addmed: () => { const m = newMed(); curP().meds.push(m); ui.med = m.id; save(); rerender('meds'); setTimeout(() => { const f = $(`[data-card="meds"] .med.open input`); if (f && !isTyping()) { f.focus(); f.scrollIntoView({ block: 'center' }); } }, 30); },
   med: el => { ui.med = ui.med === el.dataset.id ? null : el.dataset.id; rerender('meds'); },
   delmed: el => {
@@ -2320,7 +2537,10 @@ document.addEventListener('pointerdown', e => {
 
 /* ---------- start ---------- */
 applyTheme();
+loadUi();
+try { history.scrollRestoration = 'manual'; } catch (e) { /* ignore */ } // the app restores each screen's scroll position itself
 render();
+window.addEventListener('resize', () => { stickPx = -1; afterRender(); });
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 
 </script>
