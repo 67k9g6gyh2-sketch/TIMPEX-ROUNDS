@@ -1,0 +1,2035 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pnenHm7IFHpNLPvVs4UcuD0MV9FnEzsVJlOXf2gSDxs='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#EEF2F0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rounds">
+<title>TIMPEX Rounds Update</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D6B63'/%3E%3Cpath d='M14 22h36' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M32 22v26' stroke='%23fff' stroke-width='6' stroke-linecap='round'/%3E%3Cpath d='M38 42l5 5 9-11' stroke='%23F4CF45' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --bg:#EEF2F0;--sf:#FFFFFF;--sf2:#F6F8F7;--ink:#17211E;--mut:#56645F;--ln:#D3DBD8;
+  --pri:#1D6B63;--pri-ink:#FFFFFF;--pri-soft:#E1EFEC;
+  --hl:#F4CF45;--hl-ink:#3B3000;--hl-soft:#FCEFAE;
+  --bad:#B3361F;--bad-soft:#FBE5E0;--warn:#875700;--warn-soft:#FFF2D4;
+  --r:14px;--shadow:0 1px 0 rgba(23,33,30,.05);
+  color-scheme:light;
+}
+[data-theme=dark]{
+  --bg:#0E1412;--sf:#161E1C;--sf2:#1C2623;--ink:#E3EAE7;--mut:#94A39E;--ln:#2B3734;
+  --pri:#4FB2A6;--pri-ink:#04201C;--pri-soft:#173029;
+  --hl:#E8C547;--hl-ink:#2A2200;--hl-soft:#43391A;
+  --bad:#F08B76;--bad-soft:#3B201A;--warn:#F1C46A;--warn-soft:#342A15;
+  --shadow:none;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:80px;scroll-padding-bottom:100px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;font-variant-ligatures:no-contextual;font-feature-settings:"calt" 0;-webkit-tap-highlight-color:transparent;min-height:100vh}
+body.modal{overflow:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2.5px solid var(--pri);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:4px 12px 24px}
+body[data-view=patient] .wrap{padding-bottom:120px}
+a{color:var(--pri)}
+code{font-size:.9em;background:var(--sf2);border:1px solid var(--ln);border-radius:6px;padding:0 4px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:6px;padding:6px 8px;padding-top:calc(6px + env(safe-area-inset-top));background:var(--bg);border-bottom:1px solid var(--ln)}
+.bar-in{max-width:680px;margin:0 auto;width:100%;display:flex;align-items:center;gap:6px}
+.bar-t{flex:1;min-width:0}
+.bar-t b{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-t small{display:block;color:var(--mut);font-size:13px}
+.brand{flex:1;font-size:18px;letter-spacing:.01em;padding-left:6px}
+.brand b{font-weight:800;letter-spacing:.06em;color:var(--pri)}
+.ib{flex:none;min-width:44px;height:44px;display:inline-grid;place-items:center;border:0;background:none;border-radius:12px;color:var(--ink);text-decoration:none;padding:0}
+.ib svg{width:24px;height:24px}
+.ib:active{background:var(--pri-soft)}
+
+/* buttons */
+.btn{min-height:48px;padding:0 16px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf);font-weight:600;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:active{transform:translateY(1px)}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.btn.sm{min-height:42px;padding:0 14px;font-size:15px}
+.btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--ln))}
+.btn.dangerf{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.add{margin-top:10px}
+.lnk{background:none;border:0;padding:8px 4px;color:var(--pri);font-weight:600;font-size:14px;text-decoration:none;min-height:40px}
+.badge:not(:empty){min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--hl);color:var(--hl-ink);font-size:13px;font-weight:700;display:inline-grid;place-items:center}
+
+/* home */
+.pts{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.pt{display:grid;gap:2px;padding:14px 16px;background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);color:var(--ink);text-decoration:none;box-shadow:var(--shadow);border-left:5px solid var(--pri)}
+.pt-n{font-weight:700;font-size:17px}
+.pt-m{color:var(--ink);font-size:15px}
+.pt-s{color:var(--mut);font-size:13px}
+.pt-s.stale{color:var(--warn);font-weight:600}
+.pt-s.sent{color:var(--pri)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 10px}
+.backup{display:flex;gap:10px;flex-wrap:wrap}
+.empty{padding:28px 18px;text-align:center;color:var(--mut);background:var(--sf);border:1.5px dashed var(--ln);border-radius:var(--r);margin:14px 0}
+.empty p{margin:4px 0}
+.empty p:first-child{color:var(--ink);font-weight:700;font-size:17px}
+.note{color:var(--mut);font-size:13px;margin:14px 2px}
+.hint{color:var(--mut);font-size:13px;margin:8px 0}
+
+/* cards */
+.tools{display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap;margin:4px 0 -2px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);margin:10px 0;box-shadow:var(--shadow);overflow:clip}
+.card.open{border-top:4px solid var(--pri)}
+.card-h{width:100%;display:flex;align-items:center;gap:10px;min-height:56px;padding:10px 14px;border:0;background:none;text-align:left}
+.card-t{font-weight:700;font-size:17px;flex:1;min-width:0}
+.card-s{color:var(--mut);font-size:13px;text-align:right;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-s.empty{color:var(--warn);font-weight:600}
+.chev{flex:none;width:12px;height:12px;border-right:2px solid var(--mut);border-bottom:2px solid var(--mut);transform:rotate(45deg);margin:-6px 4px 0 2px;transition:transform .15s}
+.open .chev{transform:rotate(-135deg);margin-top:6px}
+.card-b:not(:empty){padding:2px 14px 16px}
+.card.plain{border-top:1px solid var(--ln)}
+.sub{font-size:15px;font-weight:700;margin:18px 0 8px}
+.card-b>.sub:first-child{margin-top:6px}
+
+/* fields */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.grid+.grid,.grid+.fld,.fld+.grid,.card-b>.fld+.fld{margin-top:10px}
+.span2{grid-column:1/-1}
+.fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lb{font-size:13px;color:var(--mut);font-weight:600;line-height:1.25}
+.lb i{font-style:normal;font-weight:500;opacity:.85}
+.in{width:100%;min-height:48px;padding:10px 12px;border:1.5px solid var(--ln);border-radius:10px;background:var(--sf2);font-size:16px;min-width:0}
+textarea.in{min-height:76px;resize:vertical;line-height:1.4}
+select.in{appearance:none;-webkit-appearance:none;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,var(--mut) 50%),linear-gradient(135deg,var(--mut) 50%,transparent 50%);background-position:calc(100% - 18px) 21px,calc(100% - 12px) 21px;background-size:6px 6px;background-repeat:no-repeat}
+.in:focus{outline:none;border-color:var(--pri);background:var(--sf)}
+.in.flag{border-color:var(--bad);background:var(--bad-soft);color:var(--bad);font-weight:700}
+input[type=date].in{min-height:48px}
+.pair{display:flex;align-items:center;gap:6px}
+.pair .in{flex:1}
+.ro{min-height:48px;display:flex;align-items:center;padding:0 12px;border-radius:10px;background:var(--sf2);border:1.5px dashed var(--ln);color:var(--mut)}
+.calc{margin:10px 0 0;color:var(--mut);font-size:14px;white-space:pre-line}
+.calc:empty{display:none}
+.calc.big{color:var(--pri);font-weight:700;font-size:16px}
+.calc.pre{background:var(--sf2);border-radius:10px;padding:10px 12px;color:var(--ink)}
+.tog{display:flex;align-items:center;gap:12px;min-height:48px;margin-top:8px;font-size:15px}
+.tog input{width:22px;height:22px;accent-color:var(--pri);flex:none}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:9px 15px;border:1.5px solid var(--ln);border-radius:22px;background:var(--sf);font-size:15px;line-height:1.3;text-align:left;display:inline-flex;align-items:center;gap:6px}
+.chip.on,.chip.cbx:has(input:checked){background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.chip.cbx input{position:absolute;opacity:0;pointer-events:none}
+.chip.cbx{position:relative;cursor:pointer}
+.chip.cbx:has(input:focus-visible){outline:2.5px solid var(--pri);outline-offset:2px}
+.auto{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.02em;padding:1px 7px;border-radius:9px;background:var(--pri-soft);color:var(--pri);vertical-align:middle}
+.chip.on .auto{background:rgba(255,255,255,.22);color:inherit}
+.chiprow{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 8px 6px 6px;border-radius:16px;background:var(--pri-soft);border:1.5px solid var(--pri)}
+.tick{flex:none;width:36px;height:36px;border-radius:50%;background:var(--pri);color:var(--pri-ink);border:0;display:grid;place-items:center;padding:0}
+.tick svg{width:20px;height:20px}
+.tx{flex:1 1 0;min-width:0;font-size:15px;line-height:1.35;padding:6px 0}
+.tx .isel,.tx .iinp{vertical-align:middle;margin:2px 0}
+.tx .auto{margin-left:6px}
+.tx .tok{font-weight:700}
+.isel,.iinp,.trend{min-height:38px;padding:4px 8px;border:1.5px solid color-mix(in srgb,var(--pri) 55%,var(--ln));border-radius:9px;background:var(--sf);font-size:16px;max-width:100%}
+.iinp{width:7em}.iinp.n{width:4.2em}
+.ctl{flex:none;display:flex;gap:6px;margin-left:auto;align-self:flex-start}
+.trend{color:var(--mut);width:100px}
+.trend:has(option:checked:not([value=""])){color:var(--ink);font-weight:600}
+.star{flex:none;width:44px;height:40px;border-radius:10px;border:1.5px solid var(--ln);background:var(--sf);font-size:21px;line-height:1;color:var(--mut);padding:0}
+.star.on{background:var(--hl);border-color:var(--hl);color:var(--hl-ink)}
+.chiprow.starred .tx>span:not(.tok){background:linear-gradient(transparent 52%,var(--hl-soft) 52%,var(--hl-soft) 92%,transparent 92%)}
+.say{flex-basis:100%;font-size:13px;color:var(--mut);padding:0 4px 2px 44px}
+.say:empty{display:none}
+.chip-edit{margin-top:2px}
+
+/* row logs */
+.rows .row{display:grid;gap:8px;align-items:end;padding:10px 0;border-bottom:1px solid var(--ln)}
+.rows .row:first-child{padding-top:2px}
+.row .rate{grid-column:1/-1;order:9;font-size:14px;color:var(--pri);font-weight:700}
+.row .rate:empty{display:none}
+.del{color:var(--mut);align-self:end;height:48px}
+.del svg{width:20px;height:20px}
+.r-void{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px}
+.r-ivf{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 44px}
+.r-bp{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr) 44px}
+.r-cbg{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px 44px}
+.r-cbg>:nth-child(3){order:8;grid-column:1/-1}
+.r-cbg .star{align-self:end;height:48px}
+.r-ctr{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px}
+.r-ctr>:nth-child(3){order:5;grid-column:1/3}
+.r-ctr>:nth-child(4){order:4}
+.addrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.drip{padding:12px;border:1.5px solid var(--ln);border-radius:12px;margin:10px 0;background:var(--sf2)}
+.drip .in{background-color:var(--sf)}
+.drip-f{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.drip-f .calc{margin:6px 0 0}
+.nih{margin-top:16px;padding-top:4px;border-top:4px solid var(--ln)}
+.nih-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.nih-h .calc{margin:0}
+.nih .fld{margin-top:10px}
+
+/* meds */
+.meds{list-style:none;margin:0;padding:0}
+.med{border-bottom:1px solid var(--ln);background:var(--sf)}
+.med.drag{background:var(--pri-soft);box-shadow:0 6px 18px rgba(0,0,0,.18);position:relative;z-index:2;border-radius:10px}
+.med-h{display:flex;align-items:center;gap:2px}
+.grip{flex:none;width:40px;height:52px;display:grid;place-items:center;color:var(--mut);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.grip svg{width:18px;height:18px}
+.med-l{flex:1;min-width:0;text-align:left;background:none;border:0;padding:12px 4px;min-height:52px;font-size:15px;line-height:1.35}
+.med.st-hold .med-l{color:var(--warn)}
+.med.st-dc .med-l{color:var(--mut);text-decoration:line-through}
+.med-e{padding:4px 4px 14px 42px}
+.flags{margin-top:10px}
+
+/* chip editor */
+.ce{list-style:none;padding:0;margin:12px 0}
+.ce-i{display:flex;gap:4px;padding:10px 0;border-bottom:1px solid var(--ln);background:var(--bg)}
+.ce-i.drag{background:var(--pri-soft);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.18);position:relative;z-index:2}
+.ce-b{flex:1;min-width:0}
+.ce-b textarea.in{min-height:56px}
+.ce-o{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:4px}
+.ce-o .tog{margin:0;font-size:14px}
+.help p{font-size:14px;color:var(--mut);margin:8px 0}
+.grp{display:flex;align-items:center;justify-content:space-between;min-height:52px;border-bottom:1px solid var(--ln);text-decoration:none;color:var(--ink);padding:0 2px}
+.grp span{color:var(--mut);font-size:14px}
+
+/* dock */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--sf);border-top:1px solid var(--ln);padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+.dock-in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:8px}
+.dock .btn{min-height:52px}
+
+/* sheets */
+.sheet-bg{position:fixed;inset:0;z-index:50;background:rgba(8,18,15,.5);display:flex;align-items:flex-end;justify-content:center;animation:fade .15s ease-out}
+.sheet{background:var(--sf);width:100%;max-width:680px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;padding:12px 16px calc(16px + env(safe-area-inset-bottom));animation:up .2s ease-out;overscroll-behavior:contain}
+@keyframes up{from{transform:translateY(24px);opacity:.6}}
+@keyframes fade{from{opacity:0}}
+.sh-h{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:-12px;background:var(--sf);padding:6px 0;z-index:1}
+.sh-h h2,.ask-t{font-size:19px;margin:6px 0}
+.sh-f{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px;position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));background:var(--sf);padding:10px 0 4px}
+.sh-f .btn{flex:1;min-width:120px}
+.sheet p{margin:8px 0}
+pre.msg{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0;white-space:pre-wrap;word-break:break-word;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--sf2);border:1px solid var(--ln);border-radius:12px;padding:14px;margin:8px 0 0;user-select:text;-webkit-user-select:text}
+.warns{background:var(--warn-soft);border-left:5px solid var(--warn);border-radius:10px;padding:10px 12px;margin:6px 0 10px;font-size:14px}
+.warns ul,.wl{margin:6px 0;padding-left:0;list-style:none}
+.warns li,.wl li{margin:2px 0}
+.warns button,.wl button{background:none;border:0;padding:6px 0;text-align:left;color:var(--ink);font-size:14px;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--warn) 50%,transparent);text-underline-offset:3px}
+.warns small{color:var(--mut)}
+.okmsg{color:var(--pri);font-weight:600;font-size:14px;margin:6px 0 4px}
+.menu{display:flex;flex-direction:column}
+.mi{display:grid;gap:2px;text-align:left;background:none;border:0;border-bottom:1px solid var(--ln);padding:14px 4px;min-height:56px}
+.mi b{font-size:16px}
+.mi span{font-size:13px;color:var(--mut)}
+.mi.danger b{color:var(--bad)}
+.secs .tog{border-bottom:1px solid var(--ln);margin:0;min-height:52px}
+.hi{display:grid;gap:2px;width:100%;text-align:left;background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;margin:10px 0}
+.hi span{color:var(--mut);font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translate(-50%,16px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:12px;z-index:70;max-width:min(92vw,560px);font-size:15px;transition:opacity .18s,transform .18s;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+body:not([data-view=patient]) .toast{bottom:calc(20px + env(safe-area-inset-bottom))}
+
+@media (min-width:560px){.r-cbg{grid-template-columns:minmax(0,.9fr) minmax(0,.8fr) minmax(0,1.6fr) 44px 44px}.r-cbg>:nth-child(3){order:0;grid-column:auto}}
+@media (max-width:370px){.grid.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* added: undo toasts, patient reordering, hide the bottom bar while typing */
+.toast.act{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:6px 8px 6px 16px}
+.tbtn{background:none;border:0;color:var(--hl);font-weight:800;font-size:15px;min-height:40px;padding:0 10px;border-radius:8px}
+[data-theme=dark] .tbtn{color:#7a5d00}
+.pt-w{display:flex;align-items:stretch;gap:2px}
+.pt-w .pt{flex:1;min-width:0}
+.pt-w .grip{height:auto;min-height:52px}
+.pt-w.drag .pt{background:var(--pri-soft);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.pt-w.drag{position:relative;z-index:2}
+@media (pointer:coarse){body.typing .dock{display:none}}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="sheets"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+<datalist id="dl-ivf"><option>PNSS</option><option>PLR</option><option>D5W</option><option>D5LR</option><option>D5NM</option><option>D5 0.3% NaCl</option><option>D5 0.45% NaCl</option><option>0.45% NaCl</option></datalist>
+<datalist id="dl-freq"><option>OD</option><option>BID</option><option>TID</option><option>QID</option><option>q4h</option><option>q6h</option><option>q8h</option><option>q12h</option><option>q24h</option><option>HS</option><option>PRN</option></datalist>
+<datalist id="dl-route"><option>IV</option><option>PO</option><option>per NGT</option><option>SC</option><option>IM</option><option>SL</option><option>via nebulizer</option><option>topical</option></datalist>
+<datalist id="dl-mv"><option>AC-VC</option><option>AC-PC</option><option>SIMV</option><option>PSV</option><option>CPAP</option></datalist>
+<noscript><p style="padding:20px">This app needs JavaScript turned on.</p></noscript>
+<script>
+/* ================= TIMPEX Rounds Update: core logic (no DOM) ================= */
+'use strict';
+const APP_KEY = 'timpex-rounds-v1';
+const HIST_MAX = 30; // saved messages kept per patient
+const DIVIDER = '━'.repeat(18);
+
+/* ---------- small helpers ---------- */
+const pad = n => String(n).padStart(2, '0');
+const uid = () => Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-5);
+const clone = o => JSON.parse(JSON.stringify(o));
+const str = v => (v == null ? '' : String(v)).trim();
+const num = v => { const s = str(v).replace(',', '.'); if (!s) return NaN; const n = Number(s); return Number.isFinite(n) ? n : parseFloat(s); };
+const ok = n => typeof n === 'number' && Number.isFinite(n);
+const fx = (n, d = 2) => { const f = 10 ** d; let s = (Math.round(n * f) / f).toFixed(d); if (d > 0) s = s.replace(/\.?0+$/, ''); return s === '-0' ? '0' : s; };
+const f2 = n => (Math.round(n * 100) / 100).toFixed(2);
+const signed = n => (n > 0 ? '+' : '') + fx(n, 2);
+const lc1 = s => (s && s.length > 1 && /[a-z]/.test(s[1]) ? s[0].toLowerCase() + s.slice(1) : s);
+const cap1 = s => (s ? s[0].toUpperCase() + s.slice(1) : s);
+const rng = (a, b) => { a = str(a); b = str(b); return a && b ? a + '-' + b : a || b; };
+
+/* ---------- dates ---------- */
+const isISO = s => /^\d{4}-\d{2}-\d{2}$/.test(s || '');
+const todayISO = (d = new Date()) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const isoDay = s => { const [y, m, d] = s.split('-').map(Number); return Math.round(Date.UTC(y, m - 1, d) / 864e5); };
+const addDays = (s, n) => { const d = new Date((isoDay(s) + n) * 864e5); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); };
+const dayDiff = (a, b) => isoDay(b) - isoDay(a);
+const counterDay = (start, base, on) => (isISO(start) && isISO(on) ? dayDiff(start, on) + (Number(base) === 0 ? 0 : 1) : null);
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const fmtDate = s => { if (!isISO(s)) return s || ''; const [y, m, d] = s.split('-').map(Number); const w = new Date(Date.UTC(y, m - 1, d)).getUTCDay(); return `${WDAYS[w]}, ${MONTHS[m - 1]} ${d}`; };
+
+/* ---------- times (stored as "HH:MM", 24 h) ---------- */
+function normTime(raw) {
+  let s = str(raw).toLowerCase();
+  if (!s) return '';
+  const pm = /p/.test(s), am = /a/.test(s) || /mn/.test(s);
+  s = s.replace(/[^0-9:.]/g, '').replace('.', ':');
+  if (!s.replace(':', '')) return '';
+  let h, m;
+  if (s.includes(':')) { const [a, b = ''] = s.split(':'); if (b.length > 2 || !a) return ''; h = +a; m = +(b || 0); }
+  else if (s.length <= 2) { h = +s; m = 0; }
+  else if (s.length === 3) { h = +s[0]; m = +s.slice(1); }
+  else if (s.length === 4) { h = +s.slice(0, 2); m = +s.slice(2); }
+  else return '';
+  if (pm && h < 12) h += 12;
+  if (am && h === 12) h = 0;
+  if (!(h >= 0 && h < 24 && m >= 0 && m < 60)) return '';
+  return pad(h) + ':' + pad(m);
+}
+const tmin = s => { const m = /^(\d{1,2}):(\d{2})$/.exec(s || ''); return m ? +m[1] * 60 + +m[2] : null; };
+function fmtTime(s) {
+  const t = tmin(s);
+  if (t == null) return s || '';
+  let h = Math.floor(t / 60); const mm = t % 60, ap = h < 12 ? 'am' : 'pm';
+  h = h % 12 || 12;
+  return h + (mm ? ':' + pad(mm) : '') + ' ' + ap;
+}
+const minsBetween = (a, b) => { const d = (b - a + 1440) % 1440; return d || null; };
+
+/* ---------- chip templates ---------- */
+// [a/b/c] dropdown   [__] or [label] text blank   [#] number blank   {token} value from another section
+function parseTpl(t) {
+  const parts = [], re = /\[([^\]]*)\]|\{([a-z0-9_]+)\}/gi;
+  let m, last = 0, fi = 0;
+  t = t || '';
+  while ((m = re.exec(t))) {
+    if (m.index > last) parts.push({ k: 'txt', s: t.slice(last, m.index) });
+    if (m[1] != null) {
+      const inner = m[1];
+      if (inner.includes('/') && !inner.startsWith('#')) parts.push({ k: 'sel', o: inner.split('/').map(x => x.trim()), i: fi++ });
+      else parts.push({ k: 'inp', ph: inner.replace(/^#/, '').trim() || (inner.startsWith('#') ? '#' : '__'), n: inner.startsWith('#'), i: fi++ });
+    } else parts.push({ k: 'tok', name: m[2].toLowerCase() });
+    last = re.lastIndex;
+  }
+  if (last < t.length) parts.push({ k: 'txt', s: t.slice(last) });
+  return parts;
+}
+function fillTpl(t, vals, ctx) {
+  return parseTpl(t).map(p => {
+    if (p.k === 'txt') return p.s;
+    const v = vals ? vals[p.i] : undefined;
+    if (p.k === 'sel') return v != null && p.o.includes(v) ? v : p.o[0];
+    if (p.k === 'inp') return str(v) || '__';
+    const tv = ctx ? ctx.tok(p.name) : '';
+    return tv === '' || tv == null ? '__' : String(tv);
+  }).join('').replace(/\s+/g, ' ').trim();
+}
+const chipLabel = t => parseTpl(t).map(p => (p.k === 'txt' ? p.s : p.k === 'sel' ? p.o[0] : p.k === 'inp' ? '__' : '…')).join('').replace(/\s+/g, ' ').trim();
+const tplHasFields = t => parseTpl(t).some(p => p.k !== 'txt');
+
+const TRENDS = ['Still', 'Improved', 'Worsened', 'New', 'Resolved'];
+const NO_WITH = /^(with|on|in|no|not|nor|able|unable|afebrile|febrile|for|under|off|npo|being|awake|asleep|drowsy|still|tolerat\w*|hav\w*|receiv\w*|requir\w*|intubated|alert|conversant|coherent|oriented|without|at|seen|patient|noted|denies|dependent|follows)\b/i;
+function applyTrend(text, tr) {
+  if (!tr || !text) return text;
+  if (tr === 'Still') return NO_WITH.test(text) ? 'Still ' + lc1(text) : 'Still with ' + lc1(text);
+  return tr + ' ' + lc1(text.replace(/^with\s+/i, ''));
+}
+// segments {text, join} -> bullet lines. Joined chips continue the previous line with a comma.
+function joinSegs(segs) {
+  const lines = [];
+  for (const s of segs) {
+    const t = s.text;
+    if (!t) continue;
+    if (s.join && lines.length) {
+      const L = lines[lines.length - 1], last = L[L.length - 1];
+      const a = /^no (.+) episodes$/i.exec(last), b = /^no (.+) episodes$/i.exec(t);
+      if (a && b) L[L.length - 1] = last.replace(/ episodes$/i, '') + ' nor ' + b[1] + ' episodes';
+      else L.push(lc1(t));
+    } else lines.push([t]);
+  }
+  return lines.map(L => cap1(L.join(', ')));
+}
+
+/* ---------- defaults ---------- */
+const DEF_SETTINGS = {
+  greeting: 'Good {time}, Doctors. Respectfully updating you regarding your patient:',
+  closing: 'Thank you, Doctors.',
+  signName: '[SURNAME], IDH',
+  fever: '38.0', cbgLow: '70', cbgHigh: '180', uoLow: '0.5', uoHigh: '1.5',
+  theme: 'auto',
+};
+
+const GROUPS = {
+  gs: { name: 'General survey', sec: 'gs', trend: 1 },
+  urine: { name: 'Urine appearance', sec: 'fluid', inline: 1 },
+  resp: { name: 'Respiratory support', sec: 'resp', trend: 1, star: 1 },
+  neuro: { name: 'Neurologic', sec: 'neuro', trend: 1, star: 1 },
+  pulm: { name: 'Pulmonary', sec: 'pulm', trend: 1, star: 1 },
+  cv: { name: 'Cardiovascular', sec: 'cv', trend: 1, star: 1 },
+  abd: { name: 'Abdomen', sec: 'gi', trend: 1, star: 1 },
+  diet: { name: 'Diet', sec: 'gi', inline: 1 },
+  bm: { name: 'Bowel movement', sec: 'gi', inline: 1 },
+  renal: { name: 'Renal / Fluid status', sec: 'renal', trend: 1, star: 1 },
+  heme: { name: 'Hematology', sec: 'heme', trend: 1, star: 1 },
+  pend: { name: 'Pending', sec: 'pend', inline: 1, keep: 1 },
+};
+
+// [id, template, joins previous line?, auto]
+const DEF_CHIPS_RAW = {
+  gs: [
+    ['gs_seen', 'Patient seen [asleep/awake]'],
+    ['gs_distress', 'Not in cardiopulmonary distress', 1],
+    ['gs_access', 'No use of accessory muscles', 1],
+    ['gs_conv', 'Able to converse', 1],
+    ['gs_verbal', 'Improved verbal output compared to [__]'],
+    ['gs_hr', 'With episodes of [bradycardia/tachycardia] (HR range: {hr_range})'],
+    ['gs_hypo', 'No hypotensive episodes'],
+    ['gs_desat', 'No desaturation episodes', 1],
+    ['gs_vaso', 'Still on vasopressor', 1, 'vaso'],
+    ['gs_afeb', 'Afebrile'],
+    ['gs_uo', 'Urine output [non-concentrated/concentrated/straw-colored/amber/tea-colored], {uo_goal}'],
+  ],
+  urine: [['ua_straw', 'straw-colored'], ['ua_amber', 'amber'], ['ua_tea', 'tea-colored'], ['ua_nonconc', 'non-concentrated'], ['ua_conc', 'concentrated'], ['ua_cloudy', 'cloudy'], ['ua_sed', 'with sediments'], ['ua_hema', 'gross hematuria']],
+  resp: [['rs_nodesat', 'No episodes of desaturation']],
+  neuro: [['ne_conv', 'Conversant', 1], ['ne_coh', 'Coherent', 1], ['ne_words', 'More words exhibited', 1], ['ne_cmd', 'Follows commands', 1], ['ne_ha', 'No headache'], ['ne_sz', 'No seizures', 1]],
+  pulm: [
+    ['pu_sym', 'Symmetric chest expansion'],
+    ['pu_clear', 'Clear breath sounds', 1],
+    ['pu_crack', '[Bilateral/Right/Left] [fine/coarse] crackles'],
+    ['pu_dbs', 'Decreased breath sounds on the [right/left/bilateral] [lower/middle/upper/entire] lung field, auscultated on the [posterior/anterior] chest wall'],
+    ['pu_wheeze', 'Wheezes'],
+    ['pu_rhon', 'Rhonchi'],
+    ['pu_cough', 'Occasional non-productive cough'],
+    ['pu_pcough', 'Productive cough with [whitish/yellowish/greenish/blood-streaked] sputum'],
+    ['pu_nodysp', 'No dyspnea'],
+    ['pu_nocp', 'No chest pain', 1],
+    ['pu_nodesat', 'No desaturation', 1],
+  ],
+  cv: [
+    ['cv_pace', 'Occasional pacing activity on monitor', 1],
+    ['cv_adyn', 'Adynamic precordium'],
+    ['cv_nomur', 'No murmurs', 1],
+    ['cv_noheave', 'No heaves or thrills', 1],
+    ['cv_pulse', 'Peripheral pulses [2+/1+/3+/0], no asymmetry'],
+    ['cv_crt', 'Capillary refill <2s', 1],
+    ['cv_nocp', 'Denies chest pain'],
+    ['cv_cvp', 'CVP range [#]-[#] cmH2O'],
+  ],
+  abd: [
+    ['ab_shape', 'Abdomen [flat/globular]'],
+    ['ab_soft', 'Soft', 1],
+    ['ab_mass', 'No lesions nor masses', 1],
+    ['ab_bs', '[Normoactive/Hypoactive/Hyperactive] bowel sounds', 1],
+    ['ab_guard', 'No guarding', 1],
+    ['ab_tender', 'No tenderness on light and deep palpation', 1],
+  ],
+  diet: [['di_npo', 'NPO'], ['di_lcd', 'Low caloric diet'], ['di_ofi', 'Limit OFI to [#] L'], ['di_supp', 'Oral supplement [__], tolerated']],
+  bm: [['bm_nobleed', 'no gross bleeding'], ['bm_nonmuc', 'non-mucoid']],
+  renal: [
+    ['re_sp', '[No/With] suprapubic discomfort'],
+    ['re_foley', 'Foley catheter inserted on [__]'],
+    ['re_nofoley', 'Foley catheter not yet inserted, patient not amenable'],
+    ['re_edema', 'Peripheral edema, grade [1/2/3/4] on the [upper extremities/lower extremities/bilateral lower extremities/upper and lower extremities]'],
+  ],
+  heme: [['he_nobleed', 'No active bleeding'], ['he_ac', 'On anticoagulation: {anticoag}', 0, 'anticoag'], ['he_tx', 'Transfusion: [__]']],
+  pend: [['pe_cbc', 'CBC'], ['pe_lytes', 'Electrolytes'], ['pe_bun', 'BUN'], ['pe_crea', 'S. Crea'], ['pe_mg', 'Mg'], ['pe_ca', 'Ca'], ['pe_abg', 'ABG'], ['pe_cx', 'Cultures'], ['pe_cxr', 'CXR'], ['pe_ecg', 'ECG'], ['pe_echo', '2D echo']],
+};
+const defChips = g => (DEF_CHIPS_RAW[g] || []).map(([id, t, j, a]) => ({ id, t, j: !!j, a: a || '' }));
+const allDefChips = () => Object.fromEntries(Object.keys(GROUPS).map(g => [g, defChips(g)]));
+
+const SECS = [
+  ['gs', 'General survey & overnight'], ['fluid', 'Fluid balance'], ['support', 'Current support'], ['resp', 'Respiratory support'],
+  ['vitals', 'Vital signs'], ['neuro', 'Neurologic'], ['pulm', 'Pulmonary'], ['cv', 'Cardiovascular'], ['gi', 'GI / Nutrition'],
+  ['renal', 'Renal / Fluid status'], ['endo', 'Endocrine / Metabolic'], ['id', 'Infectious disease'], ['heme', 'Hematology'],
+  ['pend', 'Pending'], ['meds', 'Medications'],
+];
+const SEC_NAME = Object.fromEntries(SECS.concat([['nihss', 'NIH Stroke Scale']]));
+
+const DRUGS = {
+  Norepinephrine: { u: 'mcg/kg/min', amtU: 'mg', vaso: 1, max: 3 },
+  Epinephrine: { u: 'mcg/kg/min', amtU: 'mg', vaso: 1, max: 3 },
+  Dopamine: { u: 'mcg/kg/min', amtU: 'mg', vaso: 1, max: 30 },
+  Dobutamine: { u: 'mcg/kg/min', amtU: 'mg', vaso: 1, max: 30 },
+  Vasopressin: { u: 'units/min', amtU: 'units', vaso: 1, max: 0.1 },
+  Nicardipine: { u: 'mg/hr', amtU: 'mg', vaso: 1, max: 20 },
+  Furosemide: { u: 'mg/hr', amtU: 'mg', max: 60 },
+  Midazolam: { u: 'mg/hr', amtU: 'mg', max: 30 },
+  Fentanyl: { u: 'mcg/hr', amtU: 'mcg', max: 500 },
+  Insulin: { u: 'units/hr', amtU: 'units', max: 50 },
+  Custom: { u: '', amtU: 'mg' },
+};
+const DOSE_UNITS = ['mcg/kg/min', 'mcg/min', 'mg/hr', 'mcg/hr', 'units/hr', 'units/min'];
+
+const RESP_MODES = [['', 'Not set'], ['RA', 'Room air'], ['NC', 'Nasal cannula'], ['FM', 'Face mask'], ['NRB', 'Non-rebreather mask'], ['HFNC', 'High-flow nasal cannula (HFNC)'], ['NIV', 'Non-invasive ventilation (NIV)'], ['MV', 'Mechanical ventilation']];
+const RHYTHMS = ['', 'NSR', 'Sinus bradycardia', 'Sinus tachycardia', 'AF in slow ventricular response', 'AF in controlled ventricular response', 'AF in rapid ventricular response', 'Atrial flutter', 'Paced rhythm', 'Others'];
+const LOCS = ['', 'Awake', 'Drowsy', 'Stuporous', 'Obtunded', 'Comatose'];
+const URINE_METHODS = [['', 'Not set'], ['Foley catheter', 'Foley catheter'], ['plastic container', 'Plastic container'], ['diaper weighing', 'Diaper weighing'], ['condom catheter', 'Condom catheter']];
+const CBG_FREQ = [['', 'Not set'], ['q4', 'every 4H'], ['q6', 'every 6H'], ['q8', 'every 8H'], ['premeals', 'pre-meals and HS']];
+
+const ARM = [['No drift for 10 seconds', 0], ["Drift, but doesn't hit bed", 1], ['Drift, hits bed', 2], ['Some effort against gravity', 2], ['No effort against gravity', 3], ['No movement', 4], ['Amputation/joint fusion', 'UN']];
+const LEG = [['No drift for 5 seconds', 0], ["Drift, but doesn't hit bed", 1], ['Drift, hits bed', 2], ['Some effort against gravity', 2], ['No effort against gravity', 3], ['No movement', 4], ['Amputation/joint fusion', 'UN']];
+const NIH = [
+  ['1A', 'Level of consciousness', [['Alert; keenly responsive', 0], ['Arouses to minor stimulation', 1], ['Requires repeated stimulation to arouse', 2], ['Movements to pain', 2], ['Postures or unresponsive', 3]]],
+  ['1B', 'Ask month and age', [['Both questions right', 0], ['1 question right', 1], ['0 questions right', 2], ['Dysarthric/intubated/trauma/language barrier', 1], ['Aphasic', 2]]],
+  ['1C', "'Blink eyes' & 'squeeze hands'", [['Performs both tasks', 0], ['Performs 1 task', 1], ['Performs 0 tasks', 2]]],
+  ['2', 'Horizontal extraocular movements', [['Normal', 0], ['Partial gaze palsy: can be overcome', 1], ['Partial gaze palsy: corrects with oculocephalic reflex', 1], ['Forced gaze palsy: cannot be overcome', 2]]],
+  ['3', 'Visual fields', [['No visual loss', 0], ['Partial hemianopia', 1], ['Complete hemianopia', 2], ['Patient is bilaterally blind', 3], ['Bilateral hemianopia', 3]]],
+  ['4', 'Facial palsy', [['Normal symmetry', 0], ['Minor paralysis (flat nasolabial fold, smile asymmetry)', 1], ['Partial paralysis (lower face)', 2], ['Unilateral complete paralysis (upper/lower face)', 3], ['Bilateral complete paralysis (upper/lower face)', 3]]],
+  ['5A', 'Left arm motor drift', ARM], ['5B', 'Right arm motor drift', ARM],
+  ['6A', 'Left leg motor drift', LEG], ['6B', 'Right leg motor drift', LEG],
+  ['7', 'Limb ataxia', [['No ataxia', 0], ['Ataxia in 1 limb', 1], ['Ataxia in 2 limbs', 2], ['Does not understand', 0], ['Paralyzed', 0], ['Amputation/joint fusion', 'UN']]],
+  ['8', 'Sensation', [['Normal; no sensory loss', 0], ['Mild-moderate loss: less sharp/more dull', 1], ['Mild-moderate loss: can sense being touched', 1], ['Complete loss: cannot sense being touched at all', 2], ['No response and quadriplegic', 2], ['Coma/unresponsive', 2]]],
+  ['9', 'Language/aphasia', [['Normal; no aphasia', 0], ['Mild-moderate aphasia: some obvious changes, without significant limitation', 1], ['Severe aphasia: fragmentary expression, inference needed, cannot identify materials', 2], ['Mute/global aphasia: no usable speech/auditory comprehension', 3], ['Coma/unresponsive', 3]]],
+  ['10', 'Dysarthria', [['Normal', 0], ['Mild-moderate dysarthria: slurring but can be understood', 1], ['Severe dysarthria: unintelligible slurring or out of proportion to dysphasia', 2], ['Mute/anarthric', 2], ['Intubated/unable to test', 'UN']]],
+  ['11', 'Extinction/inattention', [['No abnormality', 0], ['Visual/tactile/auditory/spatial/personal inattention', 1], ['Extinction to bilateral simultaneous stimulation', 1], ['Profound hemi-inattention (ex: does not recognize own hand)', 2], ['Extinction to >1 modality', 2]]],
+];
+
+/* ---------- records ---------- */
+function newRec(date) {
+  return {
+    date, chips: {}, oth: {},
+    fl: { in24: '', out24: '', shLabel: '4pm-12am', shHrs: '8', shIn: '', shOut: '', urine: '', stLo: '', stHi: '', ngt: '', drain: '', emesis: '', othOut: '', method: '', lastVoid: '', voids: [], uoLine: false },
+    ivf: [], drips: [],
+    resp: { mode: '', nc: '', fm: '', nrb: '', hfFlow: '', hfFio2: '', ipap: '', epap: '', nivFio2: '', mvMode: '', vt: '', mvRr: '', peep: '', mvFio2: '' },
+    v: { t: '', tmax: '', hr: '', rr: '', sbp: '', dbp: '', spo2: '', hrLo: '', hrHi: '', sbpLo: '', sbpHi: '', dbpLo: '', dbpHi: '', spo2Lo: '', spo2Hi: '', note: '', ranges: true },
+    ne: { loc: '', ot: false, op: false, opl: false, e: '', vv: '', m: '', pr: '', pl: '', prx: 'reactive', plx: 'reactive', nih: {}, nihAll: false, mmt: { rue: '', lue: '', rle: '', lle: '' } },
+    cv: { rhythm: '', rhythmOth: '', bp: [] },
+    gi: { diet: '', bmN: '', bmChar: '', bristol: '' },
+    en: { freq: '', cbg: [], insulin: '', range: false },
+    idd: { cx: '' },
+  };
+}
+function newPatient(today = todayISO()) {
+  return {
+    id: uid(), created: Date.now(),
+    surname: '', first: '', age: '', sex: '', room: '', hosp: '', weight: '',
+    admit: '', admitBase: 1, icu: '', icuBase: 1, counters: [], greet: '',
+    on: { gs: 1, fluid: 1, support: 1, resp: 1, vitals: 1, neuro: 1, nihss: 0, pulm: 1, cv: 1, gi: 1, renal: 1, endo: 1, id: 1, heme: 1, pend: 1, meds: 1 },
+    meds: [], labs: true, rec: newRec(today), hist: [],
+  };
+}
+const newMed = () => ({ id: uid(), g: '', b: '', dose: '', route: '', extra: '', freq: '', st: 'active', abx: false, ac: false, no: '', dpd: '' });
+const ROW_TPL = {
+  void: () => ({ t: '', v: '' }), bp: () => ({ t: '', s: '', d: '' }), cbg: () => ({ t: '', v: '', iv: '', star: false, at: 0 }),
+  ivf: () => ({ name: '', rate: '' }), drip: () => ({ drug: 'Norepinephrine', amt: '', amtU: 'mg', vol: '', dil: 'D5W', rate: '', cName: '', cUnit: 'mg/hr', cVaso: false }),
+  counter: () => ({ label: '', date: '', base: 1 }),
+};
+
+function fillDefaults(obj, def) {
+  if (obj == null || typeof obj !== 'object' || Array.isArray(obj)) return obj;
+  for (const k of Object.keys(def)) {
+    if (!(k in obj) || obj[k] === undefined) obj[k] = clone(def[k]);
+    else if (def[k] && typeof def[k] === 'object' && !Array.isArray(def[k]) && obj[k] && typeof obj[k] === 'object') fillDefaults(obj[k], def[k]);
+  }
+  return obj;
+}
+// Settings thresholds: a blank or non-numeric entry falls back to the default instead of silently disabling the check.
+function thr(S, k) { const n = num(S && S[k]); return ok(n) ? n : num(DEF_SETTINGS[k]); }
+const SAFE_ID = /^[A-Za-z0-9_-]{1,48}$/;
+function normPatient(p) {
+  fillDefaults(p, newPatient());
+  if (!p.rec || typeof p.rec !== 'object') p.rec = newRec(todayISO());
+  fillDefaults(p.rec, newRec(p.rec.date || todayISO()));
+  if (!isISO(p.rec.date)) p.rec.date = todayISO();
+  p.meds = (p.meds || []).map(m => fillDefaults(m, newMed()));
+  ['voids'].forEach(k => (p.rec.fl[k] = (p.rec.fl[k] || []).map(r => fillDefaults(r, ROW_TPL.void()))));
+  p.rec.cv.bp = (p.rec.cv.bp || []).map(r => fillDefaults(r, ROW_TPL.bp()));
+  p.rec.en.cbg = (p.rec.en.cbg || []).map(r => fillDefaults(r, ROW_TPL.cbg()));
+  p.rec.ivf = (p.rec.ivf || []).map(r => fillDefaults(r, ROW_TPL.ivf()));
+  p.rec.drips = (p.rec.drips || []).map(r => fillDefaults(r, ROW_TPL.drip()));
+  p.counters = (p.counters || []).map(r => fillDefaults(r, ROW_TPL.counter()));
+  p.hist = (Array.isArray(p.hist) ? p.hist : []).filter(h => h && isISO(h.date) && typeof h.text === 'string').map(h => ({ date: h.date, text: h.text, doses: h.doses && typeof h.doses === 'object' ? h.doses : {}, ts: +h.ts || 0 }));
+  if (p.hist.length > HIST_MAX) p.hist.splice(0, p.hist.length - HIST_MAX);
+  if (!SAFE_ID.test(String(p.id))) p.id = uid();
+  p.meds.forEach(m => { if (!SAFE_ID.test(String(m.id))) m.id = uid(); });
+  return p;
+}
+function freshDB() { return { v: 1, settings: clone(DEF_SETTINGS), chips: allDefChips(), patients: [] }; }
+function normDB(db) {
+  if (!db || typeof db !== 'object') return freshDB();
+  db.v = 1;
+  db.settings = Object.assign(clone(DEF_SETTINGS), db.settings || {});
+  db.chips = db.chips && typeof db.chips === 'object' ? db.chips : {};
+  for (const g of Object.keys(GROUPS)) {
+    if (!Array.isArray(db.chips[g])) { db.chips[g] = defChips(g); continue; }
+    const seen = new Set();
+    db.chips[g] = db.chips[g].filter(d => d && typeof d === 'object').map(d => {
+      let id = String(d.id || '');
+      if (!SAFE_ID.test(id) || seen.has(id)) id = 'u' + uid();
+      seen.add(id);
+      return { id, t: String(d.t == null ? '' : d.t), j: !!d.j, a: d.a === 'vaso' || d.a === 'anticoag' ? d.a : '' };
+    });
+  }
+  const ids = new Set();
+  db.patients = (Array.isArray(db.patients) ? db.patients : []).filter(p => p && typeof p === 'object').map(normPatient)
+    .map(p => { if (ids.has(p.id)) p.id = uid(); ids.add(p.id); return p; });
+  return db;
+}
+
+/* ---------- calculations ---------- */
+function dpd(m) { // doses per day from frequency
+  const o = num(m.dpd);
+  if (o > 0) return o;
+  const f = str(m.freq).toLowerCase().replace(/[\s.]/g, '');
+  if (/^(od|qd|daily|oncedaily|q24h?|hs|qam|qpm|qhs)$/.test(f)) return 1;
+  if (/^(bid|q12h?)$/.test(f)) return 2;
+  if (/^(tid|q8h?)$/.test(f)) return 3;
+  if (/^(qid|q6h?)$/.test(f)) return 4;
+  const q = /^q(\d+)h?$/.exec(f);
+  if (q && 24 % +q[1] === 0) return 24 / +q[1];
+  return null;
+}
+function dripMeta(d) {
+  if (d.drug === 'Custom') return { name: str(d.cName) || 'Custom', u: d.cUnit || 'mg/hr', vaso: !!d.cVaso, max: null };
+  const m = DRUGS[d.drug];
+  return m ? Object.assign({ name: d.drug }, m) : null;
+}
+function dripCalc(d, w) {
+  const m = dripMeta(d);
+  if (!m) return null;
+  const amt = num(d.amt), vol = num(d.vol), rate = num(d.rate), au = d.amtU || m.amtU, units = au === 'units';
+  const out = { m, au, v: null, txt: '', why: '' };
+  if (!(amt > 0 && vol > 0 && ok(rate))) { out.why = 'Enter amount, volume and rate'; return out; }
+  const perHr = (units ? amt : au === 'mg' ? amt * 1000 : amt) / vol * rate; // mcg/hr or units/hr
+  const unitsDose = m.u === 'units/hr' || m.u === 'units/min';
+  if (units !== unitsDose) { out.why = 'Amount unit does not match the dose unit'; return out; }
+  switch (m.u) {
+    case 'mcg/kg/min': if (w > 0) { out.v = perHr / 60 / w; out.txt = (out.v < 0.1 ? (Math.round(out.v * 1000) / 1000).toFixed(3) : f2(out.v)) + 'mkm'; } else out.why = 'Needs working weight'; break;
+    case 'mcg/min': out.v = perHr / 60; out.txt = fx(out.v, 2) + 'mcg/min'; break;
+    case 'mg/hr': out.v = perHr / 1000; out.txt = fx(out.v, 2) + 'mg/hr'; break;
+    case 'mcg/hr': out.v = perHr; out.txt = fx(out.v, 1) + 'mcg/hr'; break;
+    case 'units/hr': out.v = perHr; out.txt = fx(out.v, 2) + ' units/hr'; break;
+    case 'units/min': out.v = perHr / 60; out.txt = fx(out.v, 3) + ' units/min'; break;
+    default: out.why = 'Pick a dose unit';
+  }
+  return out;
+}
+function dripLine(d, dc) {
+  const m = dc.m, au = dc.au;
+  const amt = str(d.amt) ? str(d.amt) + (au === 'units' ? ' units' : au) : '';
+  let s = m.name + ' drip:';
+  if (amt) s += ' ' + amt;
+  if (str(d.vol)) s += (amt ? ' in ' : ' ') + str(d.vol) + 'cc' + (str(d.dil) ? ' ' + str(d.dil) : '');
+  if (str(d.rate)) s += ' x ' + str(d.rate) + 'cc/hr';
+  if (dc.txt) s += ` (${dc.txt})`;
+  return s;
+}
+const pct = v => { const n = num(v); if (!ok(n)) return str(v); return (n <= 1 && n > 0 ? fx(n * 100, 0) : fx(n, 1)) + '%'; };
+function o2Device(rs) {
+  const L = v => (str(v) ? ` at ${str(v)} L/min` : '');
+  const list = a => a.filter(Boolean).join(', ');
+  switch (rs.mode) {
+    case 'RA': return 'room air';
+    case 'NC': return 'nasal cannula' + L(rs.nc);
+    case 'FM': return 'face mask' + L(rs.fm);
+    case 'NRB': return 'non-rebreather mask' + L(rs.nrb);
+    case 'HFNC': return 'HFNC' + L(rs.hfFlow) + (str(rs.hfFio2) ? ', FiO2 ' + pct(rs.hfFio2) : '');
+    case 'NIV': { const x = list([str(rs.ipap) && 'IPAP ' + str(rs.ipap), str(rs.epap) && 'EPAP ' + str(rs.epap), str(rs.nivFio2) && 'FiO2 ' + pct(rs.nivFio2)]); return 'NIV' + (x ? ` (${x})` : ''); }
+    case 'MV': { const x = list([str(rs.mvMode), str(rs.vt) && 'VT ' + str(rs.vt), str(rs.mvRr) && 'RR ' + str(rs.mvRr), str(rs.peep) && 'PEEP ' + str(rs.peep), str(rs.mvFio2) && 'FiO2 ' + pct(rs.mvFio2)]); return 'mechanical ventilation' + (x ? ` (${x})` : ''); }
+    default: return '';
+  }
+}
+function voidRates(fl, w) {
+  let prev = tmin(fl.lastVoid);
+  return fl.voids.map(row => {
+    const t = tmin(row.t), v = num(row.v);
+    let rate = null;
+    if (prev != null && t != null && ok(v) && w > 0) { const d = minsBetween(prev, t); if (d) rate = v / w / (d / 60); }
+    if (t != null) prev = t;
+    return rate;
+  });
+}
+const medName = m => [str(m.g), str(m.b) && `(${str(m.b)})`].filter(Boolean).join(' ');
+const medLine = m => [medName(m), str(m.dose), str(m.route), str(m.extra), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
+const medShort = m => [medName(m), str(m.dose), str(m.route), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
+
+function calc(p, S) {
+  const r = p.rec, v = r.v, fl = r.fl, c = {};
+  c.w = num(p.weight);
+  c.hasW = c.w > 0;
+  const sbp = num(v.sbp), dbp = num(v.dbp);
+  c.map = ok(sbp) && ok(dbp) ? Math.round((sbp + 2 * dbp) / 3) : null;
+  const i24 = num(fl.in24), o24 = num(fl.out24), si = num(fl.shIn), so = num(fl.shOut);
+  c.net24 = ok(i24) && ok(o24) ? i24 - o24 : null;
+  c.netSh = ok(si) && ok(so) ? si - so : null;
+  const u = num(fl.urine), lo = thr(S, 'uoLow'), hi = thr(S, 'uoHigh');
+  c.uoRate = ok(u) && c.hasW ? u / c.w / 24 : null;
+  c.uoStatus = c.uoRate == null ? '' : c.uoRate < lo ? 'below' : c.uoRate > hi ? 'above' : 'within';
+  c.uoGoal = c.uoStatus ? `${c.uoStatus} goal of ${fx(lo)}-${fx(hi)}ml/kg/h` : '';
+  c.voids = voidRates(fl, c.w);
+  // output breakdown check
+  const parts = ['urine', 'ngt', 'drain', 'emesis', 'othOut'].map(k => num(fl[k])).filter(ok);
+  c.bdSum = parts.length ? parts.reduce((a, b) => a + b, 0) : null;
+  const sl = num(fl.stLo), sh = num(fl.stHi);
+  c.stool = str(fl.stLo) || str(fl.stHi) ? rng(fl.stLo, fl.stHi) + 'cc' : '';
+  const sLo = ok(sl) ? sl : ok(sh) ? sh : 0, sHi = ok(sh) ? sh : sLo;
+  c.bdOk = !ok(o24) || c.bdSum == null ? null : Math.abs(o24 - c.bdSum) < 0.5 || (c.stool && o24 >= c.bdSum + sLo - 0.5 && o24 <= c.bdSum + sHi + 0.5);
+  // drips
+  c.drips = r.drips.map(d => dripCalc(d, c.w));
+  c.vasoOn = r.drips.some((d, i) => c.drips[i] && c.drips[i].m.vaso && num(d.rate) > 0);
+  // GCS
+  const ne = r.ne, e = num(ne.e), m = num(ne.m), vT = ne.vv === 'T', vv = num(ne.vv);
+  c.gcs = ok(e) && ok(m) && (vT || ok(vv)) ? { total: e + m + (vT ? 0 : vv), txt: `${e + m + (vT ? 0 : vv)}${vT ? 'T' : ''} (E${e}V${vT ? 'T' : vv}M${m})` } : null;
+  // NIHSS
+  let tot = 0, n = 0;
+  c.nih = NIH.map(([code, label, opts]) => {
+    const idx = ne.nih[code];
+    if (idx === '' || idx == null || !opts[+idx]) return null;
+    const [txt, sc] = opts[+idx];
+    n++;
+    if (sc !== 'UN') tot += sc;
+    return { code, label, txt, sc };
+  });
+  c.nihN = n; c.nihTotal = tot;
+  // CBG
+  const cl = thr(S, 'cbgLow'), ch = thr(S, 'cbgHigh');
+  c.cbg = r.en.cbg.map(x => { const val = num(x.v); return { v: val, low: ok(val) && val < cl, high: ok(val) && val > ch }; });
+  const cv = c.cbg.map(x => x.v).filter(ok);
+  c.cbgRange = cv.length ? `${fx(Math.min(...cv))}-${fx(Math.max(...cv))}` : '';
+  // fever
+  const t = num(v.t), tm = num(v.tmax), ref = Math.max(ok(t) ? t : -Infinity, ok(tm) ? tm : -Infinity);
+  c.febrile = ok(ref) ? ref >= thr(S, 'fever') : null;
+  c.feverAt = thr(S, 'fever');
+  // meds links
+  const live = p.meds.filter(x => x.st !== 'dc' && str(x.g));
+  c.abx = live.filter(x => x.abx);
+  c.ac = live.filter(x => x.ac);
+  c.acOn = c.ac.some(x => x.st === 'active');
+  c.acText = c.ac.map(medShort).join('; ');
+  // day counters
+  const on = r.date;
+  c.counters = [];
+  const hd = counterDay(p.admit, p.admitBase, on); if (hd != null) c.counters.push({ label: 'Hospital', day: hd });
+  const icu = counterDay(p.icu, p.icuBase, on); if (icu != null) c.counters.push({ label: 'ICU', day: icu });
+  p.counters.forEach(x => { const d = counterDay(x.date, x.base, on); if (d != null && str(x.label)) c.counters.push({ label: str(x.label), day: d }); });
+  c.device = o2Device(r.resp);
+  return c;
+}
+
+function mkCtx(p, c) {
+  const v = p.rec.v;
+  const T = {
+    hr_range: () => rng(v.hrLo, v.hrHi),
+    bp_range: () => { const s = rng(v.sbpLo, v.sbpHi), d = rng(v.dbpLo, v.dbpHi); return s && d ? s + '/' + d : s || d; },
+    spo2_range: () => { const x = rng(v.spo2Lo, v.spo2Hi); return x ? x + '%' : ''; },
+    temp: () => str(v.t), tmax: () => str(v.tmax),
+    weight: () => (str(p.weight) ? str(p.weight) + 'kg' : ''),
+    map: () => (c.map == null ? '' : c.map), gcs: () => (c.gcs ? c.gcs.txt : ''),
+    uo_rate: () => (c.uoRate == null ? '' : f2(c.uoRate) + 'ml/kg/hr'),
+    uo_goal: () => c.uoGoal, net24: () => (c.net24 == null ? '' : signed(c.net24)),
+    cbg_range: () => c.cbgRange, anticoag: () => c.acText,
+  };
+  return { tok: n => (T[n] ? T[n]() : '{' + n + '}'), auto: a => (a === 'vaso' ? c.vasoOn : a === 'anticoag' ? c.acOn : false) };
+}
+const TOKENS = ['hr_range', 'bp_range', 'spo2_range', 'temp', 'tmax', 'weight', 'map', 'gcs', 'uo_rate', 'uo_goal', 'net24', 'cbg_range', 'anticoag'];
+
+function chipDefs(db, g) { return (db.chips && db.chips[g]) || defChips(g); }
+const chipState = (r, g, id) => (r.chips[g] || {})[id] || null;
+function isOn(def, st, ctx) {
+  if (def.a) return st && typeof st.manual === 'boolean' ? st.manual : !!ctx.auto(def.a);
+  return !!(st && st.on);
+}
+const chipPhrase = (def, st, ctx) => applyTrend(fillTpl(def.t, st && st.v, ctx), (st && st.tr) || '');
+function ticked(db, r, g, ctx) {
+  return chipDefs(db, g).filter(d => isOn(d, chipState(r, g, d.id), ctx)).map(d => {
+    const st = chipState(r, g, d.id) || {};
+    return { text: chipPhrase(d, st, ctx), join: !!d.j, star: !!st.star, at: st.at || 0, id: d.id, g };
+  });
+}
+const inlineList = (segs, keep) => segs.map((s, i) => (i && !keep ? lc1(s.text) : s.text)).join(', ');
+const othLines = (r, k) => str(r.oth[k]).split('\n').map(x => x.trim().replace(/^[>•]+\s*/, '')).filter(Boolean);
+const bul = a => a.map(x => '>' + x);
+function sec(title, gap, blocks) {
+  blocks = blocks.filter(b => (Array.isArray(b) ? b.length : b)).map(b => (Array.isArray(b) ? b.join('\n') : b));
+  return blocks.length ? title + (gap ? '\n\n' : '\n') + blocks.join('\n\n') : null;
+}
+function greetingFor(p, S, now) {
+  const h = now.getHours(), tod = h < 12 ? 'morning' : h < 18 ? 'afternoon' : 'evening';
+  return (str(p.greet) || S.greeting || '').replace(/\{time\}/g, tod);
+}
+
+/* ---------- message ---------- */
+function buildMessage(p, db, now = new Date()) {
+  const S = db.settings, r = p.rec, c = calc(p, S), ctx = mkCtx(p, c), v = r.v, fl = r.fl;
+  const on = k => !!p.on[k];
+  const T = g => ticked(db, r, g, ctx);
+  const out = {};
+
+  /* General survey */
+  out.gs = (() => {
+    const lines = joinSegs(T('gs')).concat(othLines(r, 'gs'));
+    const stars = [];
+    for (const g of Object.keys(GROUPS)) {
+      const G = GROUPS[g];
+      if (!G.star || !on(G.sec)) continue;
+      T(g).filter(s => s.star).forEach(s => stars.push({ text: cap1(s.text), at: s.at }));
+    }
+    if (on('endo')) r.en.cbg.forEach(x => { if (x.star && str(x.iv) && str(x.v)) stars.push({ text: `CBG ${str(x.v)} mg/dl at ${fmtTime(x.t)} -> ${str(x.iv)}`, at: x.at || 0 }); });
+    stars.sort((a, b) => a.at - b.at);
+    const all = lines.concat(stars.map(s => s.text));
+    return all.length ? 'General Survey and overnight summary:\n' + bul(all).join('\n') : null;
+  })();
+
+  /* Fluid balance */
+  out.fluid = (() => {
+    const b1 = [];
+    if (str(fl.in24)) b1.push('24-hour Input: ' + str(fl.in24));
+    if (str(fl.out24)) b1.push('24-hour Output: ' + str(fl.out24));
+    if (c.net24 != null) b1.push('Net balance: ' + signed(c.net24));
+    const b2 = [];
+    if (str(fl.shIn) || str(fl.shOut)) {
+      const h = str(fl.shHrs), pre = h ? h + '-hour' : 'Shift';
+      b2.push((str(fl.shLabel) || 'Shift') + ':');
+      if (str(fl.shIn)) b2.push(`${pre} Input: ${str(fl.shIn)}`);
+      if (str(fl.shOut)) b2.push(`${pre} Output: ${str(fl.shOut)}`);
+      if (c.netSh != null) b2.push('Net balance: ' + signed(c.netSh));
+    }
+    const bd = [];
+    if (str(fl.urine)) bd.push('Urine: ' + str(fl.urine) + (fl.uoLine && c.uoRate != null ? ` (${f2(c.uoRate)}ml/kg/hr, ${c.uoGoal})` : ''));
+    if (c.stool) bd.push('Stool output: approx. ' + c.stool);
+    [['ngt', 'NGT'], ['drain', 'Drain'], ['emesis', 'Emesis'], ['othOut', 'Others']].forEach(([k, l]) => { if (str(fl[k])) bd.push(`${l}: ${str(fl[k])}`); });
+    const b3 = bd.length ? ['Output breakdown:'].concat(bd) : [];
+    const vl = [];
+    fl.voids.forEach((x, i) => {
+      if (!str(x.t) && !str(x.v)) return;
+      const rt = c.voids[i];
+      vl.push(`${fmtTime(x.t) || '__'}: ${str(x.v) || '__'}` + (rt != null ? ` (${f2(rt)}ml/kg/hr)` : ''));
+    });
+    const b4 = vl.length ? [`Urine output summary${fl.method ? ` (collected via ${fl.method})` : ''}:`].concat(vl) : [];
+    const ua = T('urine');
+    const b5 = ua.length ? 'Urine appearance: ' + inlineList(ua) : '';
+    return sec('FLUID BALANCE', true, [b1, b2, b3, b4, b5, bul(othLines(r, 'fluid'))]);
+  })();
+
+  /* Current support */
+  out.support = (() => {
+    const iv = r.ivf.filter(x => str(x.name) || str(x.rate)).map(x => {
+      const rt = str(x.rate);
+      return (str(x.name) || 'IV fluid') + (rt ? ': ' + rt + (ok(num(rt)) && /^[\d.]+$/.test(rt) ? 'cc/hr' : '') : '');
+    });
+    const va = [], ot = [];
+    r.drips.forEach((d, i) => {
+      const dc = c.drips[i];
+      if (!dc || !(str(d.amt) || str(d.rate))) return;
+      (dc.m.vaso ? va : ot).push(dripLine(d, dc));
+    });
+    return sec('CURRENT SUPPORT', true, [
+      iv.length ? ['IV Fluids (Mainline)'].concat(iv) : [],
+      va.length ? ['Vasoactive / Inotropic / Chronotropic Support:'].concat(va) : [],
+      ot.length ? ['Other infusions:'].concat(ot) : [],
+      bul(othLines(r, 'support')),
+    ]);
+  })();
+
+  /* Respiratory support (own section only when there is more than the O2 source) */
+  out.resp = (() => {
+    const ch = T('resp'), oth = othLines(r, 'resp');
+    if (!(['HFNC', 'NIV', 'MV'].includes(r.resp.mode) || ch.length || oth.length)) return null;
+    const lines = [];
+    if (c.device) lines.push(cap1(c.device));
+    const sr = rng(v.spo2Lo, v.spo2Hi);
+    if (str(v.spo2)) lines.push(`SpO₂: ${str(v.spo2)}%` + (sr ? ` (24H range: ${sr}%)` : ''));
+    else if (sr) lines.push(`SpO₂ 24H range: ${sr}%`);
+    return sec('RESPIRATORY SUPPORT', false, [bul(lines.concat(joinSegs(ch), oth))]);
+  })();
+
+  /* Vital signs */
+  out.vitals = (() => {
+    const b1 = [];
+    if (str(v.t)) b1.push('T: ' + str(v.t));
+    if (str(v.hr)) b1.push(`HR: ${str(v.hr)} bpm`);
+    if (str(v.rr)) b1.push(`RR: ${str(v.rr)}/min`);
+    if (str(v.sbp) || str(v.dbp)) b1.push(`BP: ${str(v.sbp) || '__'}/${str(v.dbp) || '__'}`);
+    if (c.map != null) b1.push('MAP: ' + c.map);
+    if (str(v.spo2)) b1.push(`SpO₂: ${str(v.spo2)}%` + (c.device ? ' on ' + c.device : ''));
+    const b2 = [];
+    if (v.ranges) {
+      const rl = [];
+      if (str(v.tmax)) rl.push('Tmax: ' + str(v.tmax));
+      const hr = rng(v.hrLo, v.hrHi); if (hr) rl.push(`HR: ${hr} bpm`);
+      const s = rng(v.sbpLo, v.sbpHi), d = rng(v.dbpLo, v.dbpHi);
+      if (s && d) rl.push(`BP: ${s}/${d}`); else if (s) rl.push('SBP: ' + s); else if (d) rl.push('DBP: ' + d);
+      const sp = rng(v.spo2Lo, v.spo2Hi); if (sp) rl.push(`SpO₂: ${sp}%`);
+      if (rl.length) b2.push('24H ranges:', ...rl);
+    }
+    if (str(v.note)) b2.push(str(v.note));
+    return sec('CURRENT VITAL SIGNS', true, [b1, b2, bul(othLines(r, 'vitals'))]);
+  })();
+
+  /* Neurologic */
+  out.neuro = (() => {
+    const ne = r.ne;
+    const segs = (ne.loc ? [{ text: ne.loc, join: false }] : []).concat(T('neuro'));
+    const L = joinSegs(segs);
+    const ori = [ne.ot && 'Time', ne.op && 'Person', ne.opl && 'Place'].filter(Boolean);
+    if (ori.length) L.push('Oriented to ' + ori.join(', '));
+    if (c.gcs) L.push('GCS: ' + c.gcs.txt);
+    if (str(ne.pr) || str(ne.pl)) {
+      const R = str(ne.pr) ? str(ne.pr) + 'mm' : '__', Lf = str(ne.pl) ? str(ne.pl) + 'mm' : '__';
+      const long = { reactive: 'reactive to light', sluggish: 'sluggishly reactive to light', nonreactive: 'non-reactive to light' };
+      const short = { reactive: 'reactive', sluggish: 'sluggish', nonreactive: 'non-reactive' };
+      L.push(ne.prx === ne.plx ? `Pupils: Right ${R}, Left ${Lf}, ${long[ne.prx] || ''}`.replace(/, $/, '') : `Pupils: Right ${R} ${short[ne.prx] || ''}, Left ${Lf} ${short[ne.plx] || ''}`.trim());
+    }
+    const mm = [['rue', 'RUE'], ['lue', 'LUE'], ['rle', 'RLE'], ['lle', 'LLE']].filter(([k]) => str(ne.mmt[k])).map(([k, l]) => `${l} ${str(ne.mmt[k])}/5`);
+    if (mm.length) L.push('MMT: ' + mm.join(', '));
+    const blocks = [bul(L.concat(othLines(r, 'neuro')))];
+    if (on('nihss') && c.nihN) {
+      const items = c.nih.filter(x => x && (ne.nihAll || x.sc === 'UN' || x.sc > 0)).map(x => `${x.code}: ${x.label} —> ${x.txt}${x.sc === 'UN' ? ' (UN)' : ''}`);
+      blocks.push([`NIH Stroke Scale: ${c.nihTotal} point${c.nihTotal === 1 ? '' : 's'}`].concat(items));
+    }
+    return sec('NEUROLOGIC', false, blocks);
+  })();
+  out.nihss = on('nihss') && c.nihN ? 'x' : null;
+
+  out.pulm = sec('PULMONARY', false, [bul(joinSegs(T('pulm')).concat(othLines(r, 'pulm')))]);
+
+  out.cv = (() => {
+    const segs = [];
+    const rh = r.cv.rhythm === 'Others' ? str(r.cv.rhythmOth) : r.cv.rhythm;
+    if (rh) segs.push({ text: 'Rhythm: ' + rh + (str(v.hr) ? `, HR ${str(v.hr)} bpm` : ''), join: false });
+    const bp = r.cv.bp.filter(x => str(x.t) || str(x.s) || str(x.d)).map(x => {
+      const s = num(x.s), d = num(x.d);
+      return `${fmtTime(x.t) || '__'}: ${str(x.s) || '__'}/${str(x.d) || '__'}` + (ok(s) && ok(d) ? ` (${Math.round((s + 2 * d) / 3)})` : '');
+    });
+    return sec('CARDIOVASCULAR', false, [bul(joinSegs(segs.concat(T('cv'))).concat(othLines(r, 'cv'))), bp.length ? ['BP trend:'].concat(bp) : []]);
+  })();
+
+  out.gi = (() => {
+    const L = joinSegs(T('abd'));
+    const diet = [str(r.gi.diet)].filter(Boolean).map(x => ({ text: x })).concat(T('diet'));
+    if (diet.length) L.push('Diet: ' + inlineList(diet));
+    const bmc = T('bm'), g = r.gi;
+    if (str(g.bmN) || str(g.bmChar) || str(g.bristol) || bmc.length) {
+      const n = num(g.bmN), parts = [];
+      if (str(g.bmN)) parts.push(n === 0 ? 'none in the past 24H' : `${str(g.bmN)} episode${n === 1 ? '' : 's'} in 24H`);
+      if (c.stool && n !== 0) parts.push('approx. ' + c.stool);
+      if (str(g.bmChar)) parts.push(str(g.bmChar));
+      if (str(g.bristol)) parts.push('Bristol type ' + str(g.bristol));
+      bmc.forEach(s => parts.push(lc1(s.text)));
+      L.push('Bowel movement: ' + parts.join(', '));
+    }
+    return sec('GI / NUTRITION', false, [bul(L.concat(othLines(r, 'gi')))]);
+  })();
+
+  out.renal = (() => {
+    const L = [];
+    if (c.net24 != null) L.push(c.net24 > 0 ? `Positive fluid balance for the past 24H (${signed(c.net24)})` : c.net24 < 0 ? `Negative fluid balance for the past 24H (${signed(c.net24)})` : 'Even fluid balance for the past 24H');
+    return sec('RENAL / FLUID STATUS', false, [bul(L.concat(joinSegs(T('renal')), othLines(r, 'renal')))]);
+  })();
+
+  out.endo = (() => {
+    const en = r.en, f = CBG_FREQ.find(x => x[0] === en.freq);
+    const rows = [];
+    let lastIdx = -1;
+    en.cbg.forEach((x, i) => { if (str(x.v)) lastIdx = i; });
+    en.cbg.forEach((x, i) => {
+      if (!str(x.t) && !str(x.v)) return;
+      rows.push(`${fmtTime(x.t) || '__'}: ${str(x.v) || '__'}` + (str(x.iv) ? ' -> ' + str(x.iv) : '') + (i === lastIdx ? ' -> latest' : ''));
+    });
+    const trend = rows.length ? ['CBG trend: in mg/dl'].concat(rows) : [];
+    if (en.range && c.cbgRange) trend.push(`24H range: ${c.cbgRange} mg/dl`);
+    return sec('ENDOCRINE / METABOLIC', false, [
+      f && f[0] ? 'CBG monitoring frequency: ' + f[1] : '', trend,
+      str(en.insulin) ? 'Insulin regimen: ' + str(en.insulin) : '', bul(othLines(r, 'endo')),
+    ]);
+  })();
+
+  out.id = (() => {
+    const L = [];
+    if (c.febrile != null) {
+      const bits = [str(v.t) && 'T: ' + str(v.t), str(v.tmax) && 'Tmax: ' + str(v.tmax)].filter(Boolean).join(', ');
+      L.push((c.febrile ? 'Febrile' : 'Afebrile') + (bits ? ` (${bits})` : ''));
+    }
+    c.abx.forEach(m => L.push(medShort(m)));
+    str(r.idd.cx).split('\n').map(x => x.trim()).filter(Boolean).forEach((x, i) => L.push(i ? x : 'Cultures: ' + x));
+    return sec('INFECTIOUS DISEASE', false, [bul(L.concat(othLines(r, 'id')))]);
+  })();
+
+  out.heme = sec('HEMATOLOGY', false, [bul(joinSegs(T('heme')).concat(othLines(r, 'heme')))]);
+
+  out.pend = (() => {
+    const pc = T('pend');
+    return sec('PENDING', false, [bul((pc.length ? [inlineList(pc, true)] : []).concat(othLines(r, 'pend')))]);
+  })();
+
+  out.meds = (() => {
+    const ms = p.meds.filter(m => m.st !== 'dc' && str(m.g));
+    return ms.length ? 'Medications presently active:\n' + ms.map((m, i) => `${i + 1}. ${medLine(m)}`).join('\n') : null;
+  })();
+
+  /* assemble */
+  const top = [greetingFor(p, S, now)];
+  const id = [];
+  const nm = [str(p.surname).toUpperCase(), str(p.first)].filter(Boolean).join(', ');
+  const as = [str(p.age), str(p.sex)].filter(Boolean).join('/');
+  if (nm || as) id.push([nm, as].filter(Boolean).join(' | '));
+  const room = [str(p.room) && 'Room: ' + str(p.room), str(p.hosp)].filter(Boolean).join(' | ');
+  if (room) id.push(room);
+  if (str(p.weight)) id.push(`Working weight: ${str(p.weight)}kg`);
+  if (id.length) top.push(id.join('\n'));
+  if (c.counters.length) top.push(c.counters.map(x => `${x.label} Day ${x.day}`).join(' | '));
+  if (on('gs') && out.gs) top.push(out.gs);
+  const parts = [top.filter(Boolean).join('\n\n')];
+  for (const [k] of SECS) if (k !== 'gs' && on(k) && out[k]) parts.push(out[k]);
+  let text = parts.join(`\n\n${DIVIDER}\n\n`);
+  if (p.labs) text += '\n\nLaboratory flow sheet attached';
+  const sign = [str(S.closing), str(S.signName)].filter(Boolean).join('\n');
+  if (sign) text += '\n\n' + sign;
+
+  return { text, calc: c, ctx, secs: out, warnings: preSend(p, db, c, ctx, out) };
+}
+
+/* ---------- pre-send check (warnings never block) ---------- */
+function preSend(p, db, c, ctx, out) {
+  const W = [], r = p.rec, v = r.v, fl = r.fl, on = k => !!p.on[k];
+  const add = (k, t) => W.push({ k, t });
+  if (!c.hasW) add('header', 'Working weight is missing, so ml/kg/hr and mcg/kg/min can’t be worked out.');
+  if (on('fluid') && c.bdOk === false) add('fluid', `Output breakdown (${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}) doesn’t add up to the 24-hour output (${str(fl.out24)}).`);
+  const chk = (val, lo, hi, label, k) => { const n = num(val); if (str(val) && (!ok(n) || n < lo || n > hi)) add(k, `${label} of ${str(val)} looks implausible. Check for a typo.`); };
+  chk(p.weight, 2, 350, 'Weight', 'header');
+  chk(p.age, 0, 120, 'Age', 'header');
+  chk(v.t, 30, 43, 'Temperature', 'vitals'); chk(v.tmax, 30, 43, 'Tmax', 'vitals');
+  chk(v.hr, 20, 250, 'HR', 'vitals'); chk(v.hrLo, 20, 250, 'HR range low', 'vitals'); chk(v.hrHi, 20, 250, 'HR range high', 'vitals');
+  chk(v.rr, 4, 70, 'RR', 'vitals');
+  chk(v.sbp, 40, 300, 'Systolic BP', 'vitals'); chk(v.dbp, 15, 200, 'Diastolic BP', 'vitals');
+  chk(v.sbpLo, 40, 300, 'SBP range low', 'vitals'); chk(v.sbpHi, 40, 300, 'SBP range high', 'vitals');
+  chk(v.dbpLo, 15, 200, 'DBP range low', 'vitals'); chk(v.dbpHi, 15, 200, 'DBP range high', 'vitals');
+  chk(v.spo2, 40, 100, 'SpO₂', 'vitals'); chk(v.spo2Lo, 40, 100, 'SpO₂ range low', 'vitals'); chk(v.spo2Hi, 40, 100, 'SpO₂ range high', 'vitals');
+  if (ok(num(v.sbp)) && ok(num(v.dbp)) && num(v.dbp) >= num(v.sbp)) add('vitals', `BP ${str(v.sbp)}/${str(v.dbp)}: diastolic is not lower than systolic.`);
+  [['hrLo', 'hrHi', 'HR'], ['sbpLo', 'sbpHi', 'SBP'], ['dbpLo', 'dbpHi', 'DBP'], ['spo2Lo', 'spo2Hi', 'SpO₂']].forEach(([a, b, l]) => { if (num(v[a]) > num(v[b])) add('vitals', `${l} range: the low value is above the high value.`); });
+  ['in24', 'out24'].forEach(k => chk(fl[k], 0, 20000, k === 'in24' ? '24-hour input' : '24-hour output', 'fluid'));
+  ['shIn', 'shOut'].forEach(k => chk(fl[k], 0, 15000, k === 'shIn' ? 'Shift input' : 'Shift output', 'fluid'));
+  if (num(fl.shIn) > num(fl.in24)) add('fluid', 'Shift input is larger than the 24-hour input.');
+  if (num(fl.shOut) > num(fl.out24)) add('fluid', 'Shift output is larger than the 24-hour output.');
+  if (c.uoRate != null && c.uoRate > 15) add('fluid', `24-hour urine output works out to ${f2(c.uoRate)} ml/kg/hr. Check urine volume and weight.`);
+  fl.voids.forEach((x, i) => {
+    chk(x.v, 0, 2000, `Void at ${fmtTime(x.t) || 'row ' + (i + 1)}`, 'fluid');
+    if (str(x.t) && tmin(x.t) == null) add('fluid', `Void row ${i + 1}: time "${x.t}" isn’t a valid time.`);
+    if (c.voids[i] != null && c.voids[i] > 15) add('fluid', `Void at ${fmtTime(x.t)} works out to ${f2(c.voids[i])} ml/kg/hr. Check the time and volume.`);
+  });
+  if (str(fl.lastVoid) && tmin(fl.lastVoid) == null) add('fluid', `Last void time "${fl.lastVoid}" isn’t a valid time.`);
+  r.drips.forEach((d, i) => {
+    const dc = c.drips[i];
+    if (dc && dc.v != null && dc.m.max && dc.v > dc.m.max) add('support', `${dc.m.name} works out to ${dc.txt}. Check amount, volume and rate.`);
+    if (dc && dc.why && (str(d.amt) || str(d.rate)) && dc.why !== 'Needs working weight') add('support', `${dc.m.name} drip: ${dc.why.toLowerCase()}.`);
+  });
+  r.en.cbg.forEach((x, i) => {
+    chk(x.v, 10, 1000, `CBG at ${fmtTime(x.t) || 'row ' + (i + 1)}`, 'endo');
+    if (str(x.t) && tmin(x.t) == null) add('endo', `CBG row ${i + 1}: time "${x.t}" isn’t a valid time.`);
+  });
+  r.cv.bp.forEach((x, i) => {
+    chk(x.s, 40, 300, `BP log SBP at ${fmtTime(x.t) || 'row ' + (i + 1)}`, 'cv'); chk(x.d, 15, 200, `BP log DBP at ${fmtTime(x.t) || 'row ' + (i + 1)}`, 'cv');
+    if (str(x.t) && tmin(x.t) == null) add('cv', `BP row ${i + 1}: time "${x.t}" isn’t a valid time.`);
+  });
+  chk(r.ne.pr, 1, 9, 'Right pupil size', 'neuro'); chk(r.ne.pl, 1, 9, 'Left pupil size', 'neuro');
+  if (ok(num(v.t)) && ok(num(v.tmax)) && num(v.tmax) < num(v.t)) add('vitals', `Tmax (${str(v.tmax)}) is lower than the current T (${str(v.t)}).`);
+  // counters
+  c.counters.forEach(x => { if (x.day < 0) add('header', `${x.label} Day is ${x.day}: its start date is after the date of this update.`); else if (x.day > 365) add('header', `${x.label} Day is ${x.day}. Check the start date.`); });
+  // void rows that look out of order
+  let prevT = tmin(fl.lastVoid);
+  fl.voids.forEach(x => { const t = tmin(x.t); if (prevT != null && t != null) { const d = minsBetween(prevT, t); if (d && d > 16 * 60) add('fluid', `Void at ${fmtTime(x.t)} comes ${fx(d / 60, 1)} hours after the one before it. Check the row order or the time.`); } if (t != null) prevT = t; });
+  // low CBG with nothing done
+  r.en.cbg.forEach((x, i) => { if (c.cbg[i] && c.cbg[i].low && !str(x.iv)) add('endo', `CBG ${str(x.v)} at ${fmtTime(x.t) || 'row ' + (i + 1)} is below ${fx(thr(db.settings, 'cbgLow'))} mg/dl and has no intervention noted.`); });
+  // ticked phrases that contradict the numbers
+  const said = [];
+  for (const g of ['gs', 'resp', 'pulm', 'cv']) if (on(GROUPS[g].sec)) ticked(db, r, g, ctx).forEach(s => said.push(s));
+  const says = re => said.find(s => re.test(s.text));
+  const sbpVals = [num(v.sbp), num(v.sbpLo)].concat(r.cv.bp.map(x => num(x.s))).filter(ok);
+  const mapVals = [c.map].concat(r.cv.bp.map(x => { const s = num(x.s), d = num(x.d); return ok(s) && ok(d) ? Math.round((s + 2 * d) / 3) : null; })).filter(x => x != null);
+  const spVals = [num(v.spo2), num(v.spo2Lo)].filter(ok);
+  const lowSbp = sbpVals.length ? Math.min(...sbpVals) : null, lowMap = mapVals.length ? Math.min(...mapVals) : null, lowSp = spVals.length ? Math.min(...spVals) : null;
+  const hit = says(/\bafebrile\b/i);
+  if (hit && c.febrile) add('gs', `“${cap1(hit.text)}” is ticked, but ${ok(num(v.tmax)) ? 'Tmax' : 'T'} is ${str(v.tmax) || str(v.t)} (febrile at ${fx(c.feverAt, 1)} °C).`);
+  const hyp = says(/\bno hypotensi/i);
+  if (hyp && ((lowSbp != null && lowSbp < 90) || (lowMap != null && lowMap < 65))) add('gs', `“No hypotensive episodes” is ticked, but the lowest ${lowSbp != null && lowSbp < 90 ? 'SBP entered is ' + fx(lowSbp) : 'MAP entered is ' + lowMap}.`);
+  const des = says(/\bno (episodes of )?desaturation/i);
+  if (des && lowSp != null && lowSp < 90) add('gs', `“No desaturation” is ticked, but the lowest SpO₂ entered is ${fx(lowSp)}%.`);
+  const hrLo = num(v.hrLo), hrHi = num(v.hrHi);
+  const br = says(/episodes of bradycardia/i), ta = says(/episodes of tachycardia/i);
+  if (br && !/^no /i.test(br.text) && ok(hrLo) && hrLo >= 60) add('gs', `Bradycardia episodes are ticked, but the HR range starts at ${fx(hrLo)}.`);
+  if (ta && !/^no /i.test(ta.text) && ok(hrHi) && hrHi <= 100) add('gs', `Tachycardia episodes are ticked, but the HR range only reaches ${fx(hrHi)}.`);
+  const vs = said.find(s => s.id === 'gs_vaso');
+  if (vs && !c.vasoOn) add('gs', '“Still on vasopressor” is ticked, but no vasoactive drip is running in Current support.');
+  // settings that were left blank
+  ['fever', 'cbgLow', 'cbgHigh', 'uoLow', 'uoHigh'].forEach(k => { if (!ok(num(db.settings[k]))) add('settings', `A threshold in Settings is blank or not a number, so the default (${DEF_SETTINGS[k]}) is being used.`); });
+  if (thr(db.settings, 'uoLow') >= thr(db.settings, 'uoHigh')) add('settings', 'In Settings, the urine output goal’s lower limit is not below its upper limit.');
+  // antibiotic dose numbers
+  const prev = p.hist.filter(h => h.date < r.date).sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+  if (prev && prev.doses) p.meds.forEach(m => {
+    if (m.abx && m.st === 'active' && str(m.no) && prev.doses[m.id] != null && String(prev.doses[m.id]) === str(m.no)) add('meds', `${medName(m)} is still at dose ${str(m.no)}, the same as on ${fmtDate(prev.date)}.`);
+  });
+  p.meds.forEach(m => { if (m.abx && m.st === 'active' && str(m.g) && !str(m.no)) add('meds', `${medName(m)} is flagged as an antimicrobial but has no dose number.`); });
+  // blanks inside ticked chips
+  for (const g of Object.keys(GROUPS)) {
+    if (!on(GROUPS[g].sec)) continue;
+    ticked(db, r, g, ctx).forEach(s => { if (s.text.includes('__')) add(GROUPS[g].sec, `“${s.text}” has a blank to fill in.`); });
+  }
+  // sections switched on but empty
+  for (const [k, name] of SECS) {
+    if (!on(k) || out[k]) continue;
+    if (k === 'resp' && r.resp.mode) continue;
+    add(k, k === 'meds' ? 'Medications is on but has no active medications.' : `${name} is on but empty. Fill it in or switch it off.`);
+  }
+  if (on('nihss') && !c.nihN) add('neuro', 'NIH Stroke Scale is on but no items are scored.');
+  return W;
+}
+
+/* ---------- history & new day ---------- */
+function archive(p, db, text) {
+  if (!isISO(p.rec.date)) p.rec.date = todayISO();
+  const t = text || buildMessage(p, db).text;
+  const doses = {};
+  p.meds.forEach(m => { if (m.abx) doses[m.id] = str(m.no); });
+  const e = { date: p.rec.date, text: t, doses, ts: Date.now() };
+  const i = p.hist.findIndex(h => h.date === p.rec.date);
+  if (i >= 0) p.hist[i] = e; else p.hist.push(e);
+  p.hist.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  if (p.hist.length > HIST_MAX) p.hist.splice(0, p.hist.length - HIST_MAX);
+}
+function nextDate(cur, today) { if (!isISO(cur)) return today; return isoDay(today) > isoDay(cur) ? today : addDays(cur, 1); }
+function startNewDay(p, db, today = todayISO()) {
+  archive(p, db);
+  const old = p.rec.date, nd = nextDate(old, today), days = dayDiff(old, nd);
+  const r = clone(p.rec);
+  r.date = nd;
+  ['in24', 'out24', 'shIn', 'shOut', 'urine', 'stLo', 'stHi', 'ngt', 'drain', 'emesis', 'othOut', 'lastVoid'].forEach(k => (r.fl[k] = ''));
+  r.fl.voids = [];
+  Object.keys(r.v).forEach(k => { if (k !== 'ranges') r.v[k] = ''; });
+  r.cv.bp = [];
+  r.en.cbg = [];
+  r.gi.bmN = '';
+  const moved = [], stuck = [];
+  p.meds.forEach(m => {
+    if (!m.abx || m.st !== 'active' || !str(m.no)) return;
+    const n = num(m.no), d = dpd(m);
+    if (ok(n) && d) { m.no = String(n + d * days); moved.push(medName(m)); } else stuck.push(medName(m));
+  });
+  p.rec = r;
+  return { date: nd, days, moved, stuck };
+}
+
+/* ---------- demo patient (matches the sample message) ---------- */
+function demoPatient(today = todayISO()) {
+  const p = newPatient(today), r = p.rec;
+  Object.assign(p, {
+    surname: 'Dela Cruz', first: 'Juan', age: '69', sex: 'M', room: 'MICU 1', hosp: 'IDH', weight: '60',
+    admit: addDays(today, -10), admitBase: 1, icu: addDays(today, -8), icuBase: 1,
+    counters: [{ label: 'Ictus', date: addDays(today, -4), base: 0 }],
+  });
+  Object.assign(p.on, { nihss: 1, pulm: 0, cv: 0, gi: 0, pend: 0 });
+  const ch = (g, id, st = {}) => { (r.chips[g] = r.chips[g] || {})[id] = Object.assign({ on: true }, st); };
+  ch('gs', 'gs_seen', { v: { 0: 'asleep' } }); ch('gs', 'gs_distress'); ch('gs', 'gs_access');
+  ch('gs', 'gs_hr', { tr: 'Still', v: { 0: 'bradycardia' } }); ch('gs', 'gs_hypo'); ch('gs', 'gs_desat');
+  ch('gs', 'gs_uo', { v: { 0: 'non-concentrated' } });
+  ch('urine', 'ua_straw'); ch('urine', 'ua_nonconc');
+  ch('neuro', 'ne_conv'); ch('neuro', 'ne_coh');
+  ch('renal', 're_edema', { tr: 'Improved', star: true, at: 2, v: { 0: '1', 1: 'upper extremities' } });
+  Object.assign(r.fl, {
+    in24: '2897', out24: '1301', shLabel: '4pm-12am', shHrs: '8', shIn: '1167', shOut: '350', urine: '1301', stLo: '40', stHi: '50',
+    method: 'plastic container', voids: [{ t: '21:10', v: '60' }, { t: '03:00', v: '80' }, { t: '05:00', v: '90' }, { t: '05:43', v: '150' }],
+  });
+  r.ivf = [{ name: 'PNSS', rate: '80' }];
+  r.drips = [Object.assign(ROW_TPL.drip(), { drug: 'Norepinephrine', amt: '32', amtU: 'mg', vol: '250', dil: 'D5W', rate: '4' })];
+  Object.assign(r.resp, { mode: 'NC', nc: '3' });
+  Object.assign(r.v, { t: '36', hr: '55', rr: '16', sbp: '110', dbp: '60', spo2: '97', hrLo: '53', hrHi: '58', ranges: false });
+  Object.assign(r.ne, { loc: 'Awake', ot: true, op: true, opl: true, e: '4', vv: '5', m: '6', pr: '3', pl: '3', prx: 'reactive', plx: 'reactive' });
+  NIH.forEach(([code]) => (r.ne.nih[code] = '0'));
+  Object.assign(r.ne.nih, { 4: '3', '5A': '1', '6A': '1' });
+  Object.assign(r.en, {
+    freq: 'q8', insulin: '', range: false,
+    cbg: [{ t: '17:30', v: '113', iv: '', star: false, at: 0 }, { t: '23:30', v: '77', iv: '1 vial D50-50 given', star: true, at: 1 }, { t: '23:45', v: '193', iv: '', star: false, at: 0 }, { t: '05:30', v: '107', iv: '', star: false, at: 0 }],
+  });
+  p.meds = [
+    Object.assign(newMed(), { g: 'Meropenem', b: 'Carmepem', dose: '1g', route: 'IV', extra: 'in 100cc PNSS to run for 3H', freq: 'q12h', abx: true, no: '16' }),
+    Object.assign(newMed(), { g: 'Apixaban', b: 'Pixab', dose: '5mg/tab', extra: '1 tab', freq: 'BID', ac: true }),
+    Object.assign(newMed(), { g: 'Digoxin', dose: '0.125mg', route: 'IV', freq: 'OD', st: 'hold' }),
+  ];
+  p.labs = true;
+  return p;
+}
+
+if (typeof module !== 'undefined' && module.exports) module.exports = { buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
+
+/* ================= TIMPEX Rounds Update: interface ================= */
+const ICON = {
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  more: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  grip: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>',
+};
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+
+/* ---------- storage ---------- */
+function loadDB() {
+  let raw = null;
+  try { raw = localStorage.getItem(APP_KEY); } catch (e) { return freshDB(); }
+  if (!raw) return freshDB();
+  try { return normDB(JSON.parse(raw)); }
+  catch (e) { try { localStorage.setItem(APP_KEY + '-unreadable-' + Date.now(), raw); } catch (e2) { /* ignore */ } return freshDB(); }
+}
+let db = loadDB();
+let saveT = 0, persistAsked = false;
+function save() { clearTimeout(saveT); saveT = setTimeout(flush, 250); }
+function flush() {
+  clearTimeout(saveT);
+  let json;
+  try { json = JSON.stringify(db); localStorage.setItem(APP_KEY, json); }
+  catch (e) { toast('Couldn\u2019t save: storage for this app is full. Export a backup, then delete old patients or history.', 8000); return; }
+  if (json.length > STORE_CAP * 0.7 && !ui.storeWarned) { ui.storeWarned = true; toast(`Storage is ${Math.round(json.length / STORE_CAP * 100)}% full. Export a backup and delete discharged patients.`, 7000); }
+}
+const STORE_CAP = 5e6; // approximate localStorage limit, in characters
+window.addEventListener('storage', e => {
+  if (e.key !== APP_KEY) return;
+  try { db = e.newValue ? normDB(JSON.parse(e.newValue)) : freshDB(); } catch (err) { return; }
+  applyTheme(); render(); toast('Updated with changes made in another tab.');
+});
+function requestPersist() {
+  if (persistAsked) return;
+  persistAsked = true;
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) { /* ignore */ }
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); });
+window.addEventListener('pagehide', flush);
+
+/* ---------- state ---------- */
+const ui = { view: '', pid: '', g: '', open: {}, med: null, back: '' };
+let OUT = null, fid = 0;
+const curP = () => db.patients.find(x => x.id === ui.pid);
+const ptName = p => [str(p.surname).toUpperCase(), str(p.first)].filter(Boolean).join(', ') || 'Unnamed patient';
+function rootOf(k) { return k === 'p' ? curP() : k === 'r' ? curP().rec : k === 's' ? db.settings : k === 'c' ? db.chips : k === 'd' ? db : null; }
+function getv(path) { const [k, ...ks] = path.split('.'); let o = rootOf(k); for (const x of ks) { if (o == null) return ''; o = o[x]; } return o == null ? '' : o; }
+function setv(path, val) {
+  const [k, ...ks] = path.split('.');
+  let o = rootOf(k);
+  for (let i = 0; i < ks.length - 1; i++) { if (o[ks[i]] == null || typeof o[ks[i]] !== 'object') o[ks[i]] = {}; o = o[ks[i]]; }
+  o[ks[ks.length - 1]] = val;
+}
+
+/* ---------- theme ---------- */
+const mq = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+function applyTheme() {
+  const t = db.settings.theme, dark = t === 'dark' || (t !== 'light' && mq && mq.matches);
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  const m = $('meta[name=theme-color]');
+  if (m) m.content = dark ? '#0E1412' : '#EEF2F0';
+}
+if (mq) (mq.addEventListener ? mq.addEventListener('change', applyTheme) : mq.addListener(applyTheme));
+
+/* ---------- html helpers ---------- */
+const H = t => `<h3 class="sub">${esc(t)}</h3>`;
+const CALC = (key, cls = '') => `<div class="calc ${cls}" data-c="${key}"></div>`;
+function F(label, path, o = {}) {
+  const id = 'f' + ++fid, val = getv(path), t = o.t || 'text';
+  const common = `id="${id}" data-b="${path}"${o.rr ? ` data-rr="${o.rr}"` : ''}`;
+  const ph = o.ph ? ` placeholder="${esc(o.ph)}"` : '';
+  let inp;
+  if (t === 'num') inp = `<input class="in" type="text" inputmode="decimal" autocomplete="off" ${common} value="${esc(val)}"${ph}>`;
+  else if (t === 'time') inp = `<input class="in" type="text" inputmode="numeric" autocomplete="off" data-k="time" ${common} value="${esc(fmtTime(val))}" placeholder="${esc(o.ph || '24h, e.g. 2130')}">`;
+  else if (t === 'date') inp = `<input class="in" type="date" ${common} value="${esc(val)}">`;
+  else if (t === 'area') inp = `<textarea class="in" rows="${o.rows || 3}" ${common}${ph}>${esc(val)}</textarea>`;
+  else if (t === 'sel') inp = `<select class="in" ${common}>${o.opts.map(x => { const [v, l] = Array.isArray(x) ? x : [x, x]; return `<option value="${esc(v)}"${String(v) === String(val) ? ' selected' : ''}>${esc(l === '' ? '—' : l)}</option>`; }).join('')}</select>`;
+  else inp = `<input class="in" type="text" autocomplete="off" autocapitalize="${o.cap || 'sentences'}"${o.list ? ` list="${o.list}"` : ''} ${common} value="${esc(val)}"${ph}>`;
+  return `<label class="fld${o.cls ? ' ' + o.cls : ''}" for="${id}"><span class="lb">${esc(label)}${o.unit ? ` <i>${esc(o.unit)}</i>` : ''}</span>${inp}</label>`;
+}
+const INP = (path, ph, label) => `<input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="${path}" value="${esc(getv(path))}" placeholder="${esc(ph)}" aria-label="${esc(label || ph)}">`;
+const SEL = (path, opts, label) => `<select class="in" data-b="${path}" aria-label="${esc(label || '')}">${opts.map(v => `<option${String(v) === String(getv(path)) ? ' selected' : ''}>${esc(v)}</option>`).join('')}</select>`;
+const PAIR = (label, a, b, unit) => `<div class="fld"><span class="lb">${esc(label)}${unit ? ` <i>${esc(unit)}</i>` : ''}</span><div class="pair">${INP(a, 'low', label + ' low')}<span aria-hidden="true">–</span>${INP(b, 'high', label + ' high')}</div></div>`;
+const CB = (label, path, o = {}) => `<label class="tog${o.cls ? ' ' + o.cls : ''}"><input type="checkbox" data-b="${path}"${getv(path) ? ' checked' : ''}${o.rr ? ` data-rr="${o.rr}"` : ''}><span>${esc(label)}</span></label>`;
+const CBX = (label, path, rr) => `<label class="chip cbx"><input type="checkbox" data-b="${path}"${getv(path) ? ' checked' : ''}${rr ? ` data-rr="${rr}"` : ''}>${esc(label)}</label>`;
+const DEL = (path, i, card) => `<button type="button" class="ib del" data-act="del" data-path="${path}" data-i="${i}" data-card="${card}" aria-label="Delete row">${ICON.x}</button>`;
+const ADD = (label, path, tpl, card) => `<button type="button" class="btn sm add" data-act="add" data-path="${path}" data-tpl="${tpl}" data-card="${card}">${esc(label)}</button>`;
+const OTH = k => `<div style="margin-top:14px">${F('Others (one bullet per line)', `r.oth.${k}`, { t: 'area', rows: 2 })}</div>`;
+const BASE = [['1', 'Day 1'], ['0', 'Day 0']];
+
+/* ---------- chips ---------- */
+function chipsHtml(g) {
+  const p = curP(), r = p.rec, G = GROUPS[g], ctx = mkCtx(p, calc(p, db.settings));
+  const items = chipDefs(db, g).map(d => {
+    const st = chipState(r, g, d.id) || {}, on = isOn(d, st, ctx);
+    const auto = d.a ? ` data-auto="${g}:${esc(d.id)}" data-on="${on ? 1 : 0}"` : '';
+    const tag = d.a ? `<i class="auto">${typeof st.manual === 'boolean' ? 'set by you' : 'auto'}</i>` : '';
+    const expand = on && (G.trend || G.star || tplHasFields(d.t));
+    if (!expand) return `<button type="button" class="chip${on ? ' on' : ''}" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${on}"${auto}>${esc(chipLabel(d.t))}${tag}</button>`;
+    const base = `r.chips.${g}.${esc(d.id)}`;
+    const tx = parseTpl(d.t).map(pt => {
+      if (pt.k === 'txt') return `<span>${esc(pt.s)}</span>`;
+      if (pt.k === 'sel') { const cur = st.v && pt.o.includes(st.v[pt.i]) ? st.v[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
+      if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ''} autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
+      return `<span class="tok" data-c="tok:${pt.name}"></span>`;
+    }).join('');
+    const ctl = (G.trend ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...TRENDS].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
+      + (G.star ? `<button type="button" class="star${st.star ? ' on' : ''}" data-act="star" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${!!st.star}" aria-label="Also show in General Survey">${st.star ? '★' : '☆'}</button>` : '');
+    return `<div class="chiprow${st.star ? ' starred' : ''}"${auto}>
+      <button type="button" class="tick" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-label="Untick">${ICON.check}</button>
+      <div class="tx">${tx}${tag}</div>${ctl ? `<div class="ctl">${ctl}</div>` : ''}
+      ${G.trend ? `<div class="say" data-c="chip:${g}:${esc(d.id)}"></div>` : ''}</div>`;
+  }).join('');
+  return `<div class="chips">${items}</div><div class="chip-edit"><a class="lnk" href="#/chips/${g}" data-act="tochips">Edit these chips</a></div>`;
+}
+
+/* ---------- card bodies ---------- */
+const CARD_TITLE = Object.assign({ hdr: 'Patient details' }, SEC_NAME);
+const BODY = {};
+BODY.hdr = () => {
+  const p = curP();
+  return `<div class="grid">
+    ${F('Surname', 'p.surname', { ph: 'Dela Cruz', cap: 'words' })}${F('First name', 'p.first', { cap: 'words' })}
+    ${F('Age', 'p.age', { t: 'num' })}${F('Sex', 'p.sex', { t: 'sel', opts: [['', ''], ['M', 'M'], ['F', 'F']] })}
+    ${F('Room', 'p.room', { ph: 'MICU 1', cap: 'characters' })}${F('Hospital tag', 'p.hosp', { ph: 'IDH', cap: 'characters' })}
+    ${F('Working weight', 'p.weight', { t: 'num', unit: 'kg' })}${F('Date of this update', 'r.date', { t: 'date' })}</div>
+  ${H('Day counters')}${CALC('counters', 'big')}
+  <div class="grid" style="margin-top:10px">${F('Admission date', 'p.admit', { t: 'date' })}${F('Admission date counts as', 'p.admitBase', { t: 'sel', opts: BASE })}
+    ${F('ICU transfer date', 'p.icu', { t: 'date' })}${F('ICU date counts as', 'p.icuBase', { t: 'sel', opts: BASE })}</div>
+  <div class="rows">${p.counters.map((x, i) => `<div class="row r-ctr">${F('Counter label', `p.counters.${i}.label`, { ph: 'Ictus' })}${F('Start date', `p.counters.${i}.date`, { t: 'date' })}${F('Start date counts as', `p.counters.${i}.base`, { t: 'sel', opts: BASE })}${DEL('p.counters', i, 'hdr')}</div>`).join('')}</div>
+  <div class="addrow">${[['Ictus', 0], ['Post-op', 0], ['Intubation', 1], ['', 1]].map(([l, b]) => `<button type="button" class="btn sm" data-act="addctr" data-l="${l}" data-base="${b}">+ ${l || 'Other counter'}</button>`).join('')}</div>
+  ${H('Greeting')}${F('Greeting for this patient (leave blank to use the automatic one from Settings)', 'p.greet', { t: 'area', rows: 2, ph: greetingFor(p, db.settings, new Date()) })}`;
+};
+BODY.gs = () => `${chipsHtml('gs')}${H('Also in this summary')}<div class="calc pre" data-c="gsstars"></div>${OTH('gs')}`;
+BODY.fluid = () => {
+  const r = curP().rec;
+  return `${H('24 hours')}<div class="grid">${F('Input', 'r.fl.in24', { t: 'num', unit: 'mL' })}${F('Output', 'r.fl.out24', { t: 'num', unit: 'mL' })}</div>${CALC('net24', 'big')}
+  ${H('Shift block')}<div class="grid">${F('Label', 'r.fl.shLabel', { ph: '4pm-12am' })}${F('Hours', 'r.fl.shHrs', { t: 'num' })}${F('Input', 'r.fl.shIn', { t: 'num', unit: 'mL' })}${F('Output', 'r.fl.shOut', { t: 'num', unit: 'mL' })}</div>${CALC('netSh', 'big')}
+  ${H('Output breakdown')}<div class="grid">${F('Urine', 'r.fl.urine', { t: 'num', unit: 'mL' })}${PAIR('Stool, approx.', 'r.fl.stLo', 'r.fl.stHi', 'cc')}${F('NGT', 'r.fl.ngt', { t: 'num', unit: 'mL' })}${F('Drain', 'r.fl.drain', { t: 'num', unit: 'mL' })}${F('Emesis', 'r.fl.emesis', { t: 'num', unit: 'mL' })}${F('Others', 'r.fl.othOut', { t: 'num', unit: 'mL' })}</div>
+  ${CALC('bd')}
+  ${H('24-hour urine output')}${CALC('uo', 'big')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
+  ${H('Void log')}<div class="grid">${F('Collected via', 'r.fl.method', { t: 'sel', opts: URINE_METHODS })}${F('Last void before this log', 'r.fl.lastVoid', { t: 'time' })}</div>
+  <div class="rows">${r.fl.voids.map((x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'mL' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>`).join('')}</div>
+  ${ADD('+ Add void', 'r.fl.voids', 'void', 'fluid')}
+  <p class="hint">Each rate uses the time since the void before it, and times can cross midnight. The first row gets a rate only if you fill in the last void before the log.</p>
+  ${H('Urine appearance')}${chipsHtml('urine')}${OTH('fluid')}`;
+};
+function dripRow(d, i) {
+  const b = `r.drips.${i}`, cust = d.drug === 'Custom', u = (DRUGS[d.drug] || {}).u;
+  return `<div class="drip"><div class="grid">
+    ${F('Drug', b + '.drug', { t: 'sel', opts: Object.keys(DRUGS), rr: 'support' })}
+    ${cust ? F('Drug name', b + '.cName', { ph: 'e.g. Phenylephrine' }) : `<div class="fld"><span class="lb">Dose unit</span><div class="ro">${esc(u === 'mcg/kg/min' ? 'mcg/kg/min (mkm)' : u)}</div></div>`}
+    ${cust ? F('Dose unit', b + '.cUnit', { t: 'sel', opts: DOSE_UNITS }) + `<div class="fld"><span class="lb">Group</span>${CB('Vasoactive / inotrope', b + '.cVaso')}</div>` : ''}
+    <div class="fld"><span class="lb">Amount</span><div class="pair">${INP(b + '.amt', '32', 'Amount')}${SEL(b + '.amtU', ['mg', 'mcg', 'units'], 'Amount unit')}</div></div>
+    ${F('Diluent volume', b + '.vol', { t: 'num', unit: 'cc' })}
+    ${F('Diluent', b + '.dil', { t: 'sel', opts: ['D5W', 'PNSS', 'D5LR', 'PLR', 'SWFI'] })}
+    ${F('Rate', b + '.rate', { t: 'num', unit: 'cc/hr' })}</div>
+    <div class="drip-f"><div class="calc big" data-c="drip:${i}"></div>${DEL('r.drips', i, 'support')}</div></div>`;
+}
+BODY.support = () => {
+  const r = curP().rec;
+  return `${H('IV fluids (mainline)')}<div class="rows">${r.ivf.map((x, i) => `<div class="row r-ivf">${F('Fluid', `r.ivf.${i}.name`, { list: 'dl-ivf', ph: 'PNSS', cap: 'characters' })}${F('Rate', `r.ivf.${i}.rate`, { t: 'num', unit: 'cc/hr' })}${DEL('r.ivf', i, 'support')}</div>`).join('')}</div>
+  ${ADD('+ Add IV fluid', 'r.ivf', 'ivf', 'support')}
+  ${H('Drips')}${r.drips.map(dripRow).join('')}${ADD('+ Add drip', 'r.drips', 'drip', 'support')}
+  <p class="hint">A running vasoactive drip ticks “Still on vasopressor” in the General Survey for you.</p>${OTH('support')}`;
+};
+BODY.resp = () => {
+  const rs = curP().rec.resp, n = (l, k, u) => F(l, 'r.resp.' + k, { t: 'num', unit: u });
+  const f = { NC: n('Flow', 'nc', 'L/min'), FM: n('Flow', 'fm', 'L/min'), NRB: n('Flow', 'nrb', 'L/min'),
+    HFNC: n('Flow', 'hfFlow', 'L/min') + n('FiO2', 'hfFio2', '%'),
+    NIV: n('IPAP', 'ipap') + n('EPAP', 'epap') + n('FiO2', 'nivFio2', '%'),
+    MV: F('Mode', 'r.resp.mvMode', { list: 'dl-mv', ph: 'AC-VC', cap: 'characters' }) + n('VT', 'vt', 'mL') + n('RR', 'mvRr') + n('PEEP', 'peep') + n('FiO2', 'mvFio2', '%') }[rs.mode] || '';
+  return `<div class="grid">${F('Oxygen / ventilation', 'r.resp.mode', { t: 'sel', opts: RESP_MODES, rr: 'resp', cls: 'span2' })}${f}</div>${CALC('o2')}
+  ${H('SpO₂')}<div class="grid g3">${F('Current', 'r.v.spo2', { t: 'num', unit: '%' })}${F('24H low', 'r.v.spo2Lo', { t: 'num', unit: '%' })}${F('24H high', 'r.v.spo2Hi', { t: 'num', unit: '%' })}</div>
+  ${H('Findings')}${chipsHtml('resp')}
+  <p class="hint">The device always prints beside SpO₂ in Vital signs. This section prints on its own only for HFNC, NIV or mechanical ventilation, or when a chip or “Others” is filled in.</p>${OTH('resp')}`;
+};
+BODY.vitals = () => `<div class="grid g3">${F('T', 'r.v.t', { t: 'num', unit: '°C' })}${F('HR', 'r.v.hr', { t: 'num', unit: 'bpm' })}${F('RR', 'r.v.rr', { t: 'num', unit: '/min' })}${F('SBP', 'r.v.sbp', { t: 'num' })}${F('DBP', 'r.v.dbp', { t: 'num' })}${F('SpO₂', 'r.v.spo2', { t: 'num', unit: '%' })}</div>
+  ${CALC('map', 'big')}${CALC('o2')}
+  ${H('24-hour ranges')}<div class="grid">${F('Tmax', 'r.v.tmax', { t: 'num', unit: '°C' })}${PAIR('HR', 'r.v.hrLo', 'r.v.hrHi', 'bpm')}${PAIR('SBP', 'r.v.sbpLo', 'r.v.sbpHi')}${PAIR('DBP', 'r.v.dbpLo', 'r.v.dbpHi')}${PAIR('SpO₂', 'r.v.spo2Lo', 'r.v.spo2Hi', '%')}</div>
+  <div style="margin-top:10px">${F('Shift note', 'r.v.note', { ph: 'for the past 8H: 53-58bpm' })}</div>
+  ${CB('Print the 24-hour ranges in the message', 'r.v.ranges')}
+  <p class="hint">The HR range also fills “episodes of bradycardia/tachycardia” in the General Survey, and T/Tmax fill Infectious disease.</p>${OTH('vitals')}`;
+function nihHtml() {
+  return `<div class="nih"><div class="nih-h"><h3 class="sub">NIH Stroke Scale</h3><span class="calc big" data-c="nih"></span></div>
+    ${NIH.map(([code, label, opts]) => F(`${code}: ${label}`, `r.ne.nih.${code}`, { t: 'sel', opts: [['', 'Not scored']].concat(opts.map(([t, s], i) => [String(i), `${t} (${s})`])) })).join('')}
+    ${CB('Print every item (otherwise abnormal items only)', 'r.ne.nihAll')}
+    <div class="addrow"><button type="button" class="btn sm" data-act="nihzero">Score the unscored items as 0</button><button type="button" class="btn sm danger" data-act="nihoff">Turn off NIHSS</button></div>
+    <p class="hint">UN (untestable) items are printed but not added to the total.</p></div>`;
+}
+const PUPRX = [['reactive', 'Reactive'], ['sluggish', 'Sluggish'], ['nonreactive', 'Non-reactive']];
+BODY.neuro = () => {
+  const p = curP(), S = (l, path, opts) => F(l, path, { t: 'sel', opts });
+  return `${S('Level of consciousness', 'r.ne.loc', LOCS)}
+  ${H('Findings')}${chipsHtml('neuro')}
+  ${H('Oriented to')}<div class="chips">${CBX('Time', 'r.ne.ot')}${CBX('Person', 'r.ne.op')}${CBX('Place', 'r.ne.opl')}</div>
+  ${H('Glasgow Coma Scale')}<div class="grid g3">${S('E', 'r.ne.e', ['', '4', '3', '2', '1'])}${S('V', 'r.ne.vv', ['', '5', '4', '3', '2', '1', ['T', 'T (intubated)']])}${S('M', 'r.ne.m', ['', '6', '5', '4', '3', '2', '1'])}</div>${CALC('gcs', 'big')}
+  ${H('Pupils')}<div class="grid">${F('Right', 'r.ne.pr', { t: 'num', unit: 'mm' })}${F('Left', 'r.ne.pl', { t: 'num', unit: 'mm' })}${S('Right reaction', 'r.ne.prx', PUPRX)}${S('Left reaction', 'r.ne.plx', PUPRX)}</div>
+  ${H('Manual muscle testing')}<div class="grid g4">${['rue', 'lue', 'rle', 'lle'].map(k => S(k.toUpperCase(), 'r.ne.mmt.' + k, ['', '5', '4', '3', '2', '1', '0'])).join('')}</div>
+  ${OTH('neuro')}
+  ${p.on.nihss ? nihHtml() : `<div class="addrow"><button type="button" class="btn sm" data-act="nihon">+ Add NIH Stroke Scale</button></div>`}`;
+};
+BODY.pulm = () => chipsHtml('pulm') + OTH('pulm');
+BODY.cv = () => {
+  const r = curP().rec;
+  return `<div class="grid">${F('Rhythm', 'r.cv.rhythm', { t: 'sel', opts: RHYTHMS, rr: 'cv' })}${r.cv.rhythm === 'Others' ? F('Describe the rhythm', 'r.cv.rhythmOth') : `<div class="fld"><span class="lb">Current HR (from Vital signs)</span><div class="ro" data-c="hrv"></div></div>`}</div>
+  ${H('Findings')}${chipsHtml('cv')}
+  ${H('BP trend')}<div class="rows">${r.cv.bp.map((x, i) => `<div class="row r-bp">${F('Time', `r.cv.bp.${i}.t`, { t: 'time' })}${F('SBP', `r.cv.bp.${i}.s`, { t: 'num' })}${F('DBP', `r.cv.bp.${i}.d`, { t: 'num' })}<div class="rate" data-c="bpmap:${i}"></div>${DEL('r.cv.bp', i, 'cv')}</div>`).join('')}</div>
+  ${ADD('+ Add BP reading', 'r.cv.bp', 'bp', 'cv')}${OTH('cv')}`;
+};
+BODY.gi = () => `${H('Abdomen')}${chipsHtml('abd')}
+  ${H('Diet')}${F('Diet (free text)', 'r.gi.diet', { ph: 'Soft diet, 1800 kcal/day' })}<div style="margin-top:10px">${chipsHtml('diet')}</div>
+  ${H('Bowel movement')}<div class="grid">${F('Episodes in 24H', 'r.gi.bmN', { t: 'num' })}${PAIR('Stool output, approx.', 'r.fl.stLo', 'r.fl.stHi', 'cc')}${F('Character', 'r.gi.bmChar', { ph: 'yellowish, formed' })}${F('Bristol type', 'r.gi.bristol', { t: 'sel', opts: ['', '1', '2', '3', '4', '5', '6', '7'] })}</div>
+  <div style="margin-top:10px">${chipsHtml('bm')}</div><p class="hint">Stool output is shared with Fluid balance.</p>${OTH('gi')}`;
+BODY.renal = () => `${CALC('renal', 'big')}${H('Findings')}${chipsHtml('renal')}${OTH('renal')}`;
+BODY.endo = () => {
+  const r = curP().rec, S = db.settings;
+  return `${F('CBG monitoring frequency', 'r.en.freq', { t: 'sel', opts: CBG_FREQ })}
+  ${H('CBG log')}<div class="rows">${r.en.cbg.map((x, i) => `<div class="row r-cbg">${F('Time', `r.en.cbg.${i}.t`, { t: 'time' })}<label class="fld"><span class="lb">mg/dl</span><input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="r.en.cbg.${i}.v" data-fl="cbg:${i}" value="${esc(x.v)}"></label>${F('Intervention', `r.en.cbg.${i}.iv`, { ph: 'if any' })}<button type="button" class="star${x.star ? ' on' : ''}" data-act="cbgstar" data-i="${i}" aria-pressed="${!!x.star}" aria-label="Add to General Survey">${x.star ? '★' : '☆'}</button>${DEL('r.en.cbg', i, 'endo')}</div>`).join('')}</div>
+  ${ADD('+ Add CBG', 'r.en.cbg', 'cbg', 'endo')}${CALC('cbgr', 'big')}
+  <p class="hint">Values below ${esc(S.cbgLow)} or above ${esc(S.cbgHigh)} mg/dl are flagged in red here (change this in Settings). The newest row prints with “-> latest”. Star a row that has an intervention to add it to the General Survey.</p>
+  ${CB('Print the 24-hour range', 'r.en.range')}
+  <div style="margin-top:10px">${F('Insulin regimen', 'r.en.insulin', { t: 'area', rows: 2 })}</div>${OTH('endo')}`;
+};
+BODY.id = () => `${CALC('fever', 'big')}<p class="hint">From Vital signs. Febrile at ${esc(db.settings.fever)} °C or higher (change this in Settings).</p>
+  ${H('Antimicrobials')}<div class="calc pre" data-c="abx"></div><p class="hint">Taken from Medications: flag a medication as an antimicrobial there. Dose numbers move forward on each new day.</p>
+  ${F('Cultures', 'r.idd.cx', { t: 'area', rows: 2 })}${OTH('id')}`;
+BODY.heme = () => `${chipsHtml('heme')}<div class="calc" data-c="ac"></div>${OTH('heme')}`;
+BODY.pend = () => chipsHtml('pend') + OTH('pend');
+function medHtml(m, i) {
+  const open = ui.med === m.id, b = `p.meds.${i}`, auto = dpd(Object.assign({}, m, { dpd: '' }));
+  return `<li class="med st-${m.st}${open ? ' open' : ''}" data-si="${i}">
+    <div class="med-h"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><button type="button" class="med-l" data-act="med" data-id="${esc(m.id)}" aria-expanded="${open}"><span data-c="med:${i}"></span></button></div>
+    ${open ? `<div class="med-e"><div class="grid">
+      ${F('Generic name', b + '.g', { ph: 'Meropenem', cap: 'words' })}${F('Brand', b + '.b', { ph: 'Carmepem', cap: 'words' })}
+      ${F('Dose / form', b + '.dose', { ph: '1g', cap: 'none' })}${F('Route', b + '.route', { ph: 'IV', list: 'dl-route', cap: 'characters' })}
+      ${F('Details', b + '.extra', { ph: 'in 100cc PNSS to run for 3H', cls: 'span2', cap: 'none' })}
+      ${F('Frequency', b + '.freq', { ph: 'q12h', list: 'dl-freq', cap: 'none' })}${F('Status', b + '.st', { t: 'sel', opts: [['active', 'Active'], ['hold', 'On hold temporarily'], ['dc', 'Discontinued (hidden)']], rr: 'meds' })}</div>
+      <div class="chips flags">${CBX('Antimicrobial', b + '.abx', 'meds')}${CBX('Anticoagulant', b + '.ac', 'meds')}</div>
+      ${m.abx ? `<div class="grid" style="margin-top:10px">${F('Dose number today', b + '.no', { t: 'num' })}${F('Doses per day', b + '.dpd', { t: 'num', ph: auto ? String(auto) + ' (from frequency)' : 'enter a number' })}</div><p class="hint">Leave “Doses per day” blank to work it out from the frequency: OD 1, q12h 2, q8h 3, q6h 4.</p>` : ''}
+      <div class="addrow"><button type="button" class="btn sm" data-act="med" data-id="${esc(m.id)}">Done</button><button type="button" class="btn sm danger" data-act="delmed" data-id="${esc(m.id)}">Delete medication</button></div></div>` : ''}</li>`;
+}
+BODY.meds = () => {
+  const p = curP();
+  return `<ol class="meds" data-sort="p.meds">${p.meds.map(medHtml).join('')}</ol>
+  ${p.meds.length ? `<p class="hint">Drag the dots to reorder. Tap a medication to edit it.</p>` : ''}
+  ${`<button type="button" class="btn sm add" data-act="addmed">+ Add medication</button>`}
+  ${CB('Print “Laboratory flow sheet attached”', 'p.labs')}`;
+};
+
+/* ---------- calculated text ---------- */
+function isEmptySec(k, p, out) {
+  if (k === 'hdr' || !p.on[k]) return false;
+  if (k === 'resp' && p.rec.resp.mode) return false;
+  return !out.secs[k];
+}
+function summary(k, p, out) {
+  const c = out.calc, r = p.rec;
+  if (isEmptySec(k, p, out)) return 'Empty';
+  const lines = s => { const n = ((out.secs[s] || '').match(/^>/gm) || []).length; return n ? `${n} line${n === 1 ? '' : 's'}` : ''; };
+  switch (k) {
+    case 'hdr': return c.counters.length ? c.counters.map(x => `${x.label === 'Hospital' ? 'HD' : x.label} ${x.day}`).join(', ') : str(p.surname) ? 'Add admission date' : 'Name, room, dates';
+    case 'fluid': return [c.net24 != null && 'Net ' + signed(c.net24), c.uoRate != null && 'UO ' + f2(c.uoRate)].filter(Boolean).join(', ');
+    case 'support': { const d = r.drips.map((x, i) => c.drips[i] && c.drips[i].txt ? `${c.drips[i].m.name.slice(0, 4)}. ${c.drips[i].txt}` : '').filter(Boolean); return d.join(', ') || r.ivf.map(x => x.name).filter(Boolean).join(', '); }
+    case 'resp': return cap1(c.device) || 'Not set';
+    case 'vitals': return [str(r.v.sbp) && `BP ${str(r.v.sbp)}/${str(r.v.dbp)}`, str(r.v.hr) && `HR ${str(r.v.hr)}`].filter(Boolean).join(', ');
+    case 'neuro': return [c.gcs && 'GCS ' + c.gcs.txt.split(' ')[0], p.on.nihss && c.nihN && 'NIHSS ' + c.nihTotal].filter(Boolean).join(', ') || lines('neuro');
+    case 'endo': return c.cbgRange ? 'CBG ' + c.cbgRange : lines('endo');
+    case 'meds': { const n = p.meds.filter(m => m.st === 'active' && str(m.g)).length; return `${n} active`; }
+    case 'gs': { const n = (out.secs.gs || '').split('\n').length - 1; return n > 0 ? `${n} line${n === 1 ? '' : 's'}` : ''; }
+    default: return lines(k);
+  }
+}
+function calcText(key, p, out) {
+  const c = out.calc, r = p.rec, [k, a, b] = key.split(':');
+  switch (k) {
+    case 'title': return ptName(p);
+    case 'subtitle': return 'Update for ' + fmtDate(r.date);
+    case 'wcount': return out.warnings.length ? String(out.warnings.length) : '';
+    case 'counters': return c.counters.length ? c.counters.map(x => `${x.label} Day ${x.day}`).join(' | ') : 'Fill in the admission date to start the Hospital Day counter.';
+    case 'net24': return c.net24 == null ? '' : 'Net balance: ' + signed(c.net24);
+    case 'netSh': return c.netSh == null ? '' : 'Net balance: ' + signed(c.netSh);
+    case 'bd': return c.bdOk == null ? '' : c.bdOk ? 'Breakdown adds up to the 24-hour output.' : `Breakdown is ${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}, but the 24-hour output is ${str(r.fl.out24)}.`;
+    case 'uo': return c.uoRate != null ? `${f2(c.uoRate)} ml/kg/hr, ${c.uoGoal}` : c.hasW ? 'Enter the urine volume above.' : 'Needs the urine volume and the working weight.';
+    case 'void': { const x = c.voids[+a]; return x == null ? '' : f2(x) + ' ml/kg/hr'; }
+    case 'drip': { const d = c.drips[+a]; return !d ? '' : d.txt ? (d.txt.endsWith('mkm') ? d.txt.replace('mkm', ' mcg/kg/min') : d.txt) : d.why; }
+    case 'bpmap': { const x = r.cv.bp[+a]; if (!x) return ''; const s = num(x.s), d = num(x.d); return ok(s) && ok(d) ? 'MAP ' + Math.round((s + 2 * d) / 3) : ''; }
+    case 'map': return c.map == null ? '' : 'MAP ' + c.map;
+    case 'o2': return c.device ? `Oxygen: ${c.device}` : 'Set oxygen / ventilation in Respiratory support.';
+    case 'gcs': return c.gcs ? 'GCS ' + c.gcs.txt : '';
+    case 'nih': return c.nihN ? `${c.nihTotal} point${c.nihTotal === 1 ? '' : 's'}, ${c.nihN} of 15 scored` : 'No items scored';
+    case 'cbgr': return c.cbgRange ? `24H range: ${c.cbgRange} mg/dl` : '';
+    case 'hrv': return str(r.v.hr) ? str(r.v.hr) + ' bpm' : '—';
+    case 'fever': return c.febrile == null ? 'Enter T or Tmax in Vital signs.' : (c.febrile ? 'Febrile' : 'Afebrile') + ` (${[str(r.v.t) && 'T ' + str(r.v.t), str(r.v.tmax) && 'Tmax ' + str(r.v.tmax)].filter(Boolean).join(', ')})`;
+    case 'renal': return c.net24 == null ? 'The fluid balance line appears here once the 24-hour I&O is filled in.' : c.net24 > 0 ? `Positive fluid balance for the past 24H (${signed(c.net24)})` : c.net24 < 0 ? `Negative fluid balance for the past 24H (${signed(c.net24)})` : 'Even fluid balance for the past 24H';
+    case 'abx': return c.abx.length ? c.abx.map(medShort).join('\n') : 'No medication is flagged as an antimicrobial.';
+    case 'ac': return c.ac.length ? 'Anticoagulant on the med list: ' + c.ac.map(medShort).join('; ') : 'Flag a medication as an anticoagulant in Medications to fill “On anticoagulation”.';
+    case 'gsstars': {
+      const L = [];
+      for (const g of Object.keys(GROUPS)) { const G = GROUPS[g]; if (!G.star || !p.on[G.sec]) continue; ticked(db, r, g, out.ctx).filter(s => s.star).forEach(s => L.push([s.at, '★ ' + cap1(s.text) + '  (' + SEC_NAME[G.sec] + ')'])); }
+      if (p.on.endo) r.en.cbg.forEach(x => { if (x.star) L.push([x.at || 0, str(x.iv) ? `★ CBG ${str(x.v)} mg/dl at ${fmtTime(x.t)} -> ${str(x.iv)}` : `★ CBG at ${fmtTime(x.t) || '__'} needs an intervention before it appears`]); });
+      return L.length ? L.sort((x, y) => x[0] - y[0]).map(x => x[1]).join('\n') : 'Tap ☆ on a ticked chip in another section, or on a CBG entry with an intervention, to add it here. Items appear in the order you star them.';
+    }
+    case 'tok': return out.ctx.tok(a) || '__';
+    case 'chip': {
+      const d = chipDefs(db, a).find(x => x.id === b); if (!d) return '';
+      const st = chipState(r, a, b) || {};
+      return st.tr || /\{/.test(d.t) ? 'Prints: ' + cap1(chipPhrase(d, st, out.ctx)) : '';
+    }
+    case 'med': {
+      const m = p.meds[+a]; if (!m) return '';
+      if (!str(m.g)) return 'New medication (tap to fill in)';
+      if (m.st === 'dc') return medLine(m) + ' (discontinued, not printed)';
+      const pos = p.meds.filter(x => x.st !== 'dc' && str(x.g)).indexOf(m) + 1;
+      return `${pos}. ${medLine(m)}`;
+    }
+    case 'sum': return summary(a, p, out);
+    default: return '';
+  }
+}
+let rq = 0;
+function refresh(now) { if (now) { cancelAnimationFrame(rq); doRefresh(); } else { cancelAnimationFrame(rq); rq = requestAnimationFrame(doRefresh); } }
+function doRefresh() {
+  if (ui.view !== 'patient') return;
+  const p = curP(); if (!p) return;
+  OUT = buildMessage(p, db);
+  $$('[data-c]').forEach(el => { const t = calcText(el.dataset.c, p, OUT); if (el.textContent !== t) el.textContent = t; });
+  $$('[data-c^="sum:"]').forEach(el => el.classList.toggle('empty', isEmptySec(el.dataset.c.slice(4), p, OUT)));
+  $$('[data-fl^="cbg:"]').forEach(el => { const x = OUT.calc.cbg[+el.dataset.fl.split(':')[1]]; el.classList.toggle('flag', !!x && (x.low || x.high)); });
+  const stale = new Set();
+  $$('[data-auto]').forEach(el => {
+    const [g, id] = el.dataset.auto.split(':'), d = chipDefs(db, g).find(x => x.id === id);
+    if (d && (isOn(d, chipState(p.rec, g, id), OUT.ctx) ? '1' : '0') !== el.dataset.on) stale.add(GROUPS[g].sec);
+  });
+  stale.forEach(k => rerender(k));
+  updatePreview();
+}
+
+/* ---------- views ---------- */
+function bar(inner) { return `<header class="bar"><div class="bar-in">${inner}</div></header>`; }
+function vHome() {
+  const today = todayISO();
+  const list = db.patients.map((p, i) => {
+    const c = calc(p, db.settings), hd = c.counters.find(x => x.label === 'Hospital');
+    const sent = p.hist.some(h => h.date === p.rec.date), stale = p.rec.date < today;
+    const meta = [str(p.room), hd ? 'Hospital Day ' + hd.day : ''].filter(Boolean).join(', ');
+    return `<div class="pt-w" data-si="${i}"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><a class="pt" href="#/p/${esc(p.id)}"><span class="pt-n">${esc(ptName(p))}</span><span class="pt-m">${esc(meta || 'No room or admission date yet')}</span>
+      <span class="pt-s${stale ? ' stale' : sent ? ' sent' : ''}">${stale ? `Last update is for ${esc(fmtDate(p.rec.date))}. Open it and start a new day.` : sent ? `Sent for ${esc(fmtDate(p.rec.date))}` : `Not sent yet for ${esc(fmtDate(p.rec.date))}`}</span></a></div>`;
+  }).join('');
+  return bar(`<div class="brand"><b>TIMPEX</b> Rounds Update</div><a class="ib" href="#/settings" aria-label="Settings">${ICON.gear}</a>`) +
+  `<main class="wrap">
+    ${db.patients.length ? `<div class="pts" data-sort="d.patients">${list}</div>${db.patients.length > 1 ? '<p class="hint">Drag the dots to put patients in your rounds order.</p>' : ''}` : `<div class="empty"><p>No patients yet</p><p>Add your first patient, or load the demo patient to see a complete message.</p></div>`}
+    <div class="acts"><button type="button" class="btn pri" data-act="addpt">Add patient</button><button type="button" class="btn" data-act="demo">Load demo patient</button></div>
+    <div class="backup"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button></div>
+    <p class="note">Patient data stays in this browser on this phone. The app makes no network requests, so nothing is sent anywhere until you paste the message yourself.</p>
+  </main>`;
+}
+const cardKeys = p => ['hdr'].concat(SECS.map(s => s[0]).filter(k => p.on[k]));
+function isOpen(k) { return !!(ui.open[ui.pid] || {})[k]; }
+function cardHtml(k) {
+  const open = isOpen(k);
+  return `<section class="card${open ? ' open' : ''}" data-card="${k}" id="card-${k}">
+    <button type="button" class="card-h" data-act="card" data-k="${k}" aria-expanded="${open}"><span class="card-t">${esc(CARD_TITLE[k])}</span><span class="card-s" data-c="sum:${k}"></span><span class="chev" aria-hidden="true"></span></button>
+    <div class="card-b">${open ? BODY[k]() : ''}</div></section>`;
+}
+function rerender(k) {
+  const el = $(`[data-card="${k}"]`); if (!el) return;
+  const open = isOpen(k);
+  el.classList.toggle('open', open);
+  $('.card-h', el).setAttribute('aria-expanded', open);
+  $('.card-b', el).innerHTML = open ? BODY[k]() : '';
+  refresh();
+}
+function vPatient() {
+  const p = curP();
+  if (!ui.open[p.id]) ui.open[p.id] = { hdr: !str(p.surname) };
+  return bar(`<a class="ib" href="#/" aria-label="All patients">${ICON.back}</a><div class="bar-t"><b data-c="title"></b><small data-c="subtitle"></small></div><button type="button" class="ib" data-act="pmenu" aria-label="Patient menu">${ICON.more}</button>`) +
+  `<main class="wrap">
+    <div class="tools"><button type="button" class="lnk" data-act="openall">Open all</button><button type="button" class="lnk" data-act="closeall">Close all</button><button type="button" class="lnk" data-act="sections">Sections on/off</button></div>
+    ${cardKeys(p).map(cardHtml).join('')}
+    <p class="note">Sections that are off are hidden here and left out of the message.</p>
+  </main>
+  <nav class="dock" aria-label="Message"><div class="dock-in">
+    <button type="button" class="btn" data-act="preview">Preview <span class="badge" data-c="wcount" aria-label="warnings"></span></button>
+    <button type="button" class="btn pri" data-act="copy">Copy</button>
+    <button type="button" class="btn" data-act="share">Share</button></div></nav>`;
+}
+function vHistory() {
+  const p = curP(), list = p.hist.slice().reverse();
+  return bar(`<a class="ib" href="#/p/${esc(p.id)}" aria-label="Back to patient">${ICON.back}</a><div class="bar-t"><b>History</b><small>${esc(ptName(p))}</small></div>`) +
+  `<main class="wrap">${list.length ? list.map(h => `<button type="button" class="hi" data-act="histview" data-d="${esc(h.date)}"><b>${esc(fmtDate(h.date))}</b><span>${esc((h.text.split('\n').find(l => l.startsWith('>')) || '').slice(1))}</span></button>`).join('')
+    : `<div class="empty"><p>No saved messages yet</p><p>A message is saved here each time you copy or share it, and when you start a new day.</p></div>`}
+    <p class="note">The last ${HIST_MAX} saved messages are kept per patient.</p></main>`;
+}
+function vSettings() {
+  const groups = Object.keys(GROUPS).map(g => `<a class="grp" href="#/chips/${g}" data-act="tochips"><b>${esc(GROUPS[g].name)}</b><span>${db.chips[g].length} chips</span></a>`).join('');
+  return bar(`<a class="ib" href="#/" aria-label="Back">${ICON.back}</a><div class="bar-t"><b>Settings</b><small>Applies to all patients</small></div>`) +
+  `<main class="wrap">
+  <section class="card plain"><div class="card-b">
+    ${H('Appearance')}${F('Theme', 's.theme', { t: 'sel', opts: [['auto', 'Match the phone'], ['light', 'Light'], ['dark', 'Dark']] })}
+    ${H('Greeting and sign-off')}${F('Greeting ({time} becomes morning, afternoon or evening)', 's.greeting', { t: 'area', rows: 3 })}
+    <div class="grid" style="margin-top:10px">${F('Closing line', 's.closing')}${F('Your name and hospital', 's.signName', { ph: 'DELA CRUZ, IDH' })}</div>
+    ${H('Thresholds')}<div class="grid">${F('Febrile at or above', 's.fever', { t: 'num', unit: '°C' })}<div></div>${F('CBG flagged below', 's.cbgLow', { t: 'num', unit: 'mg/dl' })}${F('CBG flagged above', 's.cbgHigh', { t: 'num', unit: 'mg/dl' })}${F('Urine output goal from', 's.uoLow', { t: 'num', unit: 'ml/kg/h' })}${F('Urine output goal to', 's.uoHigh', { t: 'num', unit: 'ml/kg/h' })}</div>
+  </div></section>
+  <section class="card plain"><div class="card-b">${H('Chips')}<p class="hint">Add, edit, delete and reorder the phrases for each system. Changes apply to every patient.</p>${groups}</div></section>
+  <section class="card plain"><div class="card-b">${H('Your data')}
+    <p class="hint">Back up regularly: if the browser\u2019s data is cleared, patients can only come back from a backup file. Set a passphrase when you export and the file is encrypted (AES-256), so it is safer to keep in Drive or send to yourself.</p>
+    <p class="hint">${(() => { let n = 0; try { n = (localStorage.getItem(APP_KEY) || '').length; } catch (e) { /* ignore */ } return `Storage used: ${(n / 1e6).toFixed(2)} MB of about ${STORE_CAP / 1e6} MB (${Math.round(n / STORE_CAP * 100)}%). The last ${HIST_MAX} messages are kept per patient.`; })()}</p>
+    <div class="addrow"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button><button type="button" class="btn sm danger" data-act="clearall">Clear all data</button></div></div></section>
+  <section class="card plain"><div class="card-b">${H('About')}
+    <p class="hint">TIMPEX Rounds Update keeps everything in this browser’s local storage on this phone. It loads nothing from the internet and sends nothing anywhere (a content security policy blocks all network requests), in keeping with RA 10173.</p>
+    <p class="hint">On iPhone, the Safari tab and a Home Screen icon keep separate data. Pick one and use only that, or move data between them with Export and Import.</p></div></section>
+  </main>`;
+}
+function vChips() {
+  const g = ui.g, G = GROUPS[g], list = db.chips[g];
+  return bar(`<button type="button" class="ib" data-act="chipsback" aria-label="Back">${ICON.back}</button><div class="bar-t"><b>Chips: ${esc(G.name)}</b><small>Saved for all patients</small></div>`) +
+  `<main class="wrap">
+    <ol class="ce" data-sort="c.${g}">${list.map((d, i) => `<li class="ce-i" data-si="${i}"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><div class="ce-b">
+      <textarea class="in" rows="2" data-b="c.${g}.${i}.t" aria-label="Chip text">${esc(d.t)}</textarea>
+      <div class="ce-o">${G.inline ? '' : CB('Continues the line above', `c.${g}.${i}.j`)}${d.a ? `<span class="auto">ticks itself ${d.a === 'vaso' ? 'when a vasoactive drip is running' : 'when an anticoagulant is active'}</span>` : ''}<button type="button" class="btn sm danger" data-act="delchip" data-i="${i}">Delete</button></div></div></li>`).join('')}</ol>
+    <div class="addrow"><button type="button" class="btn sm pri" data-act="addchip">+ Add chip</button><button type="button" class="btn sm" data-act="resetchips">Reset to defaults</button></div>
+    <section class="card plain help"><div class="card-b">${H('How chip text works')}
+      <p><code>[a/b/c]</code> becomes a dropdown; the first option is the default.<br><code>[__]</code> or <code>[sputum]</code> becomes a text blank, and <code>[#]</code> a number blank.<br><code>{hr_range}</code> pulls a value from another section.</p>
+      <p>Values you can pull in: ${TOKENS.map(t => `<code>{${t}}</code>`).join(' ')}</p>
+      <p>“Continues the line above” joins a chip onto the bullet before it with a comma, as in “Patient seen asleep, not in cardiopulmonary distress”. Two joined “No … episodes” chips merge into “No hypotensive nor desaturation episodes”.</p>
+      <p>Trend tags go in front of the phrase: Still adds “with” where needed (“Still with bilateral fine crackles”).</p></div></section>
+  </main>`;
+}
+const VIEWS = { home: vHome, patient: vPatient, history: vHistory, settings: vSettings, chips: vChips };
+function render() {
+  const h = (location.hash || '#/').slice(1).split('/').filter(Boolean), [a, b] = h;
+  let v = 'home';
+  if ((a === 'p' || a === 'h') && db.patients.some(x => x.id === b)) { v = a === 'p' ? 'patient' : 'history'; ui.pid = b; }
+  else if (a === 'settings') v = 'settings';
+  else if (a === 'chips' && GROUPS[b]) { v = 'chips'; ui.g = b; }
+  const key = v + ':' + (b || '');
+  const changed = key !== ui.key;
+  ui.view = v; ui.key = key;
+  $$('.sheet-bg').forEach(x => x.remove());
+  document.body.classList.remove('modal');
+  document.body.dataset.view = v;
+  $('#app').innerHTML = VIEWS[v]();
+  if (v === 'patient') refresh(true);
+  if (changed) { window.scrollTo(0, 0); if (Date.now() - toastAt > 600) hideToast(); }
+}
+window.addEventListener('hashchange', render);
+const go = h => { if (popSkip > 0) { pendingGo = h; return; } if (location.hash === h) render(); else location.hash = h; };
+
+/* ---------- sheets, dialogs, toast ---------- */
+// Sheets other than quick confirmations add a history entry, so the phone's Back button closes the sheet instead of leaving the patient.
+let popSkip = 0, popTimer = 0, pendingGo = null;
+function sheet(inner, kind, onClose) {
+  const bg = document.createElement('div');
+  bg.className = 'sheet-bg';
+  bg.innerHTML = `<div class="sheet" data-kind="${kind}" role="dialog" aria-modal="true">${inner}</div>`;
+  bg._onClose = onClose;
+  bg.addEventListener('click', e => { if (e.target === bg) closeSheet(bg); });
+  $('#sheets').appendChild(bg);
+  document.body.classList.add('modal');
+  hideToast();
+  if (kind !== 'ask') { try { history.pushState({ sheet: kind }, ''); bg._pushed = true; } catch (e) { /* ignore */ } }
+  return $('.sheet', bg);
+}
+function popDone() { popSkip = 0; clearTimeout(popTimer); if (pendingGo) { const h = pendingGo; pendingGo = null; go(h); } }
+function closeSheet(el, silent, fromPop) {
+  const bg = el.classList.contains('sheet-bg') ? el : el.closest('.sheet-bg');
+  if (!bg || !bg.parentNode) return;
+  bg.remove();
+  if (!$('.sheet-bg')) document.body.classList.remove('modal');
+  if (bg._pushed && !fromPop) { popSkip++; clearTimeout(popTimer); popTimer = setTimeout(popDone, 700); history.back(); }
+  if (!silent && bg._onClose) bg._onClose();
+}
+window.addEventListener('popstate', () => {
+  if (popSkip > 0) { popSkip--; if (!popSkip) popDone(); return; }
+  const all = $$('.sheet-bg');
+  if (all.length) closeSheet(all[all.length - 1], false, true);
+});
+const closeSheets = () => $$('.sheet-bg').forEach(b => closeSheet(b));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { const all = $$('.sheet-bg'); if (all.length) closeSheet(all[all.length - 1]); } });
+// onOk runs inside the tap itself, which iPhone Safari needs for clipboard, share and file saving.
+function ask({ title, body = '', html = '', ok = 'OK', cancel = 'Cancel', alt = '', danger = false, fields = [], onOk = null }) {
+  return new Promise(res => {
+    const s = sheet(`<h2 class="ask-t">${esc(title)}</h2>${body ? `<p>${esc(body)}</p>` : ''}${html}${fields.map((f, i) => `<label class="fld" style="margin-top:10px"><span class="lb">${esc(f.label)}</span><input class="in" data-ask-in="${i}" type="${f.type || 'text'}" autocomplete="${f.type === 'password' ? 'new-password' : 'off'}" autocapitalize="${f.cap || 'none'}" spellcheck="false"></label>`).join('')}
+      <div class="sh-f">${cancel ? `<button type="button" class="btn" data-ask="no">${esc(cancel)}</button>` : ''}${alt ? `<button type="button" class="btn" data-ask="alt">${esc(alt)}</button>` : ''}<button type="button" class="btn ${danger ? 'dangerf' : 'pri'}" data-ask="ok">${esc(ok)}</button></div>`, 'ask', () => res(false));
+    const vals = () => $$('[data-ask-in]', s).map((x, i) => (fields[i].type === 'password' ? x.value : x.value.trim()));
+    const finish = k => {
+      const v = fields.length ? vals() : true;
+      if (k === 'ok' && onOk) onOk(v);
+      closeSheet(s, true);
+      res(k === 'ok' ? v : k === 'alt' ? 'alt' : false);
+    };
+    s.addEventListener('click', e => { const b = e.target.closest('button[data-ask]'); if (!b) return; e.stopPropagation(); finish(b.dataset.ask); });
+    s.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('[data-ask-in]')) { e.preventDefault(); finish('ok'); } });
+    const f = $('[data-ask-in]', s); if (f) setTimeout(() => f.focus(), 50);
+  });
+}
+let toastT = 0, toastAt = 0;
+function hideToast() { const t = $('#toast'); if (t) { t.classList.remove('show', 'act'); clearTimeout(toastT); } }
+function toast(msg, ms = 2800, action) {
+  const t = $('#toast');
+  t.innerHTML = `<span>${esc(msg)}</span>${action ? `<button type="button" class="tbtn">${esc(action.label)}</button>` : ''}`;
+  t.classList.toggle('act', !!action);
+  if (action) $('.tbtn', t).addEventListener('click', () => { t.classList.remove('show', 'act'); clearTimeout(toastT); action.fn(); });
+  t.classList.add('show');
+  toastAt = Date.now();
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show', 'act'), action ? Math.max(ms, 7000) : ms);
+}
+function withUndo(msg, restore) {
+  toast(msg, 7000, { label: 'Undo', fn: () => { restore(); flush(); render(); toast('Restored.'); } });
+}
+
+/* ---------- preview, copy, share ---------- */
+const warnList = ws => ws.map(w => `<li><button type="button" data-act="goto" data-k="${w.k}">${esc(w.t)}</button></li>`).join('');
+function openPreview() {
+  closeSheets();
+  sheet(`<div class="sh-h"><h2>Preview</h2><button type="button" class="ib" data-act="close" aria-label="Close preview">${ICON.x}</button></div>
+    <div data-pv="warn"></div><pre class="msg" data-pv="msg"></pre>
+    <div class="sh-f"><button type="button" class="btn pri" data-act="pcopy">Copy</button><button type="button" class="btn" data-act="pshare">Share</button></div>`, 'preview');
+  refresh(true);
+}
+function updatePreview() {
+  const s = $('.sheet[data-kind="preview"]'); if (!s || !OUT) return;
+  const m = $('[data-pv="msg"]', s); if (m.textContent !== OUT.text) m.textContent = OUT.text;
+  $('[data-pv="warn"]', s).innerHTML = OUT.warnings.length
+    ? `<div class="warns"><b>Check before sending (${OUT.warnings.length})</b><ul>${warnList(OUT.warnings)}</ul><small>Tap a warning to jump to it. Warnings don’t stop you from copying.</small></div>`
+    : `<p class="okmsg">Pre-send check: nothing to flag.</p>`;
+}
+function legacyCopy(t) {
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;';
+  document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, t.length);
+  let okc = false; try { okc = document.execCommand('copy'); } catch (e) { okc = false; }
+  ta.remove();
+  return okc;
+}
+// Starts the clipboard write synchronously, inside the tap.
+function copyText(t) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t).then(() => true, () => legacyCopy(t));
+  return Promise.resolve(legacyCopy(t));
+}
+function finishCopy(p, text, okMsg) {
+  return copyText(text).then(okc => {
+    if (okc) { archive(p, db, text); flush(); toast(okMsg || 'Copied. Paste it into Viber or Messenger.', okMsg ? 4500 : 2800); }
+    else toast('Couldn’t copy automatically. Open Preview, then press and hold the message to select and copy it.', 5000);
+  });
+}
+function finishShare(p, text) {
+  if (navigator.share) {
+    navigator.share({ text }).then(() => { archive(p, db, text); flush(); toast('Shared.'); }, e => { if (e && e.name === 'AbortError') return; finishCopy(p, text, 'Sharing didn’t work here, so the message was copied instead.'); });
+    return;
+  }
+  finishCopy(p, text, 'Sharing isn’t available here, so the message was copied instead.');
+}
+function send(kind, fromPreview) {
+  const p = curP(); OUT = buildMessage(p, db);
+  const text = OUT.text, run = () => (kind === 'copy' ? finishCopy(p, text) : finishShare(p, text));
+  if (fromPreview || !OUT.warnings.length) { run(); return; }
+  ask({ title: `Check before sending (${OUT.warnings.length})`, html: `<ul class="wl">${OUT.warnings.map(w => `<li>${esc(w.t)}</li>`).join('')}</ul>`, ok: kind === 'copy' ? 'Copy anyway' : 'Share anyway', cancel: 'Review', onOk: run })
+    .then(res => { if (!res) openPreview(); });
+}
+
+/* ---------- patient actions ---------- */
+function openMenu() {
+  const p = curP();
+  sheet(`<div class="sh-h"><h2>${esc(ptName(p))}</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div><div class="menu">
+    <button type="button" class="mi" data-act="newday"><b>Start new day</b><span>Carries ticks, meds and settings to the next day. Clears vitals, I&amp;O and the void, BP and CBG logs. Moves day counters and antibiotic dose numbers forward.</span></button>
+    <button type="button" class="mi" data-act="sections"><b>Sections on/off</b><span>Choose which systems appear for this patient.</span></button>
+    <button type="button" class="mi" data-act="hist"><b>History</b><span>${p.hist.length} saved message${p.hist.length === 1 ? '' : 's'}</span></button>
+    <button type="button" class="mi danger" data-act="delpt"><b>Delete patient</b><span>Removes this patient and their history from this phone.</span></button></div>`, 'menu');
+}
+function openSections() {
+  closeSheets();
+  const p = curP(), snap = JSON.stringify(p.on);
+  const SW = (n, k) => `<label class="tog"><input type="checkbox" data-b="p.on.${k}"${p.on[k] ? ' checked' : ''}><span>${esc(n)}</span></label>`;
+  sheet(`<div class="sh-h"><h2>Sections for this patient</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div>
+    <div class="secs">${SECS.map(([k, n]) => SW(n, k)).join('')}${SW('NIH Stroke Scale (inside Neurologic)', 'nihss')}</div>
+    <p class="hint">Sections that are on but empty are left out of the message and flagged in the pre-send check.</p>
+    <div class="sh-f"><button type="button" class="btn pri" data-act="close">Done</button></div>`, 'sections', () => { if (JSON.stringify(p.on) !== snap) render(); });
+}
+async function doNewDay() {
+  const p = curP(), nd = nextDate(p.rec.date, todayISO());
+  closeSheets();
+  const okd = await ask({ title: `Start the update for ${fmtDate(nd)}?`, body: `The ${fmtDate(p.rec.date)} message is saved to History. Ticks, meds and settings carry over. Vitals, I&O, and the void, BP and CBG logs are cleared. Day counters and antibiotic dose numbers move forward.`, ok: 'Start new day' });
+  if (!okd) return;
+  const snap = JSON.stringify(p), idx = db.patients.indexOf(p);
+  const res = startNewDay(p, db);
+  flush(); render();
+  let msg = `Started ${fmtDate(res.date)}.`;
+  if (res.moved.length) msg += ` Dose numbers moved forward ${res.days} day${res.days === 1 ? '' : 's'}.`;
+  if (res.stuck.length) msg += ` Check the dose number for ${res.stuck.join(', ')}: its frequency isn’t one I can count.`;
+  toast(msg, 8000, { label: 'Undo', fn: () => { db.patients[idx] = normPatient(JSON.parse(snap)); flush(); render(); toast('New day undone. Yesterday\u2019s data is back.'); } });
+}
+async function doDelete() {
+  const p = curP();
+  closeSheets();
+  if (!(await ask({ title: `Delete ${ptName(p)}?`, body: 'This removes the patient, today’s update and all saved history from this phone. It can’t be undone.', ok: 'Delete patient', danger: true }))) return;
+  const idx = db.patients.indexOf(p);
+  db.patients = db.patients.filter(x => x.id !== p.id);
+  flush(); go('#/');
+  withUndo('Patient deleted.', () => { db.patients.splice(Math.min(idx, db.patients.length), 0, p); });
+}
+
+/* ---------- data ---------- */
+function b64e(u8) { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); }
+function b64d(t) { const s = atob(t), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; }
+const canCrypt = () => !!(window.crypto && crypto.subtle && window.isSecureContext);
+async function deriveKey(pass, salt, iter) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function encryptJSON(obj, pass) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12)), iter = 600000;
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, await deriveKey(pass, salt, iter), new TextEncoder().encode(JSON.stringify(obj)));
+  return { app: 'timpex-rounds', v: 1, enc: 'AES-GCM-256', kdf: 'PBKDF2-SHA256', iter, salt: b64e(salt), iv: b64e(iv), data: b64e(new Uint8Array(ct)) };
+}
+async function decryptJSON(env, pass) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(env.iv) }, await deriveKey(pass, b64d(env.salt), env.iter), b64d(env.data));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+function saveFile(text, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+  a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+async function exportJSON() {
+  flush();
+  const name = `timpex-rounds-backup-${todayISO()}`;
+  if (!canCrypt()) { saveFile(JSON.stringify(db, null, 1), name + '.json'); toast('Backup saved (unencrypted: encryption needs the https address). It contains patient data, so keep it private.', 6000); return; }
+  const v = await ask({
+    title: 'Export backup', body: 'Set a passphrase to encrypt the file (recommended, since it holds patient data). You’ll need the passphrase to import it, and it can’t be recovered. Leave both blank to save without encryption.',
+    fields: [{ label: 'Passphrase', type: 'password' }, { label: 'Type it again', type: 'password' }], ok: 'Export',
+    onOk: x => { if (!x[0] && !x[1]) saveFile(JSON.stringify(db, null, 1), name + '.json'); },
+  });
+  if (v === false) return;
+  if (!v[0] && !v[1]) { toast('Backup saved without encryption. It contains patient data, so keep it private.', 5000); return; }
+  if (v[0] !== v[1]) { toast('The two passphrases don’t match. Nothing was exported.', 4500); return; }
+  if (v[0].length < 6) { toast('Use a passphrase of at least 6 characters. Nothing was exported.', 4500); return; }
+  toast('Encrypting…', 1500);
+  const env = await encryptJSON(db, v[0]);
+  await ask({ title: 'Encrypted backup ready', body: 'Save the file, and keep the passphrase somewhere safe.', ok: 'Save file', cancel: '', onOk: () => saveFile(JSON.stringify(env), name + '-encrypted.json') });
+}
+async function importFile(file) {
+  let data;
+  try { data = JSON.parse(await file.text()); } catch (e) { toast('That file couldn’t be read as a backup (it isn’t valid JSON).', 4500); return; }
+  if (data && data.enc && data.data) {
+    if (!canCrypt()) { toast('This backup is encrypted. Open the app from its https address to import it.', 5000); return; }
+    const iter = +data.iter;
+    if (!(iter >= 1000 && iter <= 5e6) || !data.salt || !data.iv) { toast('This encrypted backup looks damaged.', 4500); return; }
+    const v = await ask({ title: 'Encrypted backup', body: 'Enter the passphrase you set when you exported it.', fields: [{ label: 'Passphrase', type: 'password' }], ok: 'Unlock' });
+    if (v === false) return;
+    try { data = await decryptJSON(data, v[0]); } catch (e) { toast('Wrong passphrase, or the file is damaged. Nothing was imported.', 5000); return; }
+  }
+  if (!data || !Array.isArray(data.patients)) { toast('That file isn’t a TIMPEX Rounds backup: it has no patient list.', 4500); return; }
+  const n = data.patients.length;
+  const res = await ask({ title: `Import ${n} patient${n === 1 ? '' : 's'}?`, body: 'Replace swaps everything on this phone (patients, chips and settings) for the backup. Merge adds the backup’s patients and keeps yours; a patient that is in both is replaced by the backup copy.', ok: 'Replace all', alt: 'Merge', danger: true });
+  if (!res) return;
+  const inc = normDB(data);
+  if (res === 'alt') inc.patients.forEach(np => { const i = db.patients.findIndex(x => x.id === np.id); if (i >= 0) db.patients[i] = np; else db.patients.push(np); });
+  else db = inc;
+  flush(); applyTheme(); go('#/'); toast(`Imported ${n} patient${n === 1 ? '' : 's'}.`);
+}
+$('#imp').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) importFile(f); });
+async function doClearAll() {
+  const v = await ask({ title: 'Clear all data?', body: 'This deletes every patient, all history, your custom chips and your settings from this phone. It can\u2019t be undone. Export a backup first if you might need any of it.', fields: [{ label: 'Type DELETE to confirm', cap: 'characters' }], ok: 'Clear all data', danger: true });
+  if (v === false) return;
+  if (v[0] !== 'DELETE') { toast('Nothing was deleted. Type DELETE in capitals to confirm.', 4000); return; }
+  try { localStorage.removeItem(APP_KEY); } catch (e) { /* ignore */ }
+  db = freshDB(); ui.open = {}; flush(); applyTheme(); go('#/'); toast('All data cleared.');
+}
+
+/* ---------- events ---------- */
+function mirror(src, path, val) {
+  $$('[data-b]').forEach(o => {
+    if (o === src || o.dataset.b !== path) return;
+    if (o.type === 'checkbox') o.checked = !!val;
+    else if (o.dataset.k === 'time') o.value = fmtTime(val);
+    else o.value = val == null ? '' : val;
+  });
+}
+function readEl(el) {
+  if (el.type === 'checkbox') return el.checked;
+  if (el.dataset.k === 'time') return normTime(el.value) || el.value.trim();
+  return el.value;
+}
+document.addEventListener('input', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.b) return;
+  const val = readEl(el);
+  if (el.dataset.b === 'r.date' && !isISO(val)) return;
+  setv(el.dataset.b, val);
+  mirror(el, el.dataset.b, val);
+  save();
+  if (ui.view === 'patient') refresh();
+});
+document.addEventListener('change', e => {
+  const el = e.target; if (!el.dataset || !el.dataset.b) return;
+  const path = el.dataset.b, val = readEl(el);
+  if (path === 'r.date' && !isISO(val)) { el.value = getv(path); toast('The update date can\u2019t be blank.'); return; }
+  setv(path, val);
+  if (el.dataset.k === 'time') el.value = fmtTime(getv(path));
+  const m = /^r\.drips\.(\d+)\.drug$/.exec(path);
+  if (m) { const d = curP().rec.drips[+m[1]]; d.amtU = (DRUGS[d.drug] || {}).amtU || 'mg'; }
+  if (path === 's.theme') applyTheme();
+  if (path.startsWith('p.on.') && path !== 'p.on.nihss' && !$('.sheet[data-kind="sections"]')) render();
+  save();
+  if (el.dataset.rr) rerender(el.dataset.rr);
+  else if (ui.view === 'patient') refresh();
+});
+document.addEventListener('focusin', e => { if (e.target.matches && e.target.matches('input:not([type=checkbox]):not([type=file]):not([type=date]), textarea')) document.body.classList.add('typing'); });
+document.addEventListener('focusout', () => setTimeout(() => { if (!isTyping()) document.body.classList.remove('typing'); }, 60));
+const isTyping = () => { const a = document.activeElement; return !!a && a.matches('input:not([type=checkbox]), textarea, select'); };
+function focusNew(k) {
+  setTimeout(() => {
+    const card = $(`[data-card="${k}"]`); if (!card) return;
+    const blocks = $$('.rows > .row, .drip', card), last = blocks[blocks.length - 1];
+    const f = last && $('input, select', last);
+    if (f && !isTyping()) { f.focus(); f.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  }, 30);
+}
+const ensureSt = (g, id) => { const r = curP().rec; r.chips[g] = r.chips[g] || {}; return (r.chips[g][id] = r.chips[g][id] || {}); };
+const ACT = {
+  card: el => { const o = ui.open[ui.pid] = ui.open[ui.pid] || {}, k = el.dataset.k; o[k] = !o[k]; rerender(k); },
+  openall: () => { const p = curP(); cardKeys(p).forEach(k => (ui.open[p.id][k] = true)); render(); },
+  closeall: () => { ui.open[ui.pid] = {}; render(); },
+  chip: el => {
+    const p = curP(), { g, id } = el.dataset, d = chipDefs(db, g).find(x => x.id === id); if (!d) return;
+    const st = ensureSt(g, id);
+    if (d.a) {
+      const cond = !!mkCtx(p, calc(p, db.settings)).auto(d.a), cur = typeof st.manual === 'boolean' ? st.manual : cond, nv = !cur;
+      if (nv === cond) delete st.manual; else st.manual = nv;
+    } else st.on = !st.on;
+    save(); rerender(GROUPS[g].sec);
+  },
+  star: el => {
+    const { g, id } = el.dataset, st = ensureSt(g, id);
+    st.star = !st.star; if (st.star) st.at = Date.now();
+    save(); rerender(GROUPS[g].sec);
+    toast(st.star ? 'Added to the General Survey.' : 'Removed from the General Survey.', 1600);
+  },
+  cbgstar: el => {
+    const x = curP().rec.en.cbg[+el.dataset.i]; if (!x) return;
+    x.star = !x.star; if (x.star) x.at = Date.now();
+    save(); rerender('endo');
+    toast(x.star ? (str(x.iv) ? 'Added to the General Survey.' : 'Starred. Fill in the intervention so it appears in the General Survey.') : 'Removed from the General Survey.', 2400);
+  },
+  add: el => { getv(el.dataset.path).push(ROW_TPL[el.dataset.tpl]()); save(); rerender(el.dataset.card); focusNew(el.dataset.card); },
+  del: el => {
+    const pid = ui.pid, path = el.dataset.path, card = el.dataset.card, i = +el.dataset.i, [row] = getv(path).splice(i, 1);
+    save(); rerender(card);
+    withUndo('Row deleted.', () => { ui.pid = pid; getv(path).splice(i, 0, row); });
+  },
+  addctr: el => { curP().counters.push({ label: el.dataset.l, date: '', base: el.dataset.base }); save(); rerender('hdr'); focusNew('hdr'); },
+  addmed: () => { const m = newMed(); curP().meds.push(m); ui.med = m.id; save(); rerender('meds'); setTimeout(() => { const f = $(`[data-card="meds"] .med.open input`); if (f && !isTyping()) { f.focus(); f.scrollIntoView({ block: 'center' }); } }, 30); },
+  med: el => { ui.med = ui.med === el.dataset.id ? null : el.dataset.id; rerender('meds'); },
+  delmed: el => {
+    const p = curP(), i = p.meds.findIndex(m => m.id === el.dataset.id); if (i < 0) return;
+    const [m] = p.meds.splice(i, 1); save(); rerender('meds');
+    withUndo(`${str(m.g) || 'Medication'} deleted.`, () => { p.meds.splice(i, 0, m); });
+  },
+  nihon: () => { curP().on.nihss = true; save(); rerender('neuro'); },
+  nihoff: () => { curP().on.nihss = false; save(); rerender('neuro'); },
+  nihzero: () => { const ne = curP().rec.ne; NIH.forEach(([code]) => { if (ne.nih[code] === '' || ne.nih[code] == null) ne.nih[code] = '0'; }); save(); rerender('neuro'); },
+  preview: openPreview,
+  copy: () => send('copy', false), share: () => send('share', false),
+  pcopy: () => send('copy', true), pshare: () => send('share', true),
+  pmenu: openMenu, sections: openSections, newday: doNewDay, delpt: doDelete,
+  hist: () => { closeSheets(); go('#/h/' + ui.pid); },
+  histview: el => {
+    const h = curP().hist.find(x => x.date === el.dataset.d); if (!h) return;
+    sheet(`<div class="sh-h"><h2>${esc(fmtDate(h.date))}</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div><pre class="msg">${esc(h.text)}</pre>
+      <div class="sh-f"><button type="button" class="btn pri" data-act="hcopy" data-d="${esc(h.date)}">Copy this message</button></div>`, 'hist');
+  },
+  hcopy: el => { const h = curP().hist.find(x => x.date === el.dataset.d); if (h) copyText(h.text).then(okc => toast(okc ? 'Copied.' : 'Couldn\u2019t copy. Press and hold the message to copy it.')); },
+  goto: el => {
+    const k = el.dataset.k === 'header' ? 'hdr' : el.dataset.k, p = curP();
+    closeSheets();
+    if (k === 'settings') { go('#/settings'); return; }
+    if (!p.on[k] && k !== 'hdr') return;
+    (ui.open[p.id] = ui.open[p.id] || {})[k] = true;
+    rerender(k);
+    const c = $(`[data-card="${k}"]`); if (c) setTimeout(() => c.scrollIntoView({ block: 'start', behavior: 'smooth' }), 30);
+  },
+  close: el => closeSheet(el),
+  addpt: () => {
+    const p = newPatient(), last = db.patients[db.patients.length - 1];
+    if (last) p.hosp = last.hosp;
+    db.patients.push(p); ui.open[p.id] = { hdr: true }; flush(); requestPersist(); go('#/p/' + p.id);
+  },
+  demo: () => { const p = demoPatient(); db.patients.push(p); ui.open[p.id] = {}; flush(); go('#/p/' + p.id); toast('Demo patient added. Tap Preview to see the whole message.', 3500); },
+  export: exportJSON, import: () => $('#imp').click(), clearall: doClearAll,
+  tochips: () => { ui.back = location.hash; },
+  chipsback: () => go(ui.back && ui.back !== location.hash ? ui.back : '#/settings'),
+  addchip: () => { db.chips[ui.g].push({ id: 'u' + uid(), t: 'New chip', j: false, a: '' }); flush(); render(); const t = $$('.ce textarea'); const last = t[t.length - 1]; if (last) { last.focus(); last.select(); last.scrollIntoView({ block: 'center' }); } },
+  delchip: el => {
+    const g = ui.g, i = +el.dataset.i, d = db.chips[g][i]; if (!d) return;
+    db.chips[g].splice(i, 1); flush(); render();
+    withUndo('Chip deleted for all patients.', () => { db.chips[g].splice(i, 0, d); });
+  },
+  resetchips: async () => {
+    if (!(await ask({ title: `Reset ${GROUPS[ui.g].name} chips?`, body: 'Your custom chips and edits for this system are replaced with the built-in list.', ok: 'Reset chips', danger: true }))) return;
+    db.chips[ui.g] = defChips(ui.g); flush(); render();
+  },
+};
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const f = ACT[el.dataset.act]; if (!f) return;
+  if (el.tagName !== 'A') e.preventDefault();
+  f(el, e);
+});
+
+/* drag to reorder (meds and chips) */
+document.addEventListener('pointerdown', e => {
+  const grip = e.target.closest('[data-grip]'); if (!grip) return;
+  const item = grip.closest('[data-si]'), list = item && item.parentElement;
+  if (!list || !list.dataset.sort) return;
+  e.preventDefault();
+  item.classList.add('drag');
+  try { grip.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+  let raf = 0, lastY = e.clientY;
+  const move = ev => {
+    lastY = ev.clientY;
+    const others = Array.from(list.children).filter(x => x !== item);
+    let before = null;
+    for (const s of others) { const r = s.getBoundingClientRect(); if (lastY < r.top + r.height / 2) { before = s; break; } }
+    if (before) { if (item.nextSibling !== before) list.insertBefore(item, before); } else if (list.lastElementChild !== item) list.appendChild(item);
+    cancelAnimationFrame(raf);
+    const edge = 90;
+    if (lastY < edge) raf = requestAnimationFrame(() => window.scrollBy(0, -12));
+    else if (lastY > window.innerHeight - edge) raf = requestAnimationFrame(() => window.scrollBy(0, 12));
+  };
+  const up = () => {
+    grip.removeEventListener('pointermove', move); grip.removeEventListener('pointerup', up); grip.removeEventListener('pointercancel', up);
+    item.classList.remove('drag');
+    const order = Array.from(list.children).map(x => +x.dataset.si), path = list.dataset.sort, arr = getv(path);
+    if (order.some((v, i) => v !== i)) { setv(path, order.map(i => arr[i])); flush(); }
+    if (path.startsWith('c.') || path.startsWith('d.')) render(); else rerender('meds');
+  };
+  grip.addEventListener('pointermove', move); grip.addEventListener('pointerup', up); grip.addEventListener('pointercancel', up);
+});
+
+/* ---------- start ---------- */
+applyTheme();
+render();
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "TIMPEX Rounds Update",
+  "short_name": "Rounds",
+  "description": "Daily patient updates for consultants, built from tick-box chips. Data stays on the phone.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEF2F0",
+  "theme_color": "#1D6B63",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
