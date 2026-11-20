@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pnenHm7IFHpNLPvVs4UcuD0MV9FnEzsVJlOXf2gSDxs='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DMPixC0UjJ99Kta48beTxTF5nuGWYhMmFmRJ2ivtYLU='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#EEF2F0">
@@ -58,11 +58,11 @@ code{font-size:.9em;background:var(--sf2);border:1px solid var(--ln);border-radi
 .btn{min-height:48px;padding:0 16px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf);font-weight:600;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .btn:active{transform:translateY(1px)}
 .btn.pri{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
-.btn.sm{min-height:42px;padding:0 14px;font-size:15px}
+.btn.sm{min-height:44px;padding:0 14px;font-size:15px}
 .btn.danger{color:var(--bad);border-color:color-mix(in srgb,var(--bad) 45%,var(--ln))}
 .btn.dangerf{background:var(--bad);border-color:var(--bad);color:#fff}
 .btn.add{margin-top:10px}
-.lnk{background:none;border:0;padding:8px 4px;color:var(--pri);font-weight:600;font-size:14px;text-decoration:none;min-height:40px}
+.lnk{background:none;border:0;padding:10px 6px;color:var(--pri);font-weight:600;font-size:15px;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
 .badge:not(:empty){min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--hl);color:var(--hl-ink);font-size:13px;font-weight:700;display:inline-grid;place-items:center}
 
 /* home */
@@ -131,21 +131,21 @@ input[type=date].in{min-height:48px}
 .auto{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.02em;padding:1px 7px;border-radius:9px;background:var(--pri-soft);color:var(--pri);vertical-align:middle}
 .chip.on .auto{background:rgba(255,255,255,.22);color:inherit}
 .chiprow{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 8px 6px 6px;border-radius:16px;background:var(--pri-soft);border:1.5px solid var(--pri)}
-.tick{flex:none;width:36px;height:36px;border-radius:50%;background:var(--pri);color:var(--pri-ink);border:0;display:grid;place-items:center;padding:0}
+.tick{flex:none;width:44px;height:44px;border-radius:50%;background:var(--pri);color:var(--pri-ink);border:0;display:grid;place-items:center;padding:0}
 .tick svg{width:20px;height:20px}
 .tx{flex:1 1 0;min-width:0;font-size:15px;line-height:1.35;padding:6px 0}
 .tx .isel,.tx .iinp{vertical-align:middle;margin:2px 0}
 .tx .auto{margin-left:6px}
 .tx .tok{font-weight:700}
-.isel,.iinp,.trend{min-height:38px;padding:4px 8px;border:1.5px solid color-mix(in srgb,var(--pri) 55%,var(--ln));border-radius:9px;background:var(--sf);font-size:16px;max-width:100%}
-.iinp{width:7em}.iinp.n{width:4.2em}
+.isel,.iinp,.trend{min-height:44px;padding:4px 8px;border:1.5px solid color-mix(in srgb,var(--pri) 55%,var(--ln));border-radius:9px;background:var(--sf);font-size:16px;max-width:100%}
+.iinp{width:auto;min-width:5em;max-width:100%}.iinp.n{min-width:3.5em}
 .ctl{flex:none;display:flex;gap:6px;margin-left:auto;align-self:flex-start}
 .trend{color:var(--mut);width:100px}
 .trend:has(option:checked:not([value=""])){color:var(--ink);font-weight:600}
-.star{flex:none;width:44px;height:40px;border-radius:10px;border:1.5px solid var(--ln);background:var(--sf);font-size:21px;line-height:1;color:var(--mut);padding:0}
+.star{flex:none;width:44px;height:44px;border-radius:10px;border:1.5px solid var(--ln);background:var(--sf);font-size:21px;line-height:1;color:var(--mut);padding:0}
 .star.on{background:var(--hl);border-color:var(--hl);color:var(--hl-ink)}
 .chiprow.starred .tx>span:not(.tok){background:linear-gradient(transparent 52%,var(--hl-soft) 52%,var(--hl-soft) 92%,transparent 92%)}
-.say{flex-basis:100%;font-size:13px;color:var(--mut);padding:0 4px 2px 44px}
+.say{flex-basis:100%;font-size:13px;color:var(--mut);padding:0 4px 2px 52px}
 .say:empty{display:none}
 .chip-edit{margin-top:2px}
 
@@ -250,6 +250,25 @@ body:not([data-view=patient]) .toast{bottom:calc(20px + env(safe-area-inset-bott
 .pt-w.drag .pt{background:var(--pri-soft);box-shadow:0 6px 18px rgba(0,0,0,.18)}
 .pt-w.drag{position:relative;z-index:2}
 @media (pointer:coarse){body.typing .dock{display:none}}
+
+/* added: lock screen, banners, level 2 CBG flag */
+.lockv{min-height:100vh;display:grid;place-items:center;padding:24px 20px calc(24px + env(safe-area-inset-bottom))}
+.lock-in{width:100%;max-width:360px;display:flex;flex-direction:column;align-items:stretch;gap:12px;text-align:center}
+.lock-ico{width:64px;height:64px;margin:0 auto 4px;border-radius:18px;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center}
+.lock-ico svg{width:32px;height:32px}
+.lock-in h1{font-size:20px;font-weight:500;margin:4px 0 0}
+.lock-in h1 b{font-weight:800;letter-spacing:.06em;color:var(--pri)}
+.lock-in p{margin:0;color:var(--mut)}
+.in.pin{text-align:center;font-size:22px;letter-spacing:.3em;min-height:56px}
+.lock-in .lnk{align-self:center}
+.ban{display:flex;gap:6px;align-items:flex-start;background:var(--warn-soft);border-left:5px solid var(--warn);border-radius:12px;padding:10px 4px 10px 14px;margin:12px 0}
+.ban-t{flex:1;min-width:0}
+.ban-t p{margin:4px 0 8px;font-size:14px;color:var(--ink)}
+.ban-t .btn{margin-top:2px}
+.ban .ib{color:var(--mut)}
+.st-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)}
+.st-row span{display:block;color:var(--mut);font-size:13px}
+.in.flag2{border-color:var(--bad);background:var(--bad);color:#fff;font-weight:800}
 
 </style>
 </head>
@@ -382,8 +401,8 @@ const DEF_SETTINGS = {
   greeting: 'Good {time}, Doctors. Respectfully updating you regarding your patient:',
   closing: 'Thank you, Doctors.',
   signName: '[SURNAME], IDH',
-  fever: '38.0', cbgLow: '70', cbgHigh: '180', uoLow: '0.5', uoHigh: '1.5',
-  theme: 'auto',
+  fever: '38.0', feverIcu: '38.3', cbgLow: '70', cbgLow2: '54', cbgHigh: '180', uoLow: '0.5', uoHigh: '1.5',
+  theme: 'auto', reqLabel: 'For your input:', initialsNew: false, retainDays: '7', lockMins: '5',
 };
 
 const GROUPS = {
@@ -399,6 +418,7 @@ const GROUPS = {
   renal: { name: 'Renal / Fluid status', sec: 'renal', trend: 1, star: 1 },
   heme: { name: 'Hematology', sec: 'heme', trend: 1, star: 1 },
   pend: { name: 'Pending', sec: 'pend', inline: 1, keep: 1 },
+  req: { name: 'Requests', sec: 'ar' },
 };
 
 // [id, template, joins previous line?, auto]
@@ -459,6 +479,13 @@ const DEF_CHIPS_RAW = {
     ['re_edema', 'Peripheral edema, grade [1/2/3/4] on the [upper extremities/lower extremities/bilateral lower extremities/upper and lower extremities]'],
   ],
   heme: [['he_nobleed', 'No active bleeding'], ['he_ac', 'On anticoagulation: {anticoag}', 0, 'anticoag'], ['he_tx', 'Transfusion: [__]']],
+  req: [
+    ['rq_taper', 'May we [taper/discontinue/start/resume] [__]?'],
+    ['rq_clear', 'Clearance for [transfer out of the ICU/discharge/the procedure]'],
+    ['rq_recs', 'Your recommendations on [__]'],
+    ['rq_reeval', 'Kindly re-evaluate the patient for [__]'],
+    ['rq_fyi', 'For your information only'],
+  ],
   pend: [['pe_cbc', 'CBC'], ['pe_lytes', 'Electrolytes'], ['pe_bun', 'BUN'], ['pe_crea', 'S. Crea'], ['pe_mg', 'Mg'], ['pe_ca', 'Ca'], ['pe_abg', 'ABG'], ['pe_cx', 'Cultures'], ['pe_cxr', 'CXR'], ['pe_ecg', 'ECG'], ['pe_echo', '2D echo']],
 };
 const defChips = g => (DEF_CHIPS_RAW[g] || []).map(([id, t, j, a]) => ({ id, t, j: !!j, a: a || '' }));
@@ -468,7 +495,7 @@ const SECS = [
   ['gs', 'General survey & overnight'], ['fluid', 'Fluid balance'], ['support', 'Current support'], ['resp', 'Respiratory support'],
   ['vitals', 'Vital signs'], ['neuro', 'Neurologic'], ['pulm', 'Pulmonary'], ['cv', 'Cardiovascular'], ['gi', 'GI / Nutrition'],
   ['renal', 'Renal / Fluid status'], ['endo', 'Endocrine / Metabolic'], ['id', 'Infectious disease'], ['heme', 'Hematology'],
-  ['pend', 'Pending'], ['meds', 'Medications'],
+  ['pend', 'Pending'], ['meds', 'Medications'], ['ar', 'Assessment & requests'],
 ];
 const SEC_NAME = Object.fromEntries(SECS.concat([['nihss', 'NIH Stroke Scale']]));
 
@@ -524,18 +551,19 @@ function newRec(date) {
     gi: { diet: '', bmN: '', bmChar: '', bristol: '' },
     en: { freq: '', cbg: [], insulin: '', range: false },
     idd: { cx: '' },
+    ar: { assess: '', req: '' },
   };
 }
 function newPatient(today = todayISO()) {
   return {
     id: uid(), created: Date.now(),
     surname: '', first: '', age: '', sex: '', room: '', hosp: '', weight: '',
-    admit: '', admitBase: 1, icu: '', icuBase: 1, counters: [], greet: '',
-    on: { gs: 1, fluid: 1, support: 1, resp: 1, vitals: 1, neuro: 1, nihss: 0, pulm: 1, cv: 1, gi: 1, renal: 1, endo: 1, id: 1, heme: 1, pend: 1, meds: 1 },
+    admit: '', admitBase: 1, icu: '', icuBase: 1, counters: [], greet: '', initials: false, feverIcu: false, touched: 0,
+    on: { gs: 1, fluid: 1, support: 1, resp: 1, vitals: 1, neuro: 1, nihss: 0, pulm: 1, cv: 1, gi: 1, renal: 1, endo: 1, id: 1, heme: 1, pend: 1, meds: 1, ar: 1 },
     meds: [], labs: true, rec: newRec(today), hist: [],
   };
 }
-const newMed = () => ({ id: uid(), g: '', b: '', dose: '', route: '', extra: '', freq: '', st: 'active', abx: false, ac: false, no: '', dpd: '' });
+const newMed = () => ({ id: uid(), g: '', b: '', dose: '', route: '', extra: '', freq: '', st: 'active', abx: false, ac: false, no: '', dpd: '', start: '', ind: '', dur: '' });
 const ROW_TPL = {
   void: () => ({ t: '', v: '' }), bp: () => ({ t: '', s: '', d: '' }), cbg: () => ({ t: '', v: '', iv: '', star: false, at: 0 }),
   ivf: () => ({ name: '', rate: '' }), drip: () => ({ drug: 'Norepinephrine', amt: '', amtU: 'mg', vol: '', dil: 'D5W', rate: '', cName: '', cUnit: 'mg/hr', cVaso: false }),
@@ -571,11 +599,13 @@ function normPatient(p) {
   p.meds.forEach(m => { if (!SAFE_ID.test(String(m.id))) m.id = uid(); });
   return p;
 }
-function freshDB() { return { v: 1, settings: clone(DEF_SETTINGS), chips: allDefChips(), patients: [] }; }
+function freshDB() { return { v: 1, settings: clone(DEF_SETTINGS), chips: allDefChips(), patients: [], meta: { created: Date.now(), lastBackup: 0, dismiss: {} } }; }
 function normDB(db) {
   if (!db || typeof db !== 'object') return freshDB();
   db.v = 1;
   db.settings = Object.assign(clone(DEF_SETTINGS), db.settings || {});
+  db.meta = Object.assign({ created: Date.now(), lastBackup: 0, dismiss: {} }, db.meta && typeof db.meta === 'object' ? db.meta : {});
+  if (!db.meta.dismiss || typeof db.meta.dismiss !== 'object') db.meta.dismiss = {};
   db.chips = db.chips && typeof db.chips === 'object' ? db.chips : {};
   for (const g of Object.keys(GROUPS)) {
     if (!Array.isArray(db.chips[g])) { db.chips[g] = defChips(g); continue; }
@@ -668,7 +698,49 @@ function voidRates(fl, w) {
 }
 const medName = m => [str(m.g), str(m.b) && `(${str(m.b)})`].filter(Boolean).join(' ');
 const medLine = m => [medName(m), str(m.dose), str(m.route), str(m.extra), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
-const medShort = m => [medName(m), str(m.dose), str(m.route), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
+const medShort = (m, info) => [medName(m), str(m.dose), str(m.route), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (info ? ' ' + info : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
+// Antimicrobial stewardship: day of therapy (start date = Day 1), planned duration and indication.
+const abxDay = (m, on) => counterDay(m.start, 1, on);
+function abxInfo(m, on) {
+  const d = abxDay(m, on), dur = num(m.dur);
+  const bits = [d != null && `Day ${d}${dur > 0 ? ' of ' + fx(dur, 0) : ''}`, str(m.ind) && 'for ' + str(m.ind)].filter(Boolean);
+  return bits.length ? `(${bits.join(', ')})` : '';
+}
+const initialsOf = s => str(s).split(/[\s-]+/).filter(Boolean).map(w => w[0].toUpperCase() + '.').join('');
+// Urine output over the last 6/12/24 h of the void log (KDIGO windows). Each void's volume is spread over the time since the void before it.
+function uoWindows(fl, w) {
+  const res = { span: 0, r6: null, r12: null, r24: null };
+  let prevT = tmin(fl.lastVoid), pos = 0, ivs = [];
+  for (const row of fl.voids) {
+    const t = tmin(row.t), v = num(row.v);
+    if (t == null) continue;
+    if (prevT == null) { prevT = t; continue; }
+    const d = minsBetween(prevT, t);
+    prevT = t;
+    if (!d) continue;
+    if (ok(v)) ivs.push({ a: pos, b: pos + d, v }); else ivs = [];
+    pos += d;
+  }
+  if (!ivs.length || !(w > 0)) return res;
+  const end = ivs[ivs.length - 1].b, start = ivs[0].a;
+  res.span = (end - start) / 60;
+  const win = h => {
+    const lo = end - h * 60;
+    if (lo < start - 0.5) return null;
+    let vol = 0;
+    for (const x of ivs) { const ov = Math.max(0, Math.min(x.b, end) - Math.max(x.a, lo)); vol += x.v * ov / (x.b - x.a); }
+    return vol / w / h;
+  };
+  res.r6 = win(6); res.r12 = win(12); res.r24 = win(24);
+  return res;
+}
+function kdigoFlag(c) {
+  if (c.uoRate != null && c.uoRate < 0.3) return { stage: 3, t: `24-hour urine output is ${f2(c.uoRate)} ml/kg/h, under 0.3 (KDIGO AKI stage 3 urine criterion).` };
+  if (c.uoWin.r12 != null && c.uoWin.r12 < 0.5) return { stage: 2, t: `Urine output over the last 12 h of the void log is ${f2(c.uoWin.r12)} ml/kg/h, under 0.5 (KDIGO AKI stage 2 urine criterion).` };
+  if (c.uoWin.r6 != null && c.uoWin.r6 < 0.5) return { stage: 1, t: `Urine output over the last 6 h of the void log is ${f2(c.uoWin.r6)} ml/kg/h, under 0.5 (KDIGO AKI stage 1 urine criterion).` };
+  return null;
+}
+const INSULIN_RE = /insulin|glargine|detemir|degludec|lispro|aspart|glulisine|\bnph\b|humulin|novorapid|novomix|lantus|levemir|tresiba|apidra|humalog/i;
 
 function calc(p, S) {
   const r = p.rec, v = r.v, fl = r.fl, c = {};
@@ -684,6 +756,7 @@ function calc(p, S) {
   c.uoStatus = c.uoRate == null ? '' : c.uoRate < lo ? 'below' : c.uoRate > hi ? 'above' : 'within';
   c.uoGoal = c.uoStatus ? `${c.uoStatus} goal of ${fx(lo)}-${fx(hi)}ml/kg/h` : '';
   c.voids = voidRates(fl, c.w);
+  c.uoWin = uoWindows(fl, c.w);
   // output breakdown check
   const parts = ['urine', 'ngt', 'drain', 'emesis', 'othOut'].map(k => num(fl[k])).filter(ok);
   c.bdSum = parts.length ? parts.reduce((a, b) => a + b, 0) : null;
@@ -709,14 +782,14 @@ function calc(p, S) {
   });
   c.nihN = n; c.nihTotal = tot;
   // CBG
-  const cl = thr(S, 'cbgLow'), ch = thr(S, 'cbgHigh');
-  c.cbg = r.en.cbg.map(x => { const val = num(x.v); return { v: val, low: ok(val) && val < cl, high: ok(val) && val > ch }; });
+  const cl = thr(S, 'cbgLow'), cl2 = thr(S, 'cbgLow2'), ch = thr(S, 'cbgHigh');
+  c.cbg = r.en.cbg.map(x => { const val = num(x.v); return { v: val, low: ok(val) && val < cl, low2: ok(val) && val < cl2, high: ok(val) && val > ch, hi180: ok(val) && val >= ch }; });
   const cv = c.cbg.map(x => x.v).filter(ok);
   c.cbgRange = cv.length ? `${fx(Math.min(...cv))}-${fx(Math.max(...cv))}` : '';
   // fever
   const t = num(v.t), tm = num(v.tmax), ref = Math.max(ok(t) ? t : -Infinity, ok(tm) ? tm : -Infinity);
-  c.febrile = ok(ref) ? ref >= thr(S, 'fever') : null;
-  c.feverAt = thr(S, 'fever');
+  c.feverAt = p.feverIcu ? thr(S, 'feverIcu') : thr(S, 'fever');
+  c.febrile = ok(ref) ? ref >= c.feverAt : null;
   // meds links
   const live = p.meds.filter(x => x.st !== 'dc' && str(x.g));
   c.abx = live.filter(x => x.abx);
@@ -730,6 +803,8 @@ function calc(p, S) {
   const icu = counterDay(p.icu, p.icuBase, on); if (icu != null) c.counters.push({ label: 'ICU', day: icu });
   p.counters.forEach(x => { const d = counterDay(x.date, x.base, on); if (d != null && str(x.label)) c.counters.push({ label: str(x.label), day: d }); });
   c.device = o2Device(r.resp);
+  c.kdigo = kdigoFlag(c);
+  c.onInsulin = !!str(r.en.insulin) || r.drips.some(d => d.drug === 'Insulin' && num(d.rate) > 0) || live.some(m => m.st === 'active' && INSULIN_RE.test(m.g + ' ' + m.b));
   return c;
 }
 
@@ -744,11 +819,12 @@ function mkCtx(p, c) {
     map: () => (c.map == null ? '' : c.map), gcs: () => (c.gcs ? c.gcs.txt : ''),
     uo_rate: () => (c.uoRate == null ? '' : f2(c.uoRate) + 'ml/kg/hr'),
     uo_goal: () => c.uoGoal, net24: () => (c.net24 == null ? '' : signed(c.net24)),
+    uo_6h: () => (c.uoWin.r6 == null ? '' : f2(c.uoWin.r6) + 'ml/kg/hr'),
     cbg_range: () => c.cbgRange, anticoag: () => c.acText,
   };
   return { tok: n => (T[n] ? T[n]() : '{' + n + '}'), auto: a => (a === 'vaso' ? c.vasoOn : a === 'anticoag' ? c.acOn : false) };
 }
-const TOKENS = ['hr_range', 'bp_range', 'spo2_range', 'temp', 'tmax', 'weight', 'map', 'gcs', 'uo_rate', 'uo_goal', 'net24', 'cbg_range', 'anticoag'];
+const TOKENS = ['hr_range', 'bp_range', 'spo2_range', 'temp', 'tmax', 'weight', 'map', 'gcs', 'uo_rate', 'uo_goal', 'uo_6h', 'net24', 'cbg_range', 'anticoag'];
 
 function chipDefs(db, g) { return (db.chips && db.chips[g]) || defChips(g); }
 const chipState = (r, g, id) => (r.chips[g] || {})[id] || null;
@@ -967,7 +1043,7 @@ function buildMessage(p, db, now = new Date()) {
       const bits = [str(v.t) && 'T: ' + str(v.t), str(v.tmax) && 'Tmax: ' + str(v.tmax)].filter(Boolean).join(', ');
       L.push((c.febrile ? 'Febrile' : 'Afebrile') + (bits ? ` (${bits})` : ''));
     }
-    c.abx.forEach(m => L.push(medShort(m)));
+    c.abx.forEach(m => L.push(medShort(m, abxInfo(m, r.date))));
     str(r.idd.cx).split('\n').map(x => x.trim()).filter(Boolean).forEach((x, i) => L.push(i ? x : 'Cultures: ' + x));
     return sec('INFECTIOUS DISEASE', false, [bul(L.concat(othLines(r, 'id')))]);
   })();
@@ -979,6 +1055,12 @@ function buildMessage(p, db, now = new Date()) {
     return sec('PENDING', false, [bul((pc.length ? [inlineList(pc, true)] : []).concat(othLines(r, 'pend')))]);
   })();
 
+  out.ar = (() => {
+    const lines = t => str(t).split('\n').map(x => x.trim().replace(/^[>\u2022]+\s*/, '')).filter(Boolean);
+    const A = lines(r.ar.assess), Q = T('req').map(x => cap1(x.text)).concat(lines(r.ar.req));
+    return sec('ASSESSMENT AND REQUESTS', false, [A.length ? ['Assessment:'].concat(bul(A)) : [], Q.length ? [str(S.reqLabel) || 'For your input:'].concat(bul(Q)) : []]);
+  })();
+
   out.meds = (() => {
     const ms = p.meds.filter(m => m.st !== 'dc' && str(m.g));
     return ms.length ? 'Medications presently active:\n' + ms.map((m, i) => `${i + 1}. ${medLine(m)}`).join('\n') : null;
@@ -987,19 +1069,23 @@ function buildMessage(p, db, now = new Date()) {
   /* assemble */
   const top = [greetingFor(p, S, now)];
   const id = [];
-  const nm = [str(p.surname).toUpperCase(), str(p.first)].filter(Boolean).join(', ');
+  const nm = p.initials ? [initialsOf(p.surname), initialsOf(p.first)].filter(Boolean).join(', ') : [str(p.surname).toUpperCase(), str(p.first)].filter(Boolean).join(', ');
   const as = [str(p.age), str(p.sex)].filter(Boolean).join('/');
   if (nm || as) id.push([nm, as].filter(Boolean).join(' | '));
-  const room = [str(p.room) && 'Room: ' + str(p.room), str(p.hosp)].filter(Boolean).join(' | ');
-  if (room) id.push(room);
+  if (str(p.room)) id.push(['Room: ' + str(p.room), str(p.hosp)].filter(Boolean).join(' | '));
   if (str(p.weight)) id.push(`Working weight: ${str(p.weight)}kg`);
   if (id.length) top.push(id.join('\n'));
   if (c.counters.length) top.push(c.counters.map(x => `${x.label} Day ${x.day}`).join(' | '));
   if (on('gs') && out.gs) top.push(out.gs);
   const parts = [top.filter(Boolean).join('\n\n')];
-  for (const [k] of SECS) if (k !== 'gs' && on(k) && out[k]) parts.push(out[k]);
+  const LABS = '\n\nLaboratory flow sheet attached';
+  for (const [k] of SECS) {
+    if (k === 'gs') continue;
+    let t = on(k) ? out[k] : null;
+    if (k === 'meds' && p.labs) { if (t) t += LABS; else parts[parts.length - 1] += LABS; }
+    if (t) parts.push(t);
+  }
   let text = parts.join(`\n\n${DIVIDER}\n\n`);
-  if (p.labs) text += '\n\nLaboratory flow sheet attached';
   const sign = [str(S.closing), str(S.signName)].filter(Boolean).join('\n');
   if (sign) text += '\n\n' + sign;
 
@@ -1010,6 +1096,7 @@ function buildMessage(p, db, now = new Date()) {
 function preSend(p, db, c, ctx, out) {
   const W = [], r = p.rec, v = r.v, fl = r.fl, on = k => !!p.on[k];
   const add = (k, t) => W.push({ k, t });
+  if (str(p.surname) && !str(p.room)) add('header', 'Room is blank.');
   if (!c.hasW) add('header', 'Working weight is missing, so ml/kg/hr and mcg/kg/min can’t be worked out.');
   if (on('fluid') && c.bdOk === false) add('fluid', `Output breakdown (${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}) doesn’t add up to the 24-hour output (${str(fl.out24)}).`);
   const chk = (val, lo, hi, label, k) => { const n = num(val); if (str(val) && (!ok(n) || n < lo || n > hi)) add(k, `${label} of ${str(val)} looks implausible. Check for a typo.`); };
@@ -1055,8 +1142,15 @@ function preSend(p, db, c, ctx, out) {
   // void rows that look out of order
   let prevT = tmin(fl.lastVoid);
   fl.voids.forEach(x => { const t = tmin(x.t); if (prevT != null && t != null) { const d = minsBetween(prevT, t); if (d && d > 16 * 60) add('fluid', `Void at ${fmtTime(x.t)} comes ${fx(d / 60, 1)} hours after the one before it. Check the row order or the time.`); } if (t != null) prevT = t; });
-  // low CBG with nothing done
-  r.en.cbg.forEach((x, i) => { if (c.cbg[i] && c.cbg[i].low && !str(x.iv)) add('endo', `CBG ${str(x.v)} at ${fmtTime(x.t) || 'row ' + (i + 1)} is below ${fx(thr(db.settings, 'cbgLow'))} mg/dl and has no intervention noted.`); });
+  // glucose (ADA): level 1 / level 2 hypoglycemia without an intervention noted; persistent hyperglycemia without insulin
+  r.en.cbg.forEach((x, i) => {
+    const g = c.cbg[i]; if (!g || !g.low || str(x.iv)) return;
+    add('endo', `CBG ${str(x.v)} at ${fmtTime(x.t) || 'row ' + (i + 1)} is ${g.low2 ? `level 2 hypoglycemia (below ${fx(thr(db.settings, 'cbgLow2'))})` : `below ${fx(thr(db.settings, 'cbgLow'))}`} mg/dl, with no intervention noted.`);
+  });
+  const highs = c.cbg.filter(g => g.hi180).map(g => fx(g.v));
+  if (on('endo') && highs.length >= 2 && !c.onInsulin) add('endo', `CBG was ${fx(thr(db.settings, 'cbgHigh'))} mg/dl or higher ${highs.length} times (${highs.join(', ')}), but no insulin regimen, insulin drip or insulin medication is entered.`);
+  // urine output (KDIGO)
+  if (on('fluid') && c.kdigo) add('fluid', c.kdigo.t);
   // ticked phrases that contradict the numbers
   const said = [];
   for (const g of ['gs', 'resp', 'pulm', 'cv']) if (on(GROUPS[g].sec)) ticked(db, r, g, ctx).forEach(s => said.push(s));
@@ -1078,25 +1172,31 @@ function preSend(p, db, c, ctx, out) {
   const vs = said.find(s => s.id === 'gs_vaso');
   if (vs && !c.vasoOn) add('gs', '“Still on vasopressor” is ticked, but no vasoactive drip is running in Current support.');
   // settings that were left blank
-  ['fever', 'cbgLow', 'cbgHigh', 'uoLow', 'uoHigh'].forEach(k => { if (!ok(num(db.settings[k]))) add('settings', `A threshold in Settings is blank or not a number, so the default (${DEF_SETTINGS[k]}) is being used.`); });
+  ['fever', 'feverIcu', 'cbgLow', 'cbgLow2', 'cbgHigh', 'uoLow', 'uoHigh'].forEach(k => { if (!ok(num(db.settings[k]))) add('settings', `A threshold in Settings is blank or not a number, so the default (${DEF_SETTINGS[k]}) is being used.`); });
   if (thr(db.settings, 'uoLow') >= thr(db.settings, 'uoHigh')) add('settings', 'In Settings, the urine output goal’s lower limit is not below its upper limit.');
   // antibiotic dose numbers
   const prev = p.hist.filter(h => h.date < r.date).sort((a, b) => (a.date < b.date ? 1 : -1))[0];
   if (prev && prev.doses) p.meds.forEach(m => {
     if (m.abx && m.st === 'active' && str(m.no) && prev.doses[m.id] != null && String(prev.doses[m.id]) === str(m.no)) add('meds', `${medName(m)} is still at dose ${str(m.no)}, the same as on ${fmtDate(prev.date)}.`);
   });
-  p.meds.forEach(m => { if (m.abx && m.st === 'active' && str(m.g) && !str(m.no)) add('meds', `${medName(m)} is flagged as an antimicrobial but has no dose number.`); });
+  p.meds.forEach(m => {
+    if (!m.abx || m.st !== 'active' || !str(m.g)) return;
+    if (!str(m.no)) add('meds', `${medName(m)} is flagged as an antimicrobial but has no dose number.`);
+    if (!str(m.ind)) add('meds', `${medName(m)} has no indication noted.`);
+    const d = abxDay(m, r.date), dur = num(m.dur);
+    if (d != null && d < 1) add('meds', `${medName(m)}: its start date is after the date of this update.`);
+    else if (d === 3) add('meds', `${medName(m)} is on Day 3: due for the 48\u201372 h antibiotic review (cultures, de-escalation, IV-to-oral).`);
+    if (d != null && dur > 0 && d > dur) add('meds', `${medName(m)} is on Day ${d}, past the planned ${fx(dur, 0)} days.`);
+  });
   // blanks inside ticked chips
   for (const g of Object.keys(GROUPS)) {
     if (!on(GROUPS[g].sec)) continue;
     ticked(db, r, g, ctx).forEach(s => { if (s.text.includes('__')) add(GROUPS[g].sec, `“${s.text}” has a blank to fill in.`); });
   }
-  // sections switched on but empty
-  for (const [k, name] of SECS) {
-    if (!on(k) || out[k]) continue;
-    if (k === 'resp' && r.resp.mode) continue;
-    add(k, k === 'meds' ? 'Medications is on but has no active medications.' : `${name} is on but empty. Fill it in or switch it off.`);
-  }
+  // sections switched on but empty: one line, not one per section
+  const empty = SECS.filter(([k]) => on(k) && !out[k] && !(k === 'resp' && r.resp.mode));
+  if (empty.length === 1) add(empty[0][0], `${empty[0][1]} is on but empty. Fill it in or switch it off.`);
+  else if (empty.length > 1) add('sections', `${empty.length} sections are on but empty: ${empty.map(x => x[1]).join(', ')}. Fill them in or switch them off.`);
   if (on('nihss') && !c.nihN) add('neuro', 'NIH Stroke Scale is on but no items are scored.');
   return W;
 }
@@ -1125,6 +1225,8 @@ function startNewDay(p, db, today = todayISO()) {
   r.cv.bp = [];
   r.en.cbg = [];
   r.gi.bmN = '';
+  r.ar.req = '';
+  delete r.chips.req;
   const moved = [], stuck = [];
   p.meds.forEach(m => {
     if (!m.abx || m.st !== 'active' || !str(m.no)) return;
@@ -1167,20 +1269,23 @@ function demoPatient(today = todayISO()) {
     cbg: [{ t: '17:30', v: '113', iv: '', star: false, at: 0 }, { t: '23:30', v: '77', iv: '1 vial D50-50 given', star: true, at: 1 }, { t: '23:45', v: '193', iv: '', star: false, at: 0 }, { t: '05:30', v: '107', iv: '', star: false, at: 0 }],
   });
   p.meds = [
-    Object.assign(newMed(), { g: 'Meropenem', b: 'Carmepem', dose: '1g', route: 'IV', extra: 'in 100cc PNSS to run for 3H', freq: 'q12h', abx: true, no: '16' }),
+    Object.assign(newMed(), { g: 'Meropenem', b: 'Carmepem', dose: '1g', route: 'IV', extra: 'in 100cc PNSS to run for 3H', freq: 'q12h', abx: true, no: '16', start: addDays(today, -7), ind: 'HAP', dur: '14' }),
     Object.assign(newMed(), { g: 'Apixaban', b: 'Pixab', dose: '5mg/tab', extra: '1 tab', freq: 'BID', ac: true }),
     Object.assign(newMed(), { g: 'Digoxin', dose: '0.125mg', route: 'IV', freq: 'OD', st: 'hold' }),
   ];
   p.labs = true;
+  r.ar.assess = 'Acute ischemic infarct, right MCA territory\nHospital-acquired pneumonia, on meropenem';
+  ch('req', 'rq_taper', { v: { 0: 'taper', 1: 'norepinephrine to off' } });
   return p;
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = { buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
+if (typeof module !== 'undefined' && module.exports) module.exports = { uoWindows, initialsOf, abxInfo, buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
 
 /* ================= TIMPEX Rounds Update: interface ================= */
 const ICON = {
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   more: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>',
   gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
   check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
@@ -1190,28 +1295,64 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
 
-/* ---------- storage ---------- */
-function loadDB() {
+/* ---------- storage (optionally encrypted with a PIN) ---------- */
+// With a PIN set, localStorage holds only an AES-256-GCM envelope; the key (from PBKDF2 of the PIN) lives in memory while unlocked.
+const LOCK = { key: null, salt: null, iter: 310000, locked: false, env: null, hiddenAt: 0, lastAct: Date.now(), fails: 0, waitUntil: 0 };
+const STORE_CAP = 5e6; // approximate localStorage limit, in characters
+function readStore() {
   let raw = null;
-  try { raw = localStorage.getItem(APP_KEY); } catch (e) { return freshDB(); }
-  if (!raw) return freshDB();
-  try { return normDB(JSON.parse(raw)); }
-  catch (e) { try { localStorage.setItem(APP_KEY + '-unreadable-' + Date.now(), raw); } catch (e2) { /* ignore */ } return freshDB(); }
+  try { raw = localStorage.getItem(APP_KEY); } catch (e) { return { db: freshDB() }; }
+  if (!raw) return { db: freshDB() };
+  try {
+    const o = JSON.parse(raw);
+    if (o && o.lock && o.data && o.salt && o.iv) return { env: o };
+    return { db: normDB(o) };
+  } catch (e) { try { localStorage.setItem(APP_KEY + '-unreadable-' + Date.now(), raw); } catch (e2) { /* ignore */ } return { db: freshDB() }; }
 }
-let db = loadDB();
-let saveT = 0, persistAsked = false;
-function save() { clearTimeout(saveT); saveT = setTimeout(flush, 250); }
+let db;
+{ const r0 = readStore(); db = r0.db || freshDB(); if (r0.env) { LOCK.locked = true; LOCK.env = r0.env; } }
+let saveT = 0, saveSeq = 0, persistAsked = false, pendingSave = Promise.resolve();
+function save() {
+  if (LOCK.locked) return;
+  if (ui.view === 'patient') { const p = curP(); if (p) p.touched = Date.now(); }
+  clearTimeout(saveT); saveT = setTimeout(flush, 250);
+}
+async function sealJSON(json) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, LOCK.key, new TextEncoder().encode(json));
+  return { app: 'timpex-rounds', lock: 1, v: 1, kdf: 'PBKDF2-SHA256', iter: LOCK.iter, salt: b64e(LOCK.salt), iv: b64e(iv), data: b64e(new Uint8Array(ct)) };
+}
+async function openEnv(env, key) {
+  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64d(env.iv) }, key, b64d(env.data));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+function storeRaw(str2) {
+  try { localStorage.setItem(APP_KEY, str2); }
+  catch (e) { toast('Couldn’t save: storage for this app is full. Export a backup, then delete old patients or history.', 8000); return false; }
+  if (str2.length > STORE_CAP * 0.7 && !ui.storeWarned) { ui.storeWarned = true; toast(`Storage is ${Math.round(str2.length / STORE_CAP * 100)}% full. Export a backup and delete discharged patients.`, 7000); }
+  return true;
+}
 function flush() {
   clearTimeout(saveT);
-  let json;
-  try { json = JSON.stringify(db); localStorage.setItem(APP_KEY, json); }
-  catch (e) { toast('Couldn\u2019t save: storage for this app is full. Export a backup, then delete old patients or history.', 8000); return; }
-  if (json.length > STORE_CAP * 0.7 && !ui.storeWarned) { ui.storeWarned = true; toast(`Storage is ${Math.round(json.length / STORE_CAP * 100)}% full. Export a backup and delete discharged patients.`, 7000); }
+  if (LOCK.locked) return pendingSave;
+  const json = JSON.stringify(db);
+  if (!LOCK.key) { storeRaw(json); return (pendingSave = Promise.resolve()); }
+  const seq = ++saveSeq;
+  pendingSave = sealJSON(json).then(env => { if (seq === saveSeq) storeRaw(JSON.stringify(env)); }).catch(() => toast('Couldn’t encrypt and save. Your last change may not be stored.', 6000));
+  return pendingSave;
 }
-const STORE_CAP = 5e6; // approximate localStorage limit, in characters
-window.addEventListener('storage', e => {
+window.addEventListener('storage', async e => {
   if (e.key !== APP_KEY) return;
-  try { db = e.newValue ? normDB(JSON.parse(e.newValue)) : freshDB(); } catch (err) { return; }
+  if (!e.newValue) { LOCK.key = null; LOCK.locked = false; LOCK.env = null; db = freshDB(); applyTheme(); render(); toast('All data was cleared in another tab.'); return; }
+  let o; try { o = JSON.parse(e.newValue); } catch (err) { return; }
+  if (o && o.lock) {
+    if (LOCK.locked) { LOCK.env = o; return; }
+    if (LOCK.key && LOCK.salt && o.salt === b64e(LOCK.salt)) { try { db = normDB(await openEnv(o, LOCK.key)); } catch (err) { return; } }
+    else { LOCK.key = null; LOCK.env = o; LOCK.locked = true; db = freshDB(); render(); toast('The app lock was changed in another tab. Enter the PIN to continue.', 5000); return; }
+  } else {
+    LOCK.key = null; LOCK.locked = false; LOCK.env = null;
+    db = normDB(o);
+  }
   applyTheme(); render(); toast('Updated with changes made in another tab.');
 });
 function requestPersist() {
@@ -1219,8 +1360,78 @@ function requestPersist() {
   persistAsked = true;
   try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {}); } catch (e) { /* ignore */ }
 }
-document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); });
+const lockMs = () => Math.max(1, num(db.settings.lockMins) || 5) * 60000;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { LOCK.hiddenAt = Date.now(); flush(); }
+  else if (LOCK.key && LOCK.hiddenAt && Date.now() - LOCK.hiddenAt > lockMs()) lockNow();
+});
 window.addEventListener('pagehide', flush);
+['pointerdown', 'keydown'].forEach(ev => document.addEventListener(ev, () => { LOCK.lastAct = Date.now(); }, true));
+setInterval(() => { if (LOCK.key && !document.hidden && Date.now() - LOCK.lastAct > lockMs()) lockNow(); }, 15000);
+async function lockNow() {
+  if (!LOCK.key) return;
+  await flush();
+  try { LOCK.env = JSON.parse(localStorage.getItem(APP_KEY)); } catch (e) { /* ignore */ }
+  LOCK.key = null; LOCK.locked = true; db = freshDB(); OUT = null;
+  $$('.sheet-bg').forEach(x => x.remove()); document.body.classList.remove('modal');
+  render();
+}
+async function unlock() {
+  const inp = $('#pin'), btn = $('[data-act="unlock"]');
+  if (!inp || !LOCK.env) return;
+  if (Date.now() < LOCK.waitUntil) { toast(`Too many tries. Wait ${Math.ceil((LOCK.waitUntil - Date.now()) / 1000)} seconds.`); return; }
+  const iter = +LOCK.env.iter;
+  if (!(iter >= 1000 && iter <= 5e6)) { toast('The saved data looks damaged.', 4000); return; }
+  if (!canCrypt()) { toast('Unlocking needs the https address of the app.', 5000); return; }
+  btn.disabled = true; btn.textContent = 'Unlocking…';
+  try {
+    const salt = b64d(LOCK.env.salt), key = await deriveKey(inp.value, salt, iter);
+    const obj = await openEnv(LOCK.env, key);
+    db = normDB(obj); LOCK.key = key; LOCK.salt = salt; LOCK.iter = iter; LOCK.locked = false; LOCK.env = null; LOCK.fails = 0; LOCK.lastAct = Date.now();
+    applyTheme(); render();
+  } catch (e) {
+    LOCK.fails++;
+    if (LOCK.fails >= 3) LOCK.waitUntil = Date.now() + Math.min(60, 5 * 2 ** (LOCK.fails - 3)) * 1000;
+    btn.disabled = false; btn.textContent = 'Unlock'; inp.value = ''; inp.focus();
+    toast(LOCK.fails >= 3 ? 'Wrong PIN. Wait a few seconds before trying again.' : 'Wrong PIN.', 3000);
+  }
+}
+async function checkPin(pin) {
+  try { const env = JSON.parse(localStorage.getItem(APP_KEY)); const k = await deriveKey(pin, b64d(env.salt), +env.iter); await openEnv(env, k); return true; } catch (e) { return false; }
+}
+async function setPin() {
+  if (!canCrypt()) { toast('The app lock uses the browser’s encryption, which only works from the https address.', 5000); return; }
+  const changing = !!LOCK.key;
+  const fields = (changing ? [{ label: 'Current PIN', type: 'password' }] : []).concat([{ label: 'New PIN (at least 4 digits or characters)', type: 'password' }, { label: 'Type it again', type: 'password' }]);
+  const v = await ask({ title: changing ? 'Change PIN' : 'Set a PIN', body: 'Saved data on this phone will be encrypted with this PIN. If you forget it, the data can only come back from a backup.', fields, ok: changing ? 'Change PIN' : 'Turn on app lock' });
+  if (v === false) return;
+  const [cur, a, b] = changing ? v : [null, v[0], v[1]];
+  if (changing && !(await checkPin(cur))) { toast('The current PIN is wrong. Nothing changed.', 4000); return; }
+  if (a !== b) { toast('The two PINs don’t match. Nothing changed.', 4000); return; }
+  if (a.length < 4) { toast('Use at least 4 digits or characters. Nothing changed.', 4000); return; }
+  toast('Encrypting…', 1500);
+  LOCK.salt = crypto.getRandomValues(new Uint8Array(16)); LOCK.iter = 310000;
+  LOCK.key = await deriveKey(a, LOCK.salt, LOCK.iter);
+  await flush(); render();
+  toast(changing ? 'PIN changed.' : 'App lock is on. Saved data is now encrypted.', 4000);
+}
+async function pinOff() {
+  const v = await ask({ title: 'Turn off the app lock?', body: 'Saved data will be stored without encryption again.', fields: [{ label: 'Current PIN', type: 'password' }], ok: 'Turn off', danger: true });
+  if (v === false) return;
+  if (!(await checkPin(v[0]))) { toast('Wrong PIN. The lock is still on.', 4000); return; }
+  LOCK.key = null; LOCK.salt = null;
+  await flush(); render(); toast('App lock is off.');
+}
+async function forgotPin() {
+  const v = await ask({ title: 'Forgot your PIN?', body: 'Without the PIN, the saved data can’t be decrypted. You can erase everything on this phone and start again, then import a backup if you have one.', fields: [{ label: 'Type DELETE to erase all data', cap: 'characters' }], ok: 'Erase all data', danger: true });
+  if (v === false) return;
+  if (v[0] !== 'DELETE') { toast('Nothing was erased. Type DELETE in capitals to confirm.', 4000); return; }
+  try { localStorage.removeItem(APP_KEY); } catch (e) { /* ignore */ }
+  LOCK.key = null; LOCK.salt = null; LOCK.locked = false; LOCK.env = null; LOCK.fails = 0; LOCK.waitUntil = 0;
+  db = freshDB(); flush(); go('#/'); render(); toast('All data on this phone was erased.', 4000);
+}
+const isIOS = () => /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isStandalone = () => navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
 
 /* ---------- state ---------- */
 const ui = { view: '', pid: '', g: '', open: {}, med: null, back: '' };
@@ -1285,7 +1496,7 @@ function chipsHtml(g) {
     const tx = parseTpl(d.t).map(pt => {
       if (pt.k === 'txt') return `<span>${esc(pt.s)}</span>`;
       if (pt.k === 'sel') { const cur = st.v && pt.o.includes(st.v[pt.i]) ? st.v[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
-      if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ''} autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
+      if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ''} size="${Math.max(pt.n ? 3 : 6, String(val).length + 1)}" autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
       return `<span class="tok" data-c="tok:${pt.name}"></span>`;
     }).join('');
     const ctl = (G.trend ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...TRENDS].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
@@ -1308,6 +1519,7 @@ BODY.hdr = () => {
     ${F('Age', 'p.age', { t: 'num' })}${F('Sex', 'p.sex', { t: 'sel', opts: [['', ''], ['M', 'M'], ['F', 'F']] })}
     ${F('Room', 'p.room', { ph: 'MICU 1', cap: 'characters' })}${F('Hospital tag', 'p.hosp', { ph: 'IDH', cap: 'characters' })}
     ${F('Working weight', 'p.weight', { t: 'num', unit: 'kg' })}${F('Date of this update', 'r.date', { t: 'date' })}</div>
+  ${CB('Print initials instead of the full name (for group chats)', 'p.initials')}
   ${H('Day counters')}${CALC('counters', 'big')}
   <div class="grid" style="margin-top:10px">${F('Admission date', 'p.admit', { t: 'date' })}${F('Admission date counts as', 'p.admitBase', { t: 'sel', opts: BASE })}
     ${F('ICU transfer date', 'p.icu', { t: 'date' })}${F('ICU date counts as', 'p.icuBase', { t: 'sel', opts: BASE })}</div>
@@ -1322,7 +1534,7 @@ BODY.fluid = () => {
   ${H('Shift block')}<div class="grid">${F('Label', 'r.fl.shLabel', { ph: '4pm-12am' })}${F('Hours', 'r.fl.shHrs', { t: 'num' })}${F('Input', 'r.fl.shIn', { t: 'num', unit: 'mL' })}${F('Output', 'r.fl.shOut', { t: 'num', unit: 'mL' })}</div>${CALC('netSh', 'big')}
   ${H('Output breakdown')}<div class="grid">${F('Urine', 'r.fl.urine', { t: 'num', unit: 'mL' })}${PAIR('Stool, approx.', 'r.fl.stLo', 'r.fl.stHi', 'cc')}${F('NGT', 'r.fl.ngt', { t: 'num', unit: 'mL' })}${F('Drain', 'r.fl.drain', { t: 'num', unit: 'mL' })}${F('Emesis', 'r.fl.emesis', { t: 'num', unit: 'mL' })}${F('Others', 'r.fl.othOut', { t: 'num', unit: 'mL' })}</div>
   ${CALC('bd')}
-  ${H('24-hour urine output')}${CALC('uo', 'big')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
+  ${H('24-hour urine output')}${CALC('uo', 'big')}${CALC('kdigo')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
   ${H('Void log')}<div class="grid">${F('Collected via', 'r.fl.method', { t: 'sel', opts: URINE_METHODS })}${F('Last void before this log', 'r.fl.lastVoid', { t: 'time' })}</div>
   <div class="rows">${r.fl.voids.map((x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'mL' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>`).join('')}</div>
   ${ADD('+ Add void', 'r.fl.voids', 'void', 'fluid')}
@@ -1402,15 +1614,20 @@ BODY.endo = () => {
   return `${F('CBG monitoring frequency', 'r.en.freq', { t: 'sel', opts: CBG_FREQ })}
   ${H('CBG log')}<div class="rows">${r.en.cbg.map((x, i) => `<div class="row r-cbg">${F('Time', `r.en.cbg.${i}.t`, { t: 'time' })}<label class="fld"><span class="lb">mg/dl</span><input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="r.en.cbg.${i}.v" data-fl="cbg:${i}" value="${esc(x.v)}"></label>${F('Intervention', `r.en.cbg.${i}.iv`, { ph: 'if any' })}<button type="button" class="star${x.star ? ' on' : ''}" data-act="cbgstar" data-i="${i}" aria-pressed="${!!x.star}" aria-label="Add to General Survey">${x.star ? '★' : '☆'}</button>${DEL('r.en.cbg', i, 'endo')}</div>`).join('')}</div>
   ${ADD('+ Add CBG', 'r.en.cbg', 'cbg', 'endo')}${CALC('cbgr', 'big')}
-  <p class="hint">Values below ${esc(S.cbgLow)} or above ${esc(S.cbgHigh)} mg/dl are flagged in red here (change this in Settings). The newest row prints with “-> latest”. Star a row that has an intervention to add it to the General Survey.</p>
+  <p class="hint">Values below ${esc(S.cbgLow)} or above ${esc(S.cbgHigh)} mg/dl are flagged in red, and below ${esc(S.cbgLow2)} (level 2 hypoglycemia) in solid red (change these in Settings). The newest row prints with “-> latest”. Star a row that has an intervention to add it to the General Survey.</p>
   ${CB('Print the 24-hour range', 'r.en.range')}
   <div style="margin-top:10px">${F('Insulin regimen', 'r.en.insulin', { t: 'area', rows: 2 })}</div>${OTH('endo')}`;
 };
-BODY.id = () => `${CALC('fever', 'big')}<p class="hint">From Vital signs. Febrile at ${esc(db.settings.fever)} °C or higher (change this in Settings).</p>
-  ${H('Antimicrobials')}<div class="calc pre" data-c="abx"></div><p class="hint">Taken from Medications: flag a medication as an antimicrobial there. Dose numbers move forward on each new day.</p>
+BODY.id = () => `${CALC('fever', 'big')}<p class="hint">From Vital signs. Febrile at ${esc(curP().feverIcu ? db.settings.feverIcu : db.settings.fever)} \u00b0C or higher.</p>
+  ${CB(`ICU patient: use the ICU fever threshold (\u2265${db.settings.feverIcu} \u00b0C, SCCM/IDSA)`, 'p.feverIcu', { rr: 'id' })}
+  ${H('Antimicrobials')}<div class="calc pre" data-c="abx"></div><p class="hint">Taken from Medications: flag a medication as an antimicrobial there and add its start date, planned days and indication. Dose numbers and the day count move forward on each new day.</p>
   ${F('Cultures', 'r.idd.cx', { t: 'area', rows: 2 })}${OTH('id')}`;
 BODY.heme = () => `${chipsHtml('heme')}<div class="calc" data-c="ac"></div>${OTH('heme')}`;
 BODY.pend = () => chipsHtml('pend') + OTH('pend');
+BODY.ar = () => `${F('Assessment (one bullet per line)', 'r.ar.assess', { t: 'area', rows: 3, ph: 'Septic shock from HAP, improving' })}
+  ${H('Requests')}${chipsHtml('req')}
+  <div style="margin-top:10px">${F('Other requests (one bullet per line)', 'r.ar.req', { t: 'area', rows: 2 })}</div>
+  <p class="hint">Ends the message with a clear ask, as in SBAR. The assessment carries over to the next day; requests are cleared when you start a new day. The \u201c${esc(db.settings.reqLabel)}\u201d label can be changed in Settings.</p>`;
 function medHtml(m, i) {
   const open = ui.med === m.id, b = `p.meds.${i}`, auto = dpd(Object.assign({}, m, { dpd: '' }));
   return `<li class="med st-${m.st}${open ? ' open' : ''}" data-si="${i}">
@@ -1421,7 +1638,7 @@ function medHtml(m, i) {
       ${F('Details', b + '.extra', { ph: 'in 100cc PNSS to run for 3H', cls: 'span2', cap: 'none' })}
       ${F('Frequency', b + '.freq', { ph: 'q12h', list: 'dl-freq', cap: 'none' })}${F('Status', b + '.st', { t: 'sel', opts: [['active', 'Active'], ['hold', 'On hold temporarily'], ['dc', 'Discontinued (hidden)']], rr: 'meds' })}</div>
       <div class="chips flags">${CBX('Antimicrobial', b + '.abx', 'meds')}${CBX('Anticoagulant', b + '.ac', 'meds')}</div>
-      ${m.abx ? `<div class="grid" style="margin-top:10px">${F('Dose number today', b + '.no', { t: 'num' })}${F('Doses per day', b + '.dpd', { t: 'num', ph: auto ? String(auto) + ' (from frequency)' : 'enter a number' })}</div><p class="hint">Leave “Doses per day” blank to work it out from the frequency: OD 1, q12h 2, q8h 3, q6h 4.</p>` : ''}
+      ${m.abx ? `<div class="grid" style="margin-top:10px">${F('Start date (Day 1)', b + '.start', { t: 'date' })}${F('Planned days', b + '.dur', { t: 'num' })}${F('Indication', b + '.ind', { ph: 'HAP, UTI, sepsis\u2026', cls: 'span2' })}${F('Dose number today', b + '.no', { t: 'num' })}${F('Doses per day', b + '.dpd', { t: 'num', ph: auto ? 'auto: ' + auto : 'number' })}</div><p class="hint">Leave “Doses per day” blank to work it out from the frequency: OD 1, q12h 2, q8h 3, q6h 4.</p>` : ''}
       <div class="addrow"><button type="button" class="btn sm" data-act="med" data-id="${esc(m.id)}">Done</button><button type="button" class="btn sm danger" data-act="delmed" data-id="${esc(m.id)}">Delete medication</button></div></div>` : ''}</li>`;
 }
 BODY.meds = () => {
@@ -1473,11 +1690,17 @@ function calcText(key, p, out) {
     case 'o2': return c.device ? `Oxygen: ${c.device}` : 'Set oxygen / ventilation in Respiratory support.';
     case 'gcs': return c.gcs ? 'GCS ' + c.gcs.txt : '';
     case 'nih': return c.nihN ? `${c.nihTotal} point${c.nihTotal === 1 ? '' : 's'}, ${c.nihN} of 15 scored` : 'No items scored';
+    case 'kdigo': {
+      const w = c.uoWin; if (!c.hasW) return '';
+      const parts = [w.r6 != null && `last 6 h ${f2(w.r6)}`, w.r12 != null && `last 12 h ${f2(w.r12)}`, w.r24 != null && `last 24 h ${f2(w.r24)}`].filter(Boolean);
+      const base = parts.length ? `From the void log: ${parts.join(', ')} ml/kg/h.` : w.span ? `The void log covers ${fx(w.span, 1)} h; the KDIGO windows need at least 6 h.` : '';
+      return [base, c.kdigo ? c.kdigo.t : ''].filter(Boolean).join(' ');
+    }
     case 'cbgr': return c.cbgRange ? `24H range: ${c.cbgRange} mg/dl` : '';
     case 'hrv': return str(r.v.hr) ? str(r.v.hr) + ' bpm' : '—';
     case 'fever': return c.febrile == null ? 'Enter T or Tmax in Vital signs.' : (c.febrile ? 'Febrile' : 'Afebrile') + ` (${[str(r.v.t) && 'T ' + str(r.v.t), str(r.v.tmax) && 'Tmax ' + str(r.v.tmax)].filter(Boolean).join(', ')})`;
     case 'renal': return c.net24 == null ? 'The fluid balance line appears here once the 24-hour I&O is filled in.' : c.net24 > 0 ? `Positive fluid balance for the past 24H (${signed(c.net24)})` : c.net24 < 0 ? `Negative fluid balance for the past 24H (${signed(c.net24)})` : 'Even fluid balance for the past 24H';
-    case 'abx': return c.abx.length ? c.abx.map(medShort).join('\n') : 'No medication is flagged as an antimicrobial.';
+    case 'abx': return c.abx.length ? c.abx.map(m => medShort(m, abxInfo(m, r.date))).join('\n') : 'No medication is flagged as an antimicrobial.';
     case 'ac': return c.ac.length ? 'Anticoagulant on the med list: ' + c.ac.map(medShort).join('; ') : 'Flag a medication as an anticoagulant in Medications to fill “On anticoagulation”.';
     case 'gsstars': {
       const L = [];
@@ -1510,7 +1733,7 @@ function doRefresh() {
   OUT = buildMessage(p, db);
   $$('[data-c]').forEach(el => { const t = calcText(el.dataset.c, p, OUT); if (el.textContent !== t) el.textContent = t; });
   $$('[data-c^="sum:"]').forEach(el => el.classList.toggle('empty', isEmptySec(el.dataset.c.slice(4), p, OUT)));
-  $$('[data-fl^="cbg:"]').forEach(el => { const x = OUT.calc.cbg[+el.dataset.fl.split(':')[1]]; el.classList.toggle('flag', !!x && (x.low || x.high)); });
+  $$('[data-fl^="cbg:"]').forEach(el => { const x = OUT.calc.cbg[+el.dataset.fl.split(':')[1]]; el.classList.toggle('flag', !!x && (x.low || x.high) && !x.low2); el.classList.toggle('flag2', !!x && x.low2); });
   const stale = new Set();
   $$('[data-auto]').forEach(el => {
     const [g, id] = el.dataset.auto.split(':'), d = chipDefs(db, g).find(x => x.id === id);
@@ -1522,6 +1745,24 @@ function doRefresh() {
 
 /* ---------- views ---------- */
 function bar(inner) { return `<header class="bar"><div class="bar-in">${inner}</div></header>`; }
+const DAY = 864e5;
+const retainDays = () => Math.max(1, num(db.settings.retainDays) || 7);
+const lastSeen = p => Math.max(p.touched || 0, p.created || 0, isISO(p.rec.date) ? isoDay(p.rec.date) * DAY : 0);
+const staleList = () => db.patients.filter(p => Date.now() - lastSeen(p) > retainDays() * DAY);
+function banner(k, title, body, actions) {
+  return `<div class="ban"><div class="ban-t"><b>${esc(title)}</b><p>${esc(body)}</p>${actions || ''}</div><button type="button" class="ib" data-act="dismiss" data-k="${k}" aria-label="Hide for a week">${ICON.x}</button></div>`;
+}
+function homeBanners() {
+  const out = [], now = Date.now(), m = db.meta, hidden = k => m.dismiss[k] && now - m.dismiss[k] < 7 * DAY;
+  if (isIOS() && !isStandalone() && !hidden('ios')) out.push(banner('ios', 'On iPhone, use this app from your Home Screen.', 'Safari can erase a site’s saved data after 7 days without a visit; the Home Screen app keeps it. In Safari, tap Share, then Add to Home Screen.'));
+  if (db.patients.length) {
+    const last = m.lastBackup, age = now - (last || m.created);
+    if (age > 7 * DAY && !hidden('backup')) out.push(banner('backup', last ? `Last backup: ${Math.floor(age / DAY)} days ago.` : 'No backup yet.', 'If this browser’s data is cleared, patients can only come back from a backup file.', '<button type="button" class="btn sm" data-act="export">Export backup</button>'));
+    const st = staleList();
+    if (st.length && !hidden('stale')) out.push(banner('stale', `${st.length} patient${st.length === 1 ? '' : 's'} not updated in over ${retainDays()} days.`, 'If discharged, delete them so this phone keeps only the patient data you still need.', '<button type="button" class="btn sm" data-act="stale">Review</button>'));
+  }
+  return out.join('');
+}
 function vHome() {
   const today = todayISO();
   const list = db.patients.map((p, i) => {
@@ -1531,8 +1772,8 @@ function vHome() {
     return `<div class="pt-w" data-si="${i}"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><a class="pt" href="#/p/${esc(p.id)}"><span class="pt-n">${esc(ptName(p))}</span><span class="pt-m">${esc(meta || 'No room or admission date yet')}</span>
       <span class="pt-s${stale ? ' stale' : sent ? ' sent' : ''}">${stale ? `Last update is for ${esc(fmtDate(p.rec.date))}. Open it and start a new day.` : sent ? `Sent for ${esc(fmtDate(p.rec.date))}` : `Not sent yet for ${esc(fmtDate(p.rec.date))}`}</span></a></div>`;
   }).join('');
-  return bar(`<div class="brand"><b>TIMPEX</b> Rounds Update</div><a class="ib" href="#/settings" aria-label="Settings">${ICON.gear}</a>`) +
-  `<main class="wrap">
+  return bar(`<div class="brand"><b>TIMPEX</b> Rounds Update</div>${LOCK.key ? `<button type="button" class="ib" data-act="locknow" aria-label="Lock now">${ICON.lock}</button>` : ''}<a class="ib" href="#/settings" aria-label="Settings">${ICON.gear}</a>`) +
+  `<main class="wrap">${homeBanners()}
     ${db.patients.length ? `<div class="pts" data-sort="d.patients">${list}</div>${db.patients.length > 1 ? '<p class="hint">Drag the dots to put patients in your rounds order.</p>' : ''}` : `<div class="empty"><p>No patients yet</p><p>Add your first patient, or load the demo patient to see a complete message.</p></div>`}
     <div class="acts"><button type="button" class="btn pri" data-act="addpt">Add patient</button><button type="button" class="btn" data-act="demo">Load demo patient</button></div>
     <div class="backup"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button></div>
@@ -1576,6 +1817,14 @@ function vHistory() {
     : `<div class="empty"><p>No saved messages yet</p><p>A message is saved here each time you copy or share it, and when you start a new day.</p></div>`}
     <p class="note">The last ${HIST_MAX} saved messages are kept per patient.</p></main>`;
 }
+function lockCard() {
+  if (!canCrypt()) return `<p class="hint">The app lock uses the browser’s built-in encryption, which only works from the app’s https address.</p>`;
+  const note = `<p class="hint">A PIN keeps out a casual look. It can’t stop someone with special tools and a copy of your phone’s files, so your phone’s own screen lock matters most. If you forget the PIN, the data can only come back from a backup.</p>`;
+  if (LOCK.key) return `<p class="hint">On. Saved data is encrypted with your PIN (AES-256-GCM). The app locks itself after the time below in the background or without a tap.</p>
+    ${F('Lock after', 's.lockMins', { t: 'sel', opts: [['1', '1 minute'], ['5', '5 minutes'], ['15', '15 minutes'], ['30', '30 minutes']] })}
+    <div class="addrow"><button type="button" class="btn sm" data-act="locknow">Lock now</button><button type="button" class="btn sm" data-act="setpin">Change PIN</button><button type="button" class="btn sm danger" data-act="pinoff">Turn off</button></div>${note}`;
+  return `<p class="hint">Off. Set a PIN to encrypt the patient data saved on this phone and lock the app when you step away.</p><div class="addrow"><button type="button" class="btn sm pri" data-act="setpin">Set a PIN</button></div>${note}`;
+}
 function vSettings() {
   const groups = Object.keys(GROUPS).map(g => `<a class="grp" href="#/chips/${g}" data-act="tochips"><b>${esc(GROUPS[g].name)}</b><span>${db.chips[g].length} chips</span></a>`).join('');
   return bar(`<a class="ib" href="#/" aria-label="Back">${ICON.back}</a><div class="bar-t"><b>Settings</b><small>Applies to all patients</small></div>`) +
@@ -1584,12 +1833,17 @@ function vSettings() {
     ${H('Appearance')}${F('Theme', 's.theme', { t: 'sel', opts: [['auto', 'Match the phone'], ['light', 'Light'], ['dark', 'Dark']] })}
     ${H('Greeting and sign-off')}${F('Greeting ({time} becomes morning, afternoon or evening)', 's.greeting', { t: 'area', rows: 3 })}
     <div class="grid" style="margin-top:10px">${F('Closing line', 's.closing')}${F('Your name and hospital', 's.signName', { ph: 'DELA CRUZ, IDH' })}</div>
-    ${H('Thresholds')}<div class="grid">${F('Febrile at or above', 's.fever', { t: 'num', unit: '°C' })}<div></div>${F('CBG flagged below', 's.cbgLow', { t: 'num', unit: 'mg/dl' })}${F('CBG flagged above', 's.cbgHigh', { t: 'num', unit: 'mg/dl' })}${F('Urine output goal from', 's.uoLow', { t: 'num', unit: 'ml/kg/h' })}${F('Urine output goal to', 's.uoHigh', { t: 'num', unit: 'ml/kg/h' })}</div>
+    <div class="grid" style="margin-top:10px">${F('Label before requests', 's.reqLabel', { ph: 'For your input:' })}${F('Delete reminder after', 's.retainDays', { t: 'num', unit: 'days without an update' })}</div>
+    ${CB('Use initials instead of full names for new patients', 's.initialsNew')}
+    ${H('Thresholds')}<div class="grid">${F('Febrile at or above', 's.fever', { t: 'num', unit: '\u00b0C' })}${F('ICU patients: febrile at or above', 's.feverIcu', { t: 'num', unit: '\u00b0C' })}${F('CBG flagged below', 's.cbgLow', { t: 'num', unit: 'mg/dl' })}${F('Level 2 hypoglycemia below', 's.cbgLow2', { t: 'num', unit: 'mg/dl' })}${F('CBG flagged above', 's.cbgHigh', { t: 'num', unit: 'mg/dl' })}<div></div>${F('Urine output goal from', 's.uoLow', { t: 'num', unit: 'ml/kg/h' })}${F('Urine output goal to', 's.uoHigh', { t: 'num', unit: 'ml/kg/h' })}</div>
   </div></section>
   <section class="card plain"><div class="card-b">${H('Chips')}<p class="hint">Add, edit, delete and reorder the phrases for each system. Changes apply to every patient.</p>${groups}</div></section>
+  <section class="card plain"><div class="card-b">${H('App lock')}${lockCard()}</div></section>
   <section class="card plain"><div class="card-b">${H('Your data')}
     <p class="hint">Back up regularly: if the browser\u2019s data is cleared, patients can only come back from a backup file. Set a passphrase when you export and the file is encrypted (AES-256), so it is safer to keep in Drive or send to yourself.</p>
     <p class="hint">${(() => { let n = 0; try { n = (localStorage.getItem(APP_KEY) || '').length; } catch (e) { /* ignore */ } return `Storage used: ${(n / 1e6).toFixed(2)} MB of about ${STORE_CAP / 1e6} MB (${Math.round(n / STORE_CAP * 100)}%). The last ${HIST_MAX} messages are kept per patient.`; })()}</p>
+    <p class="hint">${db.meta.lastBackup ? 'Last backup: ' + esc(fmtDate(todayISO(new Date(db.meta.lastBackup)))) + '.' : 'No backup exported yet.'}</p>
+    <p class="hint" id="persist">${isIOS() ? (isStandalone() ? 'Opened from the Home Screen, so Safari\u2019s 7-day data limit doesn\u2019t apply.' : 'Opened in Safari: add the app to your Home Screen so Safari\u2019s 7-day limit can\u2019t erase its data.') : 'Checking storage protection\u2026'}</p>
     <div class="addrow"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button><button type="button" class="btn sm danger" data-act="clearall">Clear all data</button></div></div></section>
   <section class="card plain"><div class="card-b">${H('About')}
     <p class="hint">TIMPEX Rounds Update keeps everything in this browser’s local storage on this phone. It loads nothing from the internet and sends nothing anywhere (a content security policy blocks all network requests), in keeping with RA 10173.</p>
@@ -1611,8 +1865,22 @@ function vChips() {
       <p>Trend tags go in front of the phrase: Still adds “with” where needed (“Still with bilateral fine crackles”).</p></div></section>
   </main>`;
 }
+function vLock() {
+  return `<main class="lockv"><div class="lock-in"><div class="lock-ico">${ICON.lock}</div>
+    <h1><b>TIMPEX</b> Rounds Update</h1><p>Enter your PIN to unlock.</p>
+    <input class="in pin" type="password" id="pin" autocomplete="current-password" aria-label="PIN" spellcheck="false">
+    <button type="button" class="btn pri" data-act="unlock">Unlock</button>
+    <button type="button" class="lnk" data-act="forgot">Forgot your PIN?</button></div></main>`;
+}
 const VIEWS = { home: vHome, patient: vPatient, history: vHistory, settings: vSettings, chips: vChips };
 function render() {
+  if (LOCK.locked) {
+    ui.view = 'lock'; ui.key = 'lock'; document.body.dataset.view = 'lock';
+    $$('.sheet-bg').forEach(x => x.remove()); document.body.classList.remove('modal');
+    $('#app').innerHTML = vLock();
+    const pin = $('#pin'); if (pin) { pin.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); unlock(); } }); setTimeout(() => pin.focus(), 50); }
+    return;
+  }
   const h = (location.hash || '#/').slice(1).split('/').filter(Boolean), [a, b] = h;
   let v = 'home';
   if ((a === 'p' || a === 'h') && db.patients.some(x => x.id === b)) { v = a === 'p' ? 'patient' : 'history'; ui.pid = b; }
@@ -1626,6 +1894,10 @@ function render() {
   document.body.dataset.view = v;
   $('#app').innerHTML = VIEWS[v]();
   if (v === 'patient') refresh(true);
+  if (v === 'settings' && !isIOS() && navigator.storage && navigator.storage.persisted) navigator.storage.persisted().then(on => {
+    const el = $('#persist'); if (!el) return;
+    el.textContent = on ? 'Storage protection: on. The browser won’t clear this app’s data to free up space.' : `Storage protection: off.${isStandalone() ? '' : ' Install the app (browser menu, then Add to Home screen or Install app) so the browser protects its data.'}`;
+  }).catch(() => {});
   if (changed) { window.scrollTo(0, 0); if (Date.now() - toastAt > 600) hideToast(); }
 }
 window.addEventListener('hashchange', render);
@@ -1643,24 +1915,26 @@ function sheet(inner, kind, onClose) {
   $('#sheets').appendChild(bg);
   document.body.classList.add('modal');
   hideToast();
-  if (kind !== 'ask') { try { history.pushState({ sheet: kind }, ''); bg._pushed = true; } catch (e) { /* ignore */ } }
+  // All open sheets share one history entry, so Back closes them in one step and never skips a screen.
+  if (kind !== 'ask') { if (!(history.state && history.state.sheet)) { try { history.pushState({ sheet: 1 }, ''); } catch (e) { /* ignore */ } } bg._pushed = true; }
   return $('.sheet', bg);
 }
 function popDone() { popSkip = 0; clearTimeout(popTimer); if (pendingGo) { const h = pendingGo; pendingGo = null; go(h); } }
-function closeSheet(el, silent, fromPop) {
+function closeSheet(el, silent, fromPop, keepState) {
   const bg = el.classList.contains('sheet-bg') ? el : el.closest('.sheet-bg');
   if (!bg || !bg.parentNode) return;
   bg.remove();
   if (!$('.sheet-bg')) document.body.classList.remove('modal');
-  if (bg._pushed && !fromPop) { popSkip++; clearTimeout(popTimer); popTimer = setTimeout(popDone, 700); history.back(); }
+  const stillPushed = $$('.sheet-bg').some(x => x._pushed);
+  if (bg._pushed && !fromPop && !keepState && !stillPushed && history.state && history.state.sheet) { popSkip++; clearTimeout(popTimer); popTimer = setTimeout(popDone, 700); history.back(); }
   if (!silent && bg._onClose) bg._onClose();
 }
 window.addEventListener('popstate', () => {
   if (popSkip > 0) { popSkip--; if (!popSkip) popDone(); return; }
-  const all = $$('.sheet-bg');
-  if (all.length) closeSheet(all[all.length - 1], false, true);
+  $$('.sheet-bg').reverse().forEach(b => closeSheet(b, false, true));
 });
-const closeSheets = () => $$('.sheet-bg').forEach(b => closeSheet(b));
+// keepState: a new sheet is about to open, so keep the shared history entry instead of going back.
+const closeSheets = keepState => $$('.sheet-bg').forEach(b => closeSheet(b, false, false, keepState));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { const all = $$('.sheet-bg'); if (all.length) closeSheet(all[all.length - 1]); } });
 // onOk runs inside the tap itself, which iPhone Safari needs for clipboard, share and file saving.
 function ask({ title, body = '', html = '', ok = 'OK', cancel = 'Cancel', alt = '', danger = false, fields = [], onOk = null }) {
@@ -1698,7 +1972,7 @@ function withUndo(msg, restore) {
 /* ---------- preview, copy, share ---------- */
 const warnList = ws => ws.map(w => `<li><button type="button" data-act="goto" data-k="${w.k}">${esc(w.t)}</button></li>`).join('');
 function openPreview() {
-  closeSheets();
+  closeSheets(true);
   sheet(`<div class="sh-h"><h2>Preview</h2><button type="button" class="ib" data-act="close" aria-label="Close preview">${ICON.x}</button></div>
     <div data-pv="warn"></div><pre class="msg" data-pv="msg"></pre>
     <div class="sh-f"><button type="button" class="btn pri" data-act="pcopy">Copy</button><button type="button" class="btn" data-act="pshare">Share</button></div>`, 'preview');
@@ -1755,7 +2029,7 @@ function openMenu() {
     <button type="button" class="mi danger" data-act="delpt"><b>Delete patient</b><span>Removes this patient and their history from this phone.</span></button></div>`, 'menu');
 }
 function openSections() {
-  closeSheets();
+  closeSheets(true);
   const p = curP(), snap = JSON.stringify(p.on);
   const SW = (n, k) => `<label class="tog"><input type="checkbox" data-b="p.on.${k}"${p.on[k] ? ' checked' : ''}><span>${esc(n)}</span></label>`;
   sheet(`<div class="sh-h"><h2>Sections for this patient</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div>
@@ -1804,6 +2078,8 @@ async function decryptJSON(env, pass) {
   return JSON.parse(new TextDecoder().decode(pt));
 }
 function saveFile(text, name) {
+  db.meta.lastBackup = Date.now(); db.meta.dismiss.backup = 0; flush();
+  if (ui.view === 'home' || ui.view === 'settings') setTimeout(() => { $('#app').innerHTML = VIEWS[ui.view](); }, 0);
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
   a.download = name;
@@ -1873,6 +2149,7 @@ function readEl(el) {
 document.addEventListener('input', e => {
   const el = e.target; if (!el.dataset || !el.dataset.b) return;
   const val = readEl(el);
+  if (el.classList.contains('iinp')) el.size = Math.max(el.classList.contains('n') ? 3 : 6, el.value.length + 1);
   if (el.dataset.b === 'r.date' && !isISO(val)) return;
   setv(el.dataset.b, val);
   mirror(el, el.dataset.b, val);
@@ -1960,6 +2237,7 @@ const ACT = {
   hcopy: el => { const h = curP().hist.find(x => x.date === el.dataset.d); if (h) copyText(h.text).then(okc => toast(okc ? 'Copied.' : 'Couldn\u2019t copy. Press and hold the message to copy it.')); },
   goto: el => {
     const k = el.dataset.k === 'header' ? 'hdr' : el.dataset.k, p = curP();
+    if (k === 'sections') { openSections(); return; }
     closeSheets();
     if (k === 'settings') { go('#/settings'); return; }
     if (!p.on[k] && k !== 'hdr') return;
@@ -1968,9 +2246,24 @@ const ACT = {
     const c = $(`[data-card="${k}"]`); if (c) setTimeout(() => c.scrollIntoView({ block: 'start', behavior: 'smooth' }), 30);
   },
   close: el => closeSheet(el),
+  unlock: () => unlock(), forgot: () => forgotPin(), locknow: () => lockNow(), setpin: () => setPin(), pinoff: () => pinOff(),
+  dismiss: el => { db.meta.dismiss[el.dataset.k] = Date.now(); flush(); render(); },
+  stale: () => {
+    const L = staleList();
+    sheet(`<div class="sh-h"><h2>Not updated recently</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div>
+      <p class="hint">Export a backup first if you might still need their data.</p>
+      ${L.map(p => `<div class="st-row"><div><b>${esc(ptName(p))}</b><span>Last update ${esc(fmtDate(todayISO(new Date(lastSeen(p)))))}</span></div><button type="button" class="btn sm danger" data-act="delstale" data-id="${esc(p.id)}">Delete</button></div>`).join('')}`, 'stale');
+  },
+  delstale: el => {
+    const i = db.patients.findIndex(p => p.id === el.dataset.id); if (i < 0) return;
+    const [pt] = db.patients.splice(i, 1); flush();
+    el.closest('.st-row').remove(); $('#app').innerHTML = vHome();
+    withUndo('Patient deleted.', () => { db.patients.splice(i, 0, pt); });
+  },
   addpt: () => {
     const p = newPatient(), last = db.patients[db.patients.length - 1];
     if (last) p.hosp = last.hosp;
+    p.initials = !!db.settings.initialsNew;
     db.patients.push(p); ui.open[p.id] = { hdr: true }; flush(); requestPersist(); go('#/p/' + p.id);
   },
   demo: () => { const p = demoPatient(); db.patients.push(p); ui.open[p.id] = {}; flush(); go('#/p/' + p.id); toast('Demo patient added. Tap Preview to see the whole message.', 3500); },
