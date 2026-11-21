@@ -21,6 +21,9 @@ Missing weight, output breakdown that doesn't add up, implausible values, antibi
 - **Illness severity** (I-PASS: stable, watcher, unstable) under the day counters, and a **contingency plan** ("if this happens, then...") in Assessment and requests. Both are optional; when left blank the message format is unchanged.
 - **What changed since the last update**: Preview lists new, changed and stopped medications, drips, oxygen, severity and chips compared with the last message you copied or shared. It is for your own check and is not added to the message.
 - **Copy in parts** for long messages: Viber may not send a message over 7,000 characters, so Preview offers the message in parts that break at section dividers.
+- **Normal values** under vital signs (MedlinePlus; SpO₂ from ABIM), with values outside the range marked. Settings can turn this off. A **Reference** screen lists adult normal values for vitals, bedside targets and common labs (ABIM January 2026, with SI units), searchable.
+- **Drip dose guide**: pick what a drip is for (for example septic shock, cardiogenic shock, bradycardia) and the app shows the usual dose for that use and where the current dose sits. It covers norepinephrine, epinephrine, dopamine, dobutamine, milrinone, vasopressin, phenylephrine, nitroglycerin and nicardipine, from the Surviving Sepsis Campaign 2026, AHA 2025 and 2017, Resuscitation Council UK 2021 and the package inserts. A dose above the label maximum is flagged before sending. Your hospital protocol and the consultant's order come first.
+- **Tidal volume per kg of predicted body weight** on the ventilator, from height and sex (lung-protective range 4–8 mL/kg).
 - Home search once you have more than five patients.
 - Works with screen readers and a keyboard (named dialogs, focus kept inside open sheets and returned on close), and with large text or Chrome's Page Zoom up to 200%.
 
