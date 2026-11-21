@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-y6dPgUBcgzqSsOx/H9SrMWprolvzPAUcvXd14LYMNH4='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-BZuQYWL1JtM13VLxx73g/m70KIeFN5dt9dBDnWD7lhg='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#EEF2F0">
@@ -63,7 +63,7 @@ code{font-size:.9em;background:var(--sf2);border:1px solid var(--ln);border-radi
 .btn.dangerf{background:var(--bad);border-color:var(--bad);color:#fff}
 .btn.add{margin-top:10px}
 .lnk{background:none;border:0;padding:10px 6px;color:var(--pri);font-weight:600;font-size:15px;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
-.badge:not(:empty){min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--hl);color:var(--hl-ink);font-size:13px;font-weight:700;display:inline-grid;place-items:center}
+.badge:not(:empty){min-width:22px;min-height:22px;padding:0 6px;border-radius:11px;background:var(--hl);color:var(--hl-ink);font-size:13px;font-weight:700;display:inline-grid;place-items:center}
 
 /* home */
 .pts{display:flex;flex-direction:column;gap:10px;margin:14px 0}
@@ -123,23 +123,23 @@ input[type=date].in{min-height:48px}
 
 /* chips */
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{min-height:44px;padding:9px 15px;border:1.5px solid var(--ln);border-radius:22px;background:var(--sf);font-size:15px;line-height:1.3;text-align:left;display:inline-flex;align-items:center;gap:6px}
+.chip{max-width:100%;min-height:44px;padding:9px 15px;border:1.5px solid var(--ln);border-radius:22px;background:var(--sf);font-size:15px;line-height:1.3;text-align:left;display:inline-flex;align-items:center;gap:6px}
 .chip.on,.chip.cbx:has(input:checked){background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
 .chip.cbx input{position:absolute;opacity:0;pointer-events:none}
 .chip.cbx{position:relative;cursor:pointer}
 .chip.cbx:has(input:focus-visible){outline:2.5px solid var(--pri);outline-offset:2px}
 .auto{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.02em;padding:1px 7px;border-radius:9px;background:var(--pri-soft);color:var(--pri);vertical-align:middle}
 .chip.on .auto{background:rgba(255,255,255,.22);color:inherit}
-.chiprow{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 8px 6px 6px;border-radius:16px;background:var(--pri-soft);border:1.5px solid var(--pri)}
+.chiprow{flex-basis:100%;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:6px 8px 6px 6px;border-radius:16px;background:var(--pri-soft);border:1.5px solid var(--pri)}
 .tick{flex:none;width:44px;height:44px;border-radius:50%;background:var(--pri);color:var(--pri-ink);border:0;display:grid;place-items:center;padding:0}
 .tick svg{width:20px;height:20px}
-.tx{flex:1 1 0;min-width:0;font-size:15px;line-height:1.35;padding:6px 0}
+.tx{flex:1 1 9em;min-width:0;font-size:15px;line-height:1.35;padding:6px 0}
 .tx .isel,.tx .iinp{vertical-align:middle;margin:2px 0}
 .tx .auto{margin-left:6px}
 .tx .tok{font-weight:700}
 .isel,.iinp,.trend{min-height:44px;padding:4px 8px;border:1.5px solid color-mix(in srgb,var(--pri) 55%,var(--ln));border-radius:9px;background:var(--sf);font-size:16px;max-width:100%}
 .iinp{width:auto;min-width:5em;max-width:100%}.iinp.n{min-width:3.5em}
-.ctl{flex:none;display:flex;gap:6px;margin-left:auto;align-self:flex-start}
+.ctl{flex:none;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;margin-left:auto;align-self:flex-start;max-width:100%}
 .trend{color:var(--mut);width:100px}
 .trend:has(option:checked:not([value=""])){color:var(--ink);font-weight:600}
 .star{flex:none;width:44px;height:44px;border-radius:10px;border:1.5px solid var(--ln);background:var(--sf);font-size:21px;line-height:1;color:var(--mut);padding:0}
@@ -168,7 +168,8 @@ input[type=date].in{min-height:48px}
 .addrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .drip{padding:12px;border:1.5px solid var(--ln);border-radius:12px;margin:10px 0;background:var(--sf2)}
 .drip .in{background-color:var(--sf)}
-.drip-f{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.drip-f{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.drip-f>:first-child{min-width:0}
 .drip-f .calc{margin:6px 0 0}
 .nih{margin-top:16px;padding-top:4px;border-top:4px solid var(--ln)}
 .nih-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
@@ -202,7 +203,8 @@ input[type=date].in{min-height:48px}
 
 /* dock */
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--sf);border-top:1px solid var(--ln);padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
-.dock-in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:8px}
+.dock-in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);gap:8px}
+.dock .btn{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .dock .btn{min-height:52px}
 
 /* sheets */
@@ -283,7 +285,7 @@ button,a,label,select,input,.chip,.card-h{touch-action:manipulation}
 .jump{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 6px 2px;margin:0 -8px;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .jump::-webkit-scrollbar{display:none}
 .jp{flex:none;min-height:44px;padding:0 3px;border:0;background:none;color:var(--ink);display:flex;align-items:center}
-.jp span{display:inline-flex;align-items:center;height:34px;padding:0 13px;border-radius:17px;border:1.5px solid var(--ln);background:var(--sf);font-size:14px;font-weight:600;position:relative;transition:background-color .15s,border-color .15s,color .15s}
+.jp span{display:inline-flex;align-items:center;min-height:34px;padding:0 13px;border-radius:17px;border:1.5px solid var(--ln);background:var(--sf);font-size:14px;font-weight:600;position:relative;transition:background-color .15s,border-color .15s,color .15s}
 .jp.cur span{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
 .jp.empty span::after{content:"";position:absolute;top:3px;right:4px;width:7px;height:7px;border-radius:50%;background:var(--warn)}
 .jp:active{transform:none;filter:none}.jp:active span{filter:brightness(.93)}
@@ -304,6 +306,37 @@ button,a,label,select,input,.chip,.card-h{touch-action:manipulation}
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 /* after the font shorthand above, so it is not reset: show "->" exactly as it will be sent */
+/* illness severity, long-message parts, change list, search */
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.seg-b{min-height:44px;padding:6px 8px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf);color:var(--ink);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.seg-b[aria-pressed="true"]{background:var(--pri);border-color:var(--pri);color:var(--pri-ink)}
+.seg-b.sev-watcher[aria-pressed="true"]{background:var(--hl);border-color:var(--hl);color:var(--hl-ink)}
+.seg-b.sev-unstable[aria-pressed="true"]{background:var(--bad);border-color:var(--bad);color:var(--sf)}
+.parts{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:var(--hl-soft);border:1.5px solid var(--hl)}
+.parts p{margin:4px 0 8px;font-size:14px}
+.parts .btn.done{border-color:var(--pri);color:var(--pri)}
+.chg{margin:0 0 10px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--ln);background:var(--sf)}
+.chg summary{min-height:44px;display:flex;align-items:center;font-weight:600;cursor:pointer}
+.chg ul{margin:4px 0 6px;padding-left:18px;font-size:14px;line-height:1.4}
+.chg li{margin:3px 0}
+.chg p{margin:2px 0 6px;font-size:14px}
+.chg small{display:block;color:var(--mut);font-size:12.5px;padding-bottom:4px}
+.ptq{margin-bottom:10px}
+.pt-w[hidden]{display:none}
+.sheet:focus{outline:none}
+/* large text or page zoom: one column, smaller dock labels */
+@media (max-width:320px){
+  .grid,.grid.g3,.grid.g4{grid-template-columns:minmax(0,1fr)}
+  .dock{padding-left:6px;padding-right:6px}
+  .dock-in{gap:4px;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,1fr)}
+  .dock .btn{font-size:13px;padding-left:2px;padding-right:2px;letter-spacing:-.01em}
+  .seg{grid-template-columns:minmax(0,1fr)}
+  .say{padding-left:4px}
+  .card-s{display:none}
+  .card-b{padding-left:10px;padding-right:10px}
+  .chip{padding-left:11px;padding-right:11px}
+}
+@media (max-width:210px){.dock-in{grid-template-columns:repeat(3,minmax(0,1fr))}.dock .btn{font-size:12px;padding:0;letter-spacing:-.02em}}
 pre.msg,.calc.pre{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
 
 </style>
@@ -587,7 +620,8 @@ function newRec(date) {
     gi: { diet: '', bmN: '', bmChar: '', bristol: '' },
     en: { freq: '', cbg: [], insulin: '', range: false },
     idd: { cx: '' },
-    ar: { assess: '', req: '' },
+    ar: { assess: '', req: '', cont: '' },
+    sev: '',
   };
 }
 function newPatient(today = todayISO()) {
@@ -629,7 +663,7 @@ function normPatient(p) {
   p.rec.ivf = (p.rec.ivf || []).map(r => fillDefaults(r, ROW_TPL.ivf()));
   p.rec.drips = (p.rec.drips || []).map(r => fillDefaults(r, ROW_TPL.drip()));
   p.counters = (p.counters || []).map(r => fillDefaults(r, ROW_TPL.counter()));
-  p.hist = (Array.isArray(p.hist) ? p.hist : []).filter(h => h && isISO(h.date) && typeof h.text === 'string').map(h => ({ date: h.date, text: h.text, doses: h.doses && typeof h.doses === 'object' ? h.doses : {}, ts: +h.ts || 0 }));
+  p.hist = (Array.isArray(p.hist) ? p.hist : []).filter(h => h && isISO(h.date) && typeof h.text === 'string').map(h => ({ date: h.date, text: h.text, doses: h.doses && typeof h.doses === 'object' ? h.doses : {}, ts: +h.ts || 0, snap: h.snap && typeof h.snap === 'object' ? h.snap : null }));
   if (p.hist.length > HIST_MAX) p.hist.splice(0, p.hist.length - HIST_MAX);
   if (!SAFE_ID.test(String(p.id))) p.id = uid();
   p.meds.forEach(m => { if (!SAFE_ID.test(String(m.id))) m.id = uid(); });
@@ -1093,8 +1127,8 @@ function buildMessage(p, db, now = new Date()) {
 
   out.ar = (() => {
     const lines = t => str(t).split('\n').map(x => x.trim().replace(/^[>\u2022]+\s*/, '')).filter(Boolean);
-    const A = lines(r.ar.assess), Q = T('req').map(x => cap1(x.text)).concat(lines(r.ar.req));
-    return sec('ASSESSMENT AND REQUESTS', false, [A.length ? ['Assessment:'].concat(bul(A)) : [], Q.length ? [str(S.reqLabel) || 'For your input:'].concat(bul(Q)) : []]);
+    const A = lines(r.ar.assess), K = lines(r.ar.cont), Q = T('req').map(x => cap1(x.text)).concat(lines(r.ar.req));
+    return sec('ASSESSMENT AND REQUESTS', false, [A.length ? ['Assessment:'].concat(bul(A)) : [], K.length ? ['Contingency plan:'].concat(bul(K)) : [], Q.length ? [str(S.reqLabel) || 'For your input:'].concat(bul(Q)) : []]);
   })();
 
   out.meds = (() => {
@@ -1111,7 +1145,8 @@ function buildMessage(p, db, now = new Date()) {
   if (str(p.room)) id.push(['Room: ' + str(p.room), str(p.hosp)].filter(Boolean).join(' | '));
   if (str(p.weight)) id.push(`Working weight: ${str(p.weight)}kg`);
   if (id.length) top.push(id.join('\n'));
-  if (c.counters.length) top.push(c.counters.map(x => `${x.label} Day ${x.day}`).join(' | '));
+  const dayLine = [c.counters.length ? c.counters.map(x => `${x.label} Day ${x.day}`).join(' | ') : '', str(r.sev) ? 'Illness severity: ' + str(r.sev) : ''].filter(Boolean).join('\n');
+  if (dayLine) top.push(dayLine);
   if (on('gs') && out.gs) top.push(out.gs);
   const parts = [top.filter(Boolean).join('\n\n')];
   const LABS = '\n\nLaboratory flow sheet attached';
@@ -1125,13 +1160,14 @@ function buildMessage(p, db, now = new Date()) {
   const sign = [str(S.closing), str(S.signName)].filter(Boolean).join('\n');
   if (sign) text += '\n\n' + sign;
 
-  return { text, calc: c, ctx, secs: out, warnings: preSend(p, db, c, ctx, out) };
+  return { text, calc: c, ctx, secs: out, warnings: preSend(p, db, c, ctx, out, text) };
 }
 
 /* ---------- pre-send check (warnings never block) ---------- */
-function preSend(p, db, c, ctx, out) {
+function preSend(p, db, c, ctx, out, text) {
   const W = [], r = p.rec, v = r.v, fl = r.fl, on = k => !!p.on[k];
   const add = (k, t) => W.push({ k, t });
+  if (text && text.length > MSG_LIMIT) add('length', `The message is ${text.length.toLocaleString('en-US')} characters. Viber may not send a message over ${MSG_LIMIT.toLocaleString('en-US')} characters: use “Copy in parts” in Preview.`);
   if (str(p.surname) && !str(p.room)) add('header', 'Room is blank.');
   if (!c.hasW) add('header', 'Working weight is missing, so ml/kg/hr and mcg/kg/min can’t be worked out.');
   if (on('fluid') && c.bdOk === false) add('fluid', `Output breakdown (${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}) doesn’t add up to the 24-hour output (${str(fl.out24)}).`);
@@ -1237,17 +1273,79 @@ function preSend(p, db, c, ctx, out) {
   return W;
 }
 
+/* ---------- long messages ---------- */
+const MSG_LIMIT = 7000; // Viber's per-message limit
+// Splits at section dividers (never mid-section unless one section alone is too long), each part under max characters.
+function splitMessage(text, max = 6500) {
+  if (text.length <= max) return [text];
+  // Whole sections are kept together; a section that is too long on its own is broken between lines.
+  const sep = `\n\n${DIVIDER}\n\n`, segs = [];
+  text.split(sep).forEach((b, bi) => {
+    if (b.length <= max) { segs.push([b, bi ? sep : '']); return; }
+    b.split('\n').forEach((line, li) => segs.push([line, li ? '\n' : bi ? sep : '']));
+  });
+  const parts = [];
+  let cur = '';
+  for (const [seg, join] of segs) {
+    if (!cur) cur = seg;
+    else if ((cur + join + seg).length <= max) cur += join + seg;
+    else { parts.push(cur); cur = seg; }
+  }
+  if (cur) parts.push(cur);
+  return parts;
+}
+
+/* ---------- what changed since the last saved update ---------- */
+function snapOf(p, db) {
+  const c = calc(p, db.settings), ctx = mkCtx(p, c), r = p.rec, chips = {};
+  // Requests are cleared every day, so they are left out of the comparison.
+  for (const g of Object.keys(GROUPS)) if (g !== 'req' && p.on[GROUPS[g].sec]) ticked(db, r, g, ctx).forEach(x => { chips[g + ':' + x.id] = cap1(x.text); });
+  return {
+    chips,
+    meds: p.meds.filter(m => str(m.g)).map(m => ({ id: m.id, name: medName(m), line: [medName(m), str(m.dose), str(m.route), str(m.extra), str(m.freq)].filter(Boolean).join(' '), st: m.st })),
+    drips: r.drips.map((d, i) => ({ name: c.drips[i] ? c.drips[i].m.name : d.drug, rate: str(d.rate), dose: c.drips[i] ? c.drips[i].txt : '' })).filter((d, i) => str(r.drips[i].amt) || d.rate),
+    o2: c.device, sev: str(r.sev),
+  };
+}
+function prevSnap(p) {
+  const h = p.hist.filter(x => x.date < p.rec.date && x.snap).sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+  return h ? { date: h.date, snap: h.snap } : null;
+}
+function diffSnap(a, b) {
+  const out = [], arrow = ' \u2192 ';
+  if ((a.sev || '') !== (b.sev || '')) out.push('Illness severity: ' + (a.sev || 'not set') + arrow + (b.sev || 'not set'));
+  if ((a.o2 || '') !== (b.o2 || '')) out.push('Oxygen: ' + (a.o2 || 'not set') + arrow + (b.o2 || 'not set'));
+  const am = new Map((a.meds || []).map(m => [m.id, m])), bm = new Map((b.meds || []).map(m => [m.id, m]));
+  (b.meds || []).forEach(m => {
+    const o = am.get(m.id);
+    if (m.st === 'dc') { if (o && o.st !== 'dc') out.push('Stopped: ' + m.name); return; }
+    if (!o || o.st === 'dc') out.push('New medication: ' + m.line + (m.st === 'hold' ? ' (on hold)' : ''));
+    else if (o.st !== m.st) out.push((m.st === 'hold' ? 'Put on hold: ' : 'Resumed: ') + m.name);
+    else if (o.line !== m.line) out.push('Changed: ' + o.line + arrow + m.line);
+  });
+  (a.meds || []).forEach(m => { if (!bm.has(m.id) && m.st !== 'dc') out.push('Removed from the list: ' + m.name); });
+  const ad = new Map((a.drips || []).map(d => [d.name, d])), bd = new Map((b.drips || []).map(d => [d.name, d]));
+  bd.forEach((d, n) => { const o = ad.get(n); if (!o) out.push('Drip started: ' + n + (d.dose ? ' (' + d.dose + ')' : '')); else if (o.rate !== d.rate) out.push(n + ' drip: ' + (o.dose || o.rate + 'cc/hr') + arrow + (d.dose || d.rate + 'cc/hr')); });
+  ad.forEach((d, n) => { if (!bd.has(n)) out.push('Drip stopped: ' + n); });
+  const ac = a.chips || {}, bc = b.chips || {};
+  // A chip whose numbers aren't filled in yet today (shown as __) isn't a change.
+  Object.keys(bc).forEach(k => { if (!(k in ac)) out.push('Now: ' + bc[k]); else if (ac[k] !== bc[k] && !bc[k].includes('__')) out.push('Updated: ' + ac[k] + arrow + bc[k]); });
+  Object.keys(ac).forEach(k => { if (!(k in bc)) out.push('No longer: ' + ac[k]); });
+  return out;
+}
+
 /* ---------- history & new day ---------- */
 function archive(p, db, text) {
   if (!isISO(p.rec.date)) p.rec.date = todayISO();
   const t = text || buildMessage(p, db).text;
   const doses = {};
   p.meds.forEach(m => { if (m.abx) doses[m.id] = str(m.no); });
-  const e = { date: p.rec.date, text: t, doses, ts: Date.now() };
+  const e = { date: p.rec.date, text: t, doses, ts: Date.now(), snap: snapOf(p, db) };
   const i = p.hist.findIndex(h => h.date === p.rec.date);
   if (i >= 0) p.hist[i] = e; else p.hist.push(e);
   p.hist.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
   if (p.hist.length > HIST_MAX) p.hist.splice(0, p.hist.length - HIST_MAX);
+  p.hist.slice(0, -3).forEach(h => { h.snap = null; });
 }
 function nextDate(cur, today) { if (!isISO(cur)) return today; return isoDay(today) > isoDay(cur) ? today : addDays(cur, 1); }
 function startNewDay(p, db, today = todayISO()) {
@@ -1315,7 +1413,7 @@ function demoPatient(today = todayISO()) {
   return p;
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = { uoWindows, initialsOf, abxInfo, buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
+if (typeof module !== 'undefined' && module.exports) module.exports = { splitMessage, snapOf, prevSnap, diffSnap, MSG_LIMIT, uoWindows, initialsOf, abxInfo, buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
 
 /* ================= TIMPEX Rounds Update: interface ================= */
 const ICON = {
@@ -1409,7 +1507,7 @@ async function lockNow() {
   await flush();
   try { LOCK.env = JSON.parse(localStorage.getItem(APP_KEY)); } catch (e) { /* ignore */ }
   LOCK.key = null; LOCK.locked = true; db = freshDB(); OUT = null;
-  $$('.sheet-bg').forEach(x => x.remove()); document.body.classList.remove('modal');
+  dropSheets();
   render();
 }
 async function unlock() {
@@ -1559,6 +1657,8 @@ function updateChip(g, id, pop) {
 /* ---------- card bodies ---------- */
 const CARD_TITLE = Object.assign({ hdr: 'Patient details' }, SEC_NAME);
 const BODY = {};
+const SEV = ['Stable', 'Watcher', 'Unstable'];
+const sevHtml = r => `<div class="seg" role="group" aria-label="Illness severity">${SEV.map(v => `<button type="button" class="seg-b sev-${v.toLowerCase()}" data-act="sev" data-v="${v}" aria-pressed="${r.sev === v}">${v}</button>`).join('')}</div>`;
 BODY.hdr = () => {
   const p = curP();
   return `<div class="grid">
@@ -1572,6 +1672,8 @@ BODY.hdr = () => {
     ${F('ICU transfer date', 'p.icu', { t: 'date' })}${F('ICU date counts as', 'p.icuBase', { t: 'sel', opts: BASE })}</div>
   ${rowsHtml('p.counters')}
   <div class="addrow">${[['Ictus', 0], ['Post-op', 0], ['Intubation', 1], ['', 1]].map(([l, b]) => `<button type="button" class="btn sm" data-act="addctr" data-l="${l}" data-base="${b}">+ ${l || 'Other counter'}</button>`).join('')}</div>
+  ${H('Illness severity (optional)')}${sevHtml(p.rec)}
+  <p class="hint">From the I-PASS handoff: stable, watcher (could get worse) or unstable. Prints under the day counters and carries over to the next day. Tap it again to clear.</p>
   ${H('Greeting')}${F('Greeting for this patient (leave blank to use the automatic one from Settings)', 'p.greet', { t: 'area', rows: 2, ph: greetingFor(p, db.settings, new Date()) })}`;
 };
 BODY.gs = () => `${chipsHtml('gs')}${H('Also in this summary')}<div class="calc pre" data-c="gsstars"></div>${OTH('gs')}`;
@@ -1672,9 +1774,10 @@ BODY.id = () => `${CALC('fever', 'big')}<p class="hint">From Vital signs. Febril
 BODY.heme = () => `${chipsHtml('heme')}<div class="calc" data-c="ac"></div>${OTH('heme')}`;
 BODY.pend = () => chipsHtml('pend') + OTH('pend');
 BODY.ar = () => `${F('Assessment (one bullet per line)', 'r.ar.assess', { t: 'area', rows: 3, ph: 'Septic shock from HAP, improving' })}
+  <div style="margin-top:10px">${F('Contingency plan (if this happens, then\u2026; one per line)', 'r.ar.cont', { t: 'area', rows: 2, ph: 'If MAP stays below 65 on NE 0.3, start vasopressin' })}</div>
   ${H('Requests')}${chipsHtml('req')}
   <div style="margin-top:10px">${F('Other requests (one bullet per line)', 'r.ar.req', { t: 'area', rows: 2 })}</div>
-  <p class="hint">Ends the message with a clear ask, as in SBAR. The assessment carries over to the next day; requests are cleared when you start a new day. The \u201c${esc(db.settings.reqLabel)}\u201d label can be changed in Settings.</p>`;
+  <p class="hint">Ends the message with a clear ask, as in SBAR. The assessment and contingency plan carry over to the next day; requests are cleared when you start a new day. The \u201c${esc(db.settings.reqLabel)}\u201d label can be changed in Settings.</p>`;
 function medHtml(m, i) {
   const open = ui.med === m.id, b = `p.meds.${i}`, auto = dpd(Object.assign({}, m, { dpd: '' }));
   return `<li class="med st-${m.st}${open ? ' open' : ''}" data-si="${i}">
@@ -1807,10 +1910,12 @@ const retainDays = () => Math.max(1, num(db.settings.retainDays) || 7);
 const lastSeen = p => Math.max(p.touched || 0, p.created || 0, isISO(p.rec.date) ? isoDay(p.rec.date) * DAY : 0);
 const staleList = () => db.patients.filter(p => Date.now() - lastSeen(p) > retainDays() * DAY);
 function banner(k, title, body, actions) {
-  return `<div class="ban"><div class="ban-t"><b>${esc(title)}</b><p>${esc(body)}</p>${actions || ''}</div><button type="button" class="ib" data-act="dismiss" data-k="${k}" aria-label="Hide for a week">${ICON.x}</button></div>`;
+  return `<div class="ban"><div class="ban-t"><b>${esc(title)}</b><p>${esc(body)}</p>${actions || ''}</div>${k ? `<button type="button" class="ib" data-act="dismiss" data-k="${k}" aria-label="Hide for a week">${ICON.x}</button>` : ''}</div>`;
 }
 function homeBanners() {
   const out = [], now = Date.now(), m = db.meta, hidden = k => m.dismiss[k] && now - m.dismiss[k] < 7 * DAY;
+  if (installEvt && !isStandalone() && !hidden('install')) out.push(banner('install', 'Install the app on this phone.', 'It opens like an app, works without signal, and the browser is less likely to clear its saved data.', '<button type="button" class="btn sm pri" data-act="install">Install</button>'));
+  if (updReady) out.push(banner('', 'A new version of the app is ready.', 'Your patients are saved on this phone and stay as they are.', '<button type="button" class="btn sm pri" data-act="reload">Reload now</button>'));
   if (isIOS() && !isStandalone() && !hidden('ios')) out.push(banner('ios', 'On iPhone, use this app from your Home Screen.', 'Safari can erase a site’s saved data after 7 days without a visit; the Home Screen app keeps it. In Safari, tap Share, then Add to Home Screen.'));
   if (db.patients.length) {
     const last = m.lastBackup, age = now - (last || m.created);
@@ -1826,15 +1931,16 @@ function vHome() {
     const c = calc(p, db.settings), hd = c.counters.find(x => x.label === 'Hospital');
     const sent = p.hist.some(h => h.date === p.rec.date), stale = p.rec.date < today;
     const meta = [str(p.room), hd ? 'Hospital Day ' + hd.day : ''].filter(Boolean).join(', ');
-    return `<div class="pt-w" data-si="${i}"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><a class="pt" href="#/p/${esc(p.id)}"><span class="pt-n">${esc(ptName(p))}</span><span class="pt-m">${esc(meta || 'No room or admission date yet')}</span>
+    return `<div class="pt-w" data-si="${i}" data-q="${esc((ptName(p) + ' ' + str(p.surname) + ' ' + str(p.first) + ' ' + str(p.room)).toLowerCase())}"><span class="grip" data-grip aria-label="Drag to reorder">${ICON.grip}</span><a class="pt" href="#/p/${esc(p.id)}"><span class="pt-n">${esc(ptName(p))}</span><span class="pt-m">${esc(meta || 'No room or admission date yet')}</span>
       <span class="pt-s${stale ? ' stale' : sent ? ' sent' : ''}">${stale ? `Last update is for ${esc(fmtDate(p.rec.date))}. Open it and start a new day.` : sent ? `Sent for ${esc(fmtDate(p.rec.date))}` : `Not sent yet for ${esc(fmtDate(p.rec.date))}`}</span></a></div>`;
   }).join('');
   return bar(`<div class="brand"><b>TIMPEX</b> Rounds Update</div>${LOCK.key ? `<button type="button" class="ib" data-act="locknow" aria-label="Lock now">${ICON.lock}</button>` : ''}<a class="ib" href="#/settings" aria-label="Settings">${ICON.gear}</a>`) +
   `<main class="wrap">${homeBanners()}
-    ${db.patients.length ? `<div class="pts" data-sort="d.patients">${list}</div>${db.patients.length > 1 ? '<p class="hint">Drag the dots to put patients in your rounds order.</p>' : ''}` : `<div class="empty"><p>No patients yet</p><p>Add your first patient, or load the demo patient to see a complete message.</p></div>`}
+    ${db.patients.length > 5 ? `<label class="fld ptq"><span class="lb">Find a patient</span><input class="in" id="ptq" type="search" placeholder="Name or room" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search"></label>` : ''}
+    ${db.patients.length ? `<div class="pts" data-sort="d.patients">${list}</div><p class="hint" id="ptq-none" hidden>No patient matches.</p>${db.patients.length > 1 ? '<p class="hint">Drag the dots to put patients in your rounds order.</p>' : ''}` : `<div class="empty"><p>No patients yet</p><p>Add your first patient, or load the demo patient to see a complete message.</p></div>`}
     <div class="acts"><button type="button" class="btn pri" data-act="addpt">Add patient</button><button type="button" class="btn" data-act="demo">Load demo patient</button></div>
     <div class="backup"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button></div>
-    <p class="note">Patient data stays in this browser on this phone. The app makes no network requests, so nothing is sent anywhere until you paste the message yourself.</p>
+    <p class="note">Patient data stays in this browser on this phone and is never sent anywhere. Nothing leaves the phone until you paste the message yourself.</p>
   </main>`;
 }
 const cardKeys = p => ['hdr'].concat(SECS.map(s => s[0]).filter(k => p.on[k]));
@@ -1876,7 +1982,7 @@ const SHORT = { hdr: 'Patient', gs: 'Survey', fluid: 'I&O', support: 'Support', 
 let io = null;
 function setCur(k) {
   const strip = $('.jump'); if (!strip) return;
-  $$('.jp', strip).forEach(b => b.classList.toggle('cur', b.dataset.k === k));
+  $$('.jp', strip).forEach(b => { const on = b.dataset.k === k; b.classList.toggle('cur', on); if (on) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
   const b = $(`.jp[data-k="${k}"]`, strip);
   if (b) strip.scrollTo({ left: b.offsetLeft - strip.clientWidth / 2 + b.offsetWidth / 2, behavior: reduceMotion() ? 'auto' : 'smooth' });
 }
@@ -1951,7 +2057,8 @@ function vSettings() {
     <p class="hint" id="persist">${isIOS() ? (isStandalone() ? 'Opened from the Home Screen, so Safari\u2019s 7-day data limit doesn\u2019t apply.' : 'Opened in Safari: add the app to your Home Screen so Safari\u2019s 7-day limit can\u2019t erase its data.') : 'Checking storage protection\u2026'}</p>
     <div class="addrow"><button type="button" class="btn sm" data-act="export">Export backup</button><button type="button" class="btn sm" data-act="import">Import backup</button><button type="button" class="btn sm danger" data-act="clearall">Clear all data</button></div></div></section>
   <section class="card plain"><div class="card-b">${H('About')}
-    <p class="hint">TIMPEX Rounds Update keeps everything in this browser’s local storage on this phone. It loads nothing from the internet and sends nothing anywhere (a content security policy blocks all network requests), in keeping with RA 10173.</p>
+    <p class="hint">TIMPEX Rounds Update keeps everything in this browser’s local storage on this phone. Apart from loading its own page, it loads nothing from the internet and sends nothing anywhere (a content security policy blocks all network requests from the page), in keeping with RA 10173.</p>
+    <p class="hint">Version ${APP_VERSION}.${updReady ? ' A newer version is ready: <button type="button" class="btn sm pri" data-act="reload">Reload now</button>' : ''}${installEvt && !isStandalone() ? ' <button type="button" class="btn sm" data-act="install">Install app</button>' : ''}</p>
     <p class="hint">On iPhone, the Safari tab and a Home Screen icon keep separate data. Pick one and use only that, or move data between them with Export and Import.</p></div></section>
   </main>`;
 }
@@ -1981,7 +2088,7 @@ const VIEWS = { home: vHome, patient: vPatient, history: vHistory, settings: vSe
 function render() {
   if (LOCK.locked) {
     ui.view = 'lock'; ui.key = 'lock'; document.body.dataset.view = 'lock';
-    $$('.sheet-bg').forEach(x => x.remove()); document.body.classList.remove('modal');
+    dropSheets();
     $('#app').innerHTML = vLock();
     const pin = $('#pin'); if (pin) { pin.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); unlock(); } }); setTimeout(() => pin.focus(), 50); }
     return;
@@ -1998,7 +2105,7 @@ function render() {
   const swap = () => {
   if (my !== rseq) return; // a newer navigation already drew the screen
   ui.view = v; ui.key = key;
-  $$('.sheet-bg').forEach(x => x.remove());
+  dropSheets();
   document.body.classList.remove('modal');
   document.body.dataset.view = v;
   $('#app').innerHTML = VIEWS[v]();
@@ -2017,14 +2124,18 @@ function render() {
     t.finished.finally(() => { vtBusy = false; });
   } else swap();
 }
-let rseq = 0, vtBusy = false;
+let rseq = 0, vtBusy = false, installEvt = null, updReady = false;
+const APP_VERSION = '2026.11.21';
 window.addEventListener('hashchange', render);
 const go = h => { if (popSkip > 0) { pendingGo = h; return; } if (location.hash === h) render(); else location.hash = h; };
 
 /* ---------- sheets, dialogs, toast ---------- */
 // Sheets other than quick confirmations add a history entry, so the phone's Back button closes the sheet instead of leaving the patient.
-let popSkip = 0, popTimer = 0, pendingGo = null;
+let popSkip = 0, popTimer = 0, pendingGo = null, modalOpener = null, shSeq = 0;
+const SHEET_NAME = { ask: 'Dialog', preview: 'Preview', menu: 'Patient menu', sections: 'Sections', hist: 'History' };
 function sheet(inner, kind, onClose) {
+  const ae = document.activeElement;
+  if (!liveSheets().length && ae && ae !== document.body && !ae.closest('#sheets')) modalOpener = ae;
   const bg = document.createElement('div');
   bg.className = 'sheet-bg';
   bg.innerHTML = `<div class="sheet" data-kind="${kind}" role="dialog" aria-modal="true"><div class="grab" aria-hidden="true"></div>${inner}</div>`;
@@ -2035,8 +2146,25 @@ function sheet(inner, kind, onClose) {
   hideToast();
   // All open sheets share one history entry, so Back closes them in one step and never skips a screen.
   if (kind !== 'ask') { if (!(history.state && history.state.sheet)) { try { history.pushState({ sheet: 1 }, ''); } catch (e) { /* ignore */ } } bg._pushed = true; }
-  return $('.sheet', bg);
+  const sh = $('.sheet', bg), t = $('h2', sh);
+  if (t) { t.id = t.id || 'sh-t-' + (++shSeq); sh.setAttribute('aria-labelledby', t.id); } else sh.setAttribute('aria-label', SHEET_NAME[kind] || 'Dialog');
+  sh.tabIndex = -1;
+  // After the sheet's first frame is on screen, so the tap itself stays quick: the page behind goes inert and
+  // focus moves into the sheet (screen readers start at its top; ask() moves on to its first field).
+  afterPaint(() => {
+    if (!sh.isConnected || bg.classList.contains('closing')) return;
+    $('#app').inert = true;
+    if (!sh.contains(document.activeElement)) sh.focus({ preventScroll: true });
+  });
+  return sh;
 }
+// Hands focus back to whatever opened the first sheet (never to a text field, which would pop up the keyboard).
+function modalEnded() {
+  $('#app').inert = false; document.body.classList.remove('modal');
+  const o = modalOpener; modalOpener = null;
+  if (o && o.isConnected && !o.matches('input, textarea, select') && !o.closest('[inert]')) { try { o.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+}
+function dropSheets() { $$('.sheet-bg').forEach(x => x.remove()); modalOpener = null; $('#app').inert = false; document.body.classList.remove('modal'); }
 function popDone() { popSkip = 0; clearTimeout(popTimer); if (pendingGo) { const h = pendingGo; pendingGo = null; go(h); } }
 const liveSheets = () => $$('.sheet-bg:not(.closing)');
 function closeSheet(el, silent, fromPop, keepState) {
@@ -2044,7 +2172,7 @@ function closeSheet(el, silent, fromPop, keepState) {
   if (!bg || !bg.parentNode || bg.classList.contains('closing')) return;
   if (reduceMotion()) bg.remove();
   else { bg.classList.add('closing'); setTimeout(() => bg.remove(), 170); }
-  if (!liveSheets().length) document.body.classList.remove('modal');
+  if (!liveSheets().length) modalEnded();
   const stillPushed = liveSheets().some(x => x._pushed);
   if (bg._pushed && !fromPop && !keepState && !stillPushed && history.state && history.state.sheet) { popSkip++; clearTimeout(popTimer); popTimer = setTimeout(popDone, 700); history.back(); }
   if (!silent && bg._onClose) bg._onClose();
@@ -2055,7 +2183,17 @@ window.addEventListener('popstate', () => {
 });
 // keepState: a new sheet is about to open, so keep the shared history entry instead of going back.
 const closeSheets = keepState => liveSheets().forEach(b => closeSheet(b, false, false, keepState));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { const all = liveSheets(); if (all.length) closeSheet(all[all.length - 1]); } });
+document.addEventListener('keydown', e => {
+  const all = liveSheets(); if (!all.length) return;
+  if (e.key === 'Escape') { closeSheet(all[all.length - 1]); return; }
+  if (e.key !== 'Tab') return;
+  // Keep Tab inside the open sheet, wrapping from the last control to the first.
+  const sh = $('.sheet', all[all.length - 1]);
+  const f = $$('button, [href], input, select, textarea, summary, [tabindex]:not([tabindex="-1"])', sh).filter(x => !x.disabled && x.getClientRects().length);
+  if (!f.length) { e.preventDefault(); sh.focus(); return; }
+  const a = document.activeElement, first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (a === first || a === sh || !sh.contains(a))) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && (a === last || !sh.contains(a))) { e.preventDefault(); first.focus(); }
+});
 // Drag a sheet down by its handle or title to close it.
 document.addEventListener('pointerdown', e => {
   const h = e.target.closest('.sheet .grab, .sheet .sh-h, .sheet .ask-t');
@@ -2116,13 +2254,25 @@ const warnList = ws => ws.map(w => `<li><button type="button" data-act="goto" da
 function openPreview() {
   closeSheets(true);
   sheet(`<div class="sh-h"><h2>Preview</h2><button type="button" class="ib" data-act="close" aria-label="Close preview">${ICON.x}</button></div>
-    <div data-pv="warn"></div><pre class="msg" data-pv="msg"></pre>
+    <div data-pv="warn"></div><div data-pv="parts"></div><div data-pv="chg"></div><pre class="msg" data-pv="msg"></pre>
     <div class="sh-f"><button type="button" class="btn pri" data-act="pcopy">Copy</button><button type="button" class="btn" data-act="pshare">Share</button></div>`, 'preview');
   refresh(true);
 }
+let PARTS = [];
 function updatePreview() {
   const s = $('.sheet-bg:not(.closing) .sheet[data-kind="preview"]'); if (!s || !OUT) return;
   const m = $('[data-pv="msg"]', s); if (m.textContent !== OUT.text) m.textContent = OUT.text;
+  const n = OUT.text.length, parts = n > MSG_LIMIT ? splitMessage(OUT.text) : [];
+  if (parts.join('\u0000') !== PARTS.join('\u0000') || !parts.length !== !$('[data-pv="parts"]', s).firstChild) {
+    PARTS = parts;
+    $('[data-pv="parts"]', s).innerHTML = parts.length ? `<div class="parts"><b>Long message: ${n.toLocaleString('en-US')} characters</b><p>Viber may not send a message this long. Copy and paste the parts one at a time; each part breaks at a section divider.</p><div class="addrow">${parts.map((x, i) => `<button type="button" class="btn sm" data-act="ppart" data-i="${i}">Copy part ${i + 1} of ${parts.length}</button>`).join('')}</div></div>` : '';
+  }
+  const p = curP(), prev = p && prevSnap(p), box = $('[data-pv="chg"]', s);
+  if (!prev) box.innerHTML = '';
+  else {
+    const d = diffSnap(prev.snap, snapOf(p, db)), det = $('details', box), was = det ? det.open : false;
+    box.innerHTML = `<details class="chg"${was ? ' open' : ''}><summary>${d.length ? `What changed since ${esc(fmtDate(prev.date))} (${d.length})` : `No changes in ticks, medications or drips since ${esc(fmtDate(prev.date))}`}</summary>${d.length ? `<ul>${d.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Check that today\u2019s findings were updated, not just carried over.</p>'}<small>For your own check; not added to the message.</small></details>`;
+  }
   $('[data-pv="warn"]', s).innerHTML = OUT.warnings.length
     ? `<div class="warns"><b>Check before sending (${OUT.warnings.length})</b><ul>${warnList(OUT.warnings)}</ul><small>Tap a warning to jump to it. Warnings don’t stop you from copying.</small></div>`
     : `<p class="okmsg">Pre-send check: nothing to flag.</p>`;
@@ -2444,6 +2594,26 @@ const ACT = {
   preview: openPreview,
   copy: () => send('copy', false), share: () => send('share', false),
   pcopy: () => send('copy', true), pshare: () => send('share', true),
+  ppart: el => {
+    const i = +el.dataset.i, t = PARTS[i], p = curP(); if (!t || !p) return;
+    copyText(t).then(ok => {
+      if (!ok) { toast('Couldn\u2019t copy automatically. Press and hold the message to select it.', 5000); return; }
+      archive(p, db, OUT ? OUT.text : undefined); flush(); haptic(12);
+      el.textContent = `Part ${i + 1} copied \u2713`; el.classList.add('done');
+      toast(i + 1 < PARTS.length ? `Part ${i + 1} copied. Paste it, then copy part ${i + 2}.` : 'Last part copied. Paste it to finish.', 3200);
+    });
+  },
+  sev: el => {
+    const r = curP().rec; r.sev = r.sev === el.dataset.v ? '' : el.dataset.v;
+    $$('[data-act="sev"]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === r.sev)));
+    save(); haptic(); refresh();
+  },
+  install: () => {
+    if (!installEvt) return;
+    const e = installEvt; installEvt = null; e.prompt();
+    (e.userChoice || Promise.resolve({})).then(c => { if (c.outcome !== 'accepted') installEvt = e; if (ui.view === 'home' || ui.view === 'settings') render(); });
+  },
+  reload: () => { Promise.resolve(flush()).then(() => location.reload(), () => location.reload()); },
   pmenu: openMenu, sections: openSections, newday: doNewDay, delpt: doDelete,
   hist: () => { closeSheets(); go('#/h/' + ui.pid); },
   histview: el => {
@@ -2455,6 +2625,7 @@ const ACT = {
   goto: el => {
     const k = el.dataset.k === 'header' ? 'hdr' : el.dataset.k, p = curP();
     if (k === 'sections') { openSections(); return; }
+    if (k === 'length') { const pv = $('.sheet-bg:not(.closing) .sheet[data-kind="preview"] [data-pv="parts"]'); if (pv) pv.scrollIntoView({ block: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' }); else openPreview(); return; }
     closeSheets();
     if (k === 'settings') { go('#/settings'); return; }
     if (!p.on[k] && k !== 'hdr') return;
@@ -2541,7 +2712,25 @@ loadUi();
 try { history.scrollRestoration = 'manual'; } catch (e) { /* ignore */ } // the app restores each screen's scroll position itself
 render();
 window.addEventListener('resize', () => { stickPx = -1; afterRender(); });
-if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+  // The service worker tells the page when it has downloaded a newer copy of the app.
+  navigator.serviceWorker.addEventListener('message', e => {
+    if (!e.data || e.data.type !== 'timpex-update' || updReady) return;
+    updReady = true;
+    if (ui.view === 'home' || ui.view === 'settings') { if (!liveSheets().length && !document.activeElement.matches('input, textarea')) render(); }
+    else toast('A new version of the app is ready.', 9000, { label: 'Reload', fn: () => ACT.reload() });
+  });
+}
+// Home search: hides patients whose name or room doesn't match.
+document.addEventListener('input', e => {
+  if (e.target.id !== 'ptq') return;
+  const q = e.target.value.trim().toLowerCase(); let n = 0;
+  $$('.pts .pt-w').forEach(w => { const hit = !q || w.dataset.q.includes(q); w.hidden = !hit; if (hit) n++; });
+  const none = $('#ptq-none'); if (none) none.hidden = n > 0;
+});
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; if ((ui.view === 'home' || ui.view === 'settings') && !liveSheets().length) render(); });
+window.addEventListener('appinstalled', () => { installEvt = null; toast('Installed. Open it from your home screen from now on.', 4000); });
 
 </script>
 </body>

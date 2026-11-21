@@ -5,7 +5,7 @@ A phone-first web app for writing the daily patient update to consultants. Tick 
 ## Privacy (RA 10173)
 
 - Patient data is stored only in the browser's local storage on the device you use.
-- The app makes no network requests. A content security policy blocks every outside connection, and only the app's own script can run.
+- The page makes no network requests. A content security policy blocks every outside connection, and only the app's own script can run. The optional service worker only re-downloads the app's own files from this site, to keep it up to date and working offline.
 - Nothing is sent anywhere until you paste the message yourself.
 - Optional app lock: with a PIN set, the data saved on the phone is encrypted (AES-256-GCM, key from PBKDF2-SHA256), and the app locks itself after a few idle minutes. If the PIN is forgotten, data can only come back from a backup.
 - Backups can be encrypted with a passphrase (AES-256-GCM, key from PBKDF2-SHA256 with 600,000 iterations). Without the passphrase, the file can't be opened.
@@ -15,6 +15,14 @@ A phone-first web app for writing the daily patient update to consultants. Tick 
 ## What it checks before you send
 
 Missing weight, output breakdown that doesn't add up, implausible values, antibiotic dose numbers not moved forward, sections left empty, chips that contradict the numbers (for example "afebrile" with a Tmax of 39), hypoglycemia without an intervention (level 1 below 70, level 2 below 54 mg/dl), CBG of 180 or more twice with no insulin entered (ADA), urine output under KDIGO thresholds from the void log, and antimicrobials on Day 3 (48-72 h review), past their planned duration or without an indication.
+
+## Also in the app
+
+- **Illness severity** (I-PASS: stable, watcher, unstable) under the day counters, and a **contingency plan** ("if this happens, then...") in Assessment and requests. Both are optional; when left blank the message format is unchanged.
+- **What changed since the last update**: Preview lists new, changed and stopped medications, drips, oxygen, severity and chips compared with the last message you copied or shared. It is for your own check and is not added to the message.
+- **Copy in parts** for long messages: Viber may not send a message over 7,000 characters, so Preview offers the message in parts that break at section dividers.
+- Home search once you have more than five patients.
+- Works with screen readers and a keyboard (named dialogs, focus kept inside open sheets and returned on close), and with large text or Chrome's Page Zoom up to 200%.
 
 ## Files
 
@@ -34,4 +42,4 @@ On iPhone, the Safari tab and the Home Screen icon keep separate data. Use one o
 
 ## Updating
 
-Replace `index.html` in this repository. Phones pick up the new version the next time the app is opened online, and use it from the launch after that.
+Replace `index.html` in this repository. The next time the app is opened online it downloads the new version and shows **A new version of the app is ready. Reload now**. Patients are kept. The version number is in Settings, under About.
