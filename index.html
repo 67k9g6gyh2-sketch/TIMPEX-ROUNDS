@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-gagtHWnSdLtkewHP9ZorSyH9cV3P/oBiDb8ikgyzoj8='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-HKCeVNf2EhFdVVqa5e6HOrb+KLEOVLGXwZ0WihgfVqY='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#EEF2F0">
@@ -602,10 +602,10 @@ const defChips = g => (DEF_CHIPS_RAW[g] || []).map(([id, t, j, a]) => ({ id, t, 
 const allDefChips = () => Object.fromEntries(Object.keys(GROUPS).map(g => [g, defChips(g)]));
 
 const SECS = [
-  ['gs', 'General survey & overnight'], ['fluid', 'Fluid balance'], ['support', 'Current support'], ['resp', 'Respiratory support'],
+  ['gs', 'General survey and overnight'], ['fluid', 'Fluid balance'], ['support', 'Current support'], ['resp', 'Respiratory support'],
   ['vitals', 'Vital signs'], ['neuro', 'Neurologic'], ['pulm', 'Pulmonary'], ['cv', 'Cardiovascular'], ['gi', 'GI / Nutrition'],
   ['renal', 'Renal / Fluid status'], ['endo', 'Endocrine / Metabolic'], ['id', 'Infectious disease'], ['heme', 'Hematology'],
-  ['pend', 'Pending'], ['meds', 'Medications'], ['ar', 'Assessment & requests'],
+  ['pend', 'Pending'], ['meds', 'Medications'], ['ar', 'Assessment and requests'],
 ];
 const SEC_NAME = Object.fromEntries(SECS.concat([['nihss', 'NIH Stroke Scale']]));
 
@@ -796,9 +796,9 @@ function o2Device(rs) {
     case 'NC': return 'nasal cannula' + L(rs.nc);
     case 'FM': return 'face mask' + L(rs.fm);
     case 'NRB': return 'non-rebreather mask' + L(rs.nrb);
-    case 'HFNC': return 'HFNC' + L(rs.hfFlow) + (str(rs.hfFio2) ? ', FiO2 ' + pct(rs.hfFio2) : '');
-    case 'NIV': { const x = list([str(rs.ipap) && 'IPAP ' + str(rs.ipap), str(rs.epap) && 'EPAP ' + str(rs.epap), str(rs.nivFio2) && 'FiO2 ' + pct(rs.nivFio2)]); return 'NIV' + (x ? ` (${x})` : ''); }
-    case 'MV': { const x = list([str(rs.mvMode), str(rs.vt) && 'VT ' + str(rs.vt), str(rs.mvRr) && 'RR ' + str(rs.mvRr), str(rs.peep) && 'PEEP ' + str(rs.peep), str(rs.mvFio2) && 'FiO2 ' + pct(rs.mvFio2)]); return 'mechanical ventilation' + (x ? ` (${x})` : ''); }
+    case 'HFNC': return 'HFNC' + L(rs.hfFlow) + (str(rs.hfFio2) ? ', FiO₂ ' + pct(rs.hfFio2) : '');
+    case 'NIV': { const x = list([str(rs.ipap) && 'IPAP ' + str(rs.ipap), str(rs.epap) && 'EPAP ' + str(rs.epap), str(rs.nivFio2) && 'FiO₂ ' + pct(rs.nivFio2)]); return 'NIV' + (x ? ` (${x})` : ''); }
+    case 'MV': { const x = list([str(rs.mvMode), str(rs.vt) && 'VT ' + str(rs.vt), str(rs.mvRr) && 'RR ' + str(rs.mvRr), str(rs.peep) && 'PEEP ' + str(rs.peep), str(rs.mvFio2) && 'FiO₂ ' + pct(rs.mvFio2)]); return 'mechanical ventilation' + (x ? ` (${x})` : ''); }
     default: return '';
   }
 }
@@ -814,7 +814,7 @@ function voidRates(fl, w) {
 }
 const medName = m => [str(m.g), str(m.b) && `(${str(m.b)})`].filter(Boolean).join(' ');
 const medLine = m => [medName(m), str(m.dose), str(m.route), str(m.extra), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
-const medShort = (m, info) => [medName(m), str(m.dose), str(m.route), str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (info ? ' ' + info : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
+const medShort = (m, info) => [medName(m), str(m.dose), str(m.route), /^\d/.test(str(m.extra)) ? str(m.extra) : '', str(m.freq)].filter(Boolean).join(' ') + (m.abx && str(m.no) ? ' dose ' + str(m.no) : '') + (info ? ' ' + info : '') + (m.st === 'hold' ? ' - on hold temporarily' : '');
 // Antimicrobial stewardship: day of therapy (start date = Day 1), planned duration and indication.
 const abxDay = (m, on) => counterDay(m.start, 1, on);
 function abxInfo(m, on) {
@@ -851,9 +851,9 @@ function uoWindows(fl, w) {
   return res;
 }
 function kdigoFlag(c) {
-  if (c.uoRate != null && c.uoRate < 0.3) return { stage: 3, t: `24-hour urine output is ${f2(c.uoRate)} ml/kg/h, under 0.3 (KDIGO AKI stage 3 urine criterion).` };
-  if (c.uoWin.r12 != null && c.uoWin.r12 < 0.5) return { stage: 2, t: `Urine output over the last 12 h of the void log is ${f2(c.uoWin.r12)} ml/kg/h, under 0.5 (KDIGO AKI stage 2 urine criterion).` };
-  if (c.uoWin.r6 != null && c.uoWin.r6 < 0.5) return { stage: 1, t: `Urine output over the last 6 h of the void log is ${f2(c.uoWin.r6)} ml/kg/h, under 0.5 (KDIGO AKI stage 1 urine criterion).` };
+  if (c.uoRate != null && c.uoRate < 0.3) return { stage: 3, t: `24H urine output is ${f2(c.uoRate)} ml/kg/hr, under 0.3 (KDIGO AKI stage 3 urine criterion).` };
+  if (c.uoWin.r12 != null && c.uoWin.r12 < 0.5) return { stage: 2, t: `Urine output over the last 12H of the void log is ${f2(c.uoWin.r12)} ml/kg/hr, under 0.5 (KDIGO AKI stage 2 urine criterion).` };
+  if (c.uoWin.r6 != null && c.uoWin.r6 < 0.5) return { stage: 1, t: `Urine output over the last 6H of the void log is ${f2(c.uoWin.r6)} ml/kg/hr, under 0.5 (KDIGO AKI stage 1 urine criterion).` };
   return null;
 }
 const INSULIN_RE = /insulin|glargine|detemir|degludec|lispro|aspart|glulisine|\bnph\b|humulin|novorapid|novomix|lantus|levemir|tresiba|apidra|humalog/i;
@@ -870,7 +870,7 @@ function calc(p, S) {
   const u = num(fl.urine), lo = thr(S, 'uoLow'), hi = thr(S, 'uoHigh');
   c.uoRate = ok(u) && c.hasW ? u / c.w / 24 : null;
   c.uoStatus = c.uoRate == null ? '' : c.uoRate < lo ? 'below' : c.uoRate > hi ? 'above' : 'within';
-  c.uoGoal = c.uoStatus ? `${c.uoStatus} goal of ${fx(lo)}-${fx(hi)}ml/kg/h` : '';
+  c.uoGoal = c.uoStatus ? `${c.uoStatus} goal of ${fx(lo)}-${fx(hi)}ml/kg/hr` : '';
   c.voids = voidRates(fl, c.w);
   c.uoWin = uoWindows(fl, c.w);
   // output breakdown check
@@ -986,7 +986,7 @@ function buildMessage(p, db, now = new Date()) {
       if (!G.star || !on(G.sec)) continue;
       T(g).filter(s => s.star).forEach(s => stars.push({ text: cap1(s.text), at: s.at }));
     }
-    if (on('endo')) r.en.cbg.forEach(x => { if (x.star && str(x.iv) && str(x.v)) stars.push({ text: `CBG ${str(x.v)} mg/dl at ${fmtTime(x.t)} -> ${str(x.iv)}`, at: x.at || 0 }); });
+    if (on('endo')) r.en.cbg.forEach(x => { if (x.star && str(x.iv) && str(x.v)) stars.push({ text: `CBG ${str(x.v)} mg/dl${fmtTime(x.t) ? ' at ' + fmtTime(x.t) : ''} -> ${str(x.iv)}`, at: x.at || 0 }); });
     stars.sort((a, b) => a.at - b.at);
     const all = lines.concat(stars.map(s => s.text));
     return all.length ? 'General Survey and overnight summary:\n' + bul(all).join('\n') : null;
@@ -1219,7 +1219,7 @@ function preSend(p, db, c, ctx, out, text) {
   if (text && text.length > MSG_LIMIT) add('length', `The message is ${text.length.toLocaleString('en-US')} characters. Viber may not send a message over ${MSG_LIMIT.toLocaleString('en-US')} characters: use “Copy in parts” in Preview.`);
   if (str(p.surname) && !str(p.room)) add('header', 'Room is blank.');
   if (!c.hasW) add('header', 'Working weight is missing, so ml/kg/hr and mcg/kg/min can’t be worked out.');
-  if (on('fluid') && c.bdOk === false) add('fluid', `Output breakdown (${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}) doesn’t add up to the 24-hour output (${str(fl.out24)}).`);
+  if (on('fluid') && c.bdOk === false) add('fluid', `Output breakdown (${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}) doesn’t add up to the 24H output (${str(fl.out24)}).`);
   const chk = (val, lo, hi, label, k) => { const n = num(val); if (str(val) && (!ok(n) || n < lo || n > hi)) add(k, `${label} of ${str(val)} looks implausible. Check for a typo.`); };
   chk(p.weight, 2, 350, 'Weight', 'header');
   chk(p.age, 0, 120, 'Age', 'header');
@@ -1233,11 +1233,11 @@ function preSend(p, db, c, ctx, out, text) {
   chk(v.spo2, 40, 100, 'SpO₂', 'vitals'); chk(v.spo2Lo, 40, 100, 'SpO₂ range low', 'vitals'); chk(v.spo2Hi, 40, 100, 'SpO₂ range high', 'vitals');
   if (ok(num(v.sbp)) && ok(num(v.dbp)) && num(v.dbp) >= num(v.sbp)) add('vitals', `BP ${str(v.sbp)}/${str(v.dbp)}: diastolic is not lower than systolic.`);
   [['hrLo', 'hrHi', 'HR'], ['sbpLo', 'sbpHi', 'SBP'], ['dbpLo', 'dbpHi', 'DBP'], ['spo2Lo', 'spo2Hi', 'SpO₂']].forEach(([a, b, l]) => { if (num(v[a]) > num(v[b])) add('vitals', `${l} range: the low value is above the high value.`); });
-  ['in24', 'out24'].forEach(k => chk(fl[k], 0, 20000, k === 'in24' ? '24-hour input' : '24-hour output', 'fluid'));
+  ['in24', 'out24'].forEach(k => chk(fl[k], 0, 20000, k === 'in24' ? '24H input' : '24H output', 'fluid'));
   ['shIn', 'shOut'].forEach(k => chk(fl[k], 0, 15000, k === 'shIn' ? 'Shift input' : 'Shift output', 'fluid'));
-  if (num(fl.shIn) > num(fl.in24)) add('fluid', 'Shift input is larger than the 24-hour input.');
-  if (num(fl.shOut) > num(fl.out24)) add('fluid', 'Shift output is larger than the 24-hour output.');
-  if (c.uoRate != null && c.uoRate > 15) add('fluid', `24-hour urine output works out to ${f2(c.uoRate)} ml/kg/hr. Check urine volume and weight.`);
+  if (num(fl.shIn) > num(fl.in24)) add('fluid', 'Shift input is larger than the 24H input.');
+  if (num(fl.shOut) > num(fl.out24)) add('fluid', 'Shift output is larger than the 24H output.');
+  if (c.uoRate != null && c.uoRate > 15) add('fluid', `24H urine output works out to ${f2(c.uoRate)} ml/kg/hr. Check urine volume and weight.`);
   fl.voids.forEach((x, i) => {
     chk(x.v, 0, 2000, `Void at ${fmtTime(x.t) || 'row ' + (i + 1)}`, 'fluid');
     if (str(x.t) && tmin(x.t) == null) add('fluid', `Void row ${i + 1}: time "${x.t}" isn’t a valid time.`);
@@ -1296,6 +1296,80 @@ function preSend(p, db, c, ctx, out, text) {
   if (ta && !/^no /i.test(ta.text) && ok(hrHi) && hrHi <= 100) add('gs', `Tachycardia episodes are ticked, but the HR range only reaches ${fx(hrHi)}.`);
   const vs = said.find(s => s.id === 'gs_vaso');
   if (vs && !c.vasoOn) add('gs', '“Still on vasopressor” is ticked, but no vasopressor drip is running in Current support.');
+  // ticked phrases that contradict each other
+  const tick = (g, id) => !!(on(GROUPS[g].sec) && ticked(db, r, g, ctx).some(x => x.id === id));
+  const tickText = (g, id) => { const x = on(GROUPS[g].sec) && ticked(db, r, g, ctx).find(y => y.id === id); return x ? x.text : ''; };
+  const both = (sec, a, b, why) => { if (a && b) add(sec, why); };
+  const adv = ['pu_crack', 'pu_wheeze', 'pu_rhon', 'pu_dbs'].filter(id => tick('pulm', id));
+  both('pulm', tick('pulm', 'pu_clear'), adv.length, '“Clear breath sounds” is ticked together with crackles, wheezes, rhonchi or decreased breath sounds.');
+  both('pulm', tick('pulm', 'pu_cough'), tick('pulm', 'pu_pcough'), 'Both a non-productive and a productive cough are ticked.');
+  both('renal', tick('renal', 're_foley'), tick('renal', 're_nofoley'), 'Both “Foley catheter inserted” and “not yet inserted” are ticked.');
+  const colors = ['ua_straw', 'ua_amber', 'ua_tea'].filter(id => tick('urine', id));
+  if (colors.length > 1) add('fluid', 'More than one urine color is ticked (straw-colored, amber, tea-colored).');
+  both('fluid', tick('urine', 'ua_conc'), tick('urine', 'ua_nonconc'), 'Urine is ticked as both concentrated and non-concentrated.');
+  const uoChip = tickText('gs', 'gs_uo');
+  if (uoChip) {
+    const said2 = /non-concentrated/i.test(uoChip) ? 'ua_nonconc' : /\bconcentrated/i.test(uoChip) ? 'ua_conc' : /straw/i.test(uoChip) ? 'ua_straw' : /amber/i.test(uoChip) ? 'ua_amber' : /tea/i.test(uoChip) ? 'ua_tea' : '';
+    const opp = { ua_nonconc: ['ua_conc'], ua_conc: ['ua_nonconc'], ua_straw: ['ua_amber', 'ua_tea'], ua_amber: ['ua_straw', 'ua_tea'], ua_tea: ['ua_straw', 'ua_amber'] }[said2] || [];
+    if (opp.some(id => tick('urine', id))) add('gs', 'The urine described in the General Survey doesn’t match the urine appearance ticked in Fluid balance.');
+  }
+  const dietText = str(r.gi.diet) || ['di_lcd', 'di_supp'].some(id => tick('diet', id));
+  both('gi', tick('diet', 'di_npo'), dietText, '“NPO” is ticked together with a diet or an oral supplement.');
+  // neurologic findings against the GCS and level of consciousness
+  const E = num(r.ne.e), V = r.ne.vv === 'T' ? 'T' : num(r.ne.vv), M = num(r.ne.m), loc = r.ne.loc;
+  const talks = ['ne_conv', 'ne_coh', 'ne_words'].some(id => tick('neuro', id)) || tick('gs', 'gs_conv');
+  if (talks && (V === 'T' || (ok(V) && V < 4))) add('neuro', `Conversant or coherent is ticked, but GCS V is ${V === 'T' ? 'T (intubated)' : V}.`);
+  if (tick('neuro', 'ne_cmd') && ok(M) && M < 6) add('neuro', `“Follows commands” is ticked, but GCS M is ${M}.`);
+  const oriented = r.ne.ot && r.ne.op && r.ne.opl;
+  if (on('neuro') && oriented && (V === 'T' || (ok(V) && V < 5))) add('neuro', `Oriented to time, person and place is ticked, but GCS V is ${V === 'T' ? 'T (intubated)' : V} (V5 means oriented).`);
+  if (on('neuro') && V === 5 && (r.ne.ot || r.ne.op || r.ne.opl) && !oriented) add('neuro', 'GCS V is 5 (oriented), but not all of time, person and place are ticked.');
+  if (on('neuro') && loc === 'Awake' && ok(E) && E < 4) add('neuro', `Level of consciousness is Awake, but GCS E is ${E}.`);
+  const seen = tickText('gs', 'gs_seen');
+  if (/awake/i.test(seen) && /^(Stuporous|Obtunded|Comatose)$/.test(loc)) add('gs', `The General Survey says the patient was seen awake, but the level of consciousness is ${loc.toLowerCase()}.`);
+  // rhythm against the current heart rate
+  const hrNow = num(v.hr), rh = r.cv.rhythm;
+  if (on('cv') && ok(hrNow) && rh) {
+    const bad = (rh === 'Sinus bradycardia' && hrNow >= 60) || (rh === 'Sinus tachycardia' && hrNow <= 100) || (rh === 'NSR' && (hrNow < 60 || hrNow > 100)) ||
+      (rh === 'AF in rapid ventricular response' && hrNow <= 100) || (rh === 'AF in slow ventricular response' && hrNow >= 60) || (rh === 'AF in controlled ventricular response' && (hrNow < 60 || hrNow > 100));
+    if (bad) add('cv', `The rhythm is ${rh}, but the current HR is ${fx(hrNow)}.`);
+  }
+  // current vital signs outside their own 24H range
+  [['hr', 'hrLo', 'hrHi', 'HR'], ['sbp', 'sbpLo', 'sbpHi', 'SBP'], ['dbp', 'dbpLo', 'dbpHi', 'DBP'], ['spo2', 'spo2Lo', 'spo2Hi', 'SpO₂']].forEach(([k, a, b, l]) => {
+    const x = num(v[k]), lo = num(v[a]), hi = num(v[b]);
+    if (ok(x) && ((ok(lo) && x < lo) || (ok(hi) && x > hi))) add('vitals', `The current ${l} (${fx(x)}) is outside its 24H range (${str(v[a]) || '?'}-${str(v[b]) || '?'}).`);
+  });
+  // urine: the void log can't add up to more than the 24H urine output
+  const vsum = fl.voids.reduce((t, x) => t + (ok(num(x.v)) ? num(x.v) : 0), 0);
+  if (on('fluid') && ok(num(fl.urine)) && vsum > num(fl.urine) + 0.5) add('fluid', `The void log adds up to ${fx(vsum)}, more than the 24H urine output (${str(fl.urine)}).`);
+  // shift label against its hours ("4pm-12am" is 8 hours)
+  const shm = /^\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)\s*[-–to ]+\s*(\d{1,2})(?::(\d{2}))?\s*(am|pm)\s*$/i.exec(str(fl.shLabel));
+  if (on('fluid') && shm && ok(num(fl.shHrs))) {
+    const toMin = (h, m, ap) => ((+h % 12) + (/pm/i.test(ap) ? 12 : 0)) * 60 + (+m || 0);
+    let span = toMin(shm[4], shm[5], shm[6]) - toMin(shm[1], shm[2], shm[3]); if (span <= 0) span += 1440;
+    if (Math.abs(span / 60 - num(fl.shHrs)) > 0.01) add('fluid', `The shift is labelled ${str(fl.shLabel)} (${fx(span / 60, 1)} hours) but its hours are set to ${str(fl.shHrs)}.`);
+  }
+  // day counters: ICU transfer before admission
+  if (isISO(p.icu) && isISO(p.admit) && p.icu < p.admit) add('header', 'The ICU transfer date is before the admission date.');
+  // ventilator and oxygen settings
+  const rs = r.resp, rchk = (val, lo, hi, label) => chk(val, lo, hi, label, 'resp');
+  if (on('resp') || on('vitals')) {
+    if (rs.mode === 'NC') rchk(rs.nc, 0.5, 15, 'Nasal cannula flow');
+    if (rs.mode === 'NC' && num(rs.nc) > 6 && num(rs.nc) <= 15) add('resp', `Nasal cannula at ${str(rs.nc)} L/min is above the usual 1–6 L/min. Check the device.`);
+    if (rs.mode === 'HFNC') { rchk(rs.hfFlow, 5, 80, 'HFNC flow'); rchk(rs.hfFio2, 21, 100, 'HFNC FiO₂'); }
+    if (rs.mode === 'NIV') { rchk(rs.ipap, 3, 40, 'IPAP'); rchk(rs.epap, 3, 25, 'EPAP'); rchk(rs.nivFio2, 21, 100, 'NIV FiO₂'); if (num(rs.ipap) <= num(rs.epap)) add('resp', `IPAP (${str(rs.ipap)}) should be higher than EPAP (${str(rs.epap)}).`); }
+    if (rs.mode === 'MV') { rchk(rs.vt, 100, 1500, 'VT'); rchk(rs.mvRr, 4, 60, 'Ventilator RR'); rchk(rs.peep, 0, 30, 'PEEP'); rchk(rs.mvFio2, 21, 100, 'Ventilator FiO₂'); }
+  }
+  // the same drug listed twice
+  const seenDrug = {};
+  r.drips.forEach((d, i) => { const dc = c.drips[i]; if (!dc || !(str(d.amt) || str(d.rate))) return; const n = dc.m.name.toLowerCase(); if (seenDrug[n]) add('support', `${dc.m.name} is listed twice in Drips.`); seenDrug[n] = 1; });
+  // antimicrobial dose number against its day count (q12h on Day 8 is about dose 15-16)
+  p.meds.forEach(m => {
+    if (!m.abx || m.st !== 'active' || !str(m.no)) return;
+    const d = abxDay(m, r.date), per = dpd(m), n = num(m.no);
+    if (d == null || d < 1 || !per || !ok(n)) return;
+    const lo = (d - 1) * per, hi = d * per + 1;
+    if (n < lo || n > hi) add('meds', `${medName(m)} is at dose ${str(m.no)} on Day ${d} (${str(m.freq)}); about dose ${(d - 1) * per + 1}–${d * per} would be expected. Check the dose number or the start date.`);
+  });
   // settings that were left blank
   ['fever', 'feverIcu', 'cbgLow', 'cbgLow2', 'cbgHigh', 'uoLow', 'uoHigh'].forEach(k => { if (!ok(num(db.settings[k]))) add('settings', `A threshold in Settings is blank or not a number, so the default (${DEF_SETTINGS[k]}) is being used.`); });
   if (thr(db.settings, 'uoLow') >= thr(db.settings, 'uoHigh')) add('settings', 'In Settings, the urine output goal’s lower limit is not below its upper limit.');
@@ -1310,7 +1384,7 @@ function preSend(p, db, c, ctx, out, text) {
     if (!str(m.ind)) add('meds', `${medName(m)} has no indication noted.`);
     const d = abxDay(m, r.date), dur = num(m.dur);
     if (d != null && d < 1) add('meds', `${medName(m)}: its start date is after the date of this update.`);
-    else if (d === 3) add('meds', `${medName(m)} is on Day 3: due for the 48\u201372 h antibiotic review (cultures, de-escalation, IV-to-oral).`);
+    else if (d === 3) add('meds', `${medName(m)} is on Day 3: due for the 48\u201372H antibiotic review (cultures, de-escalation, IV-to-oral).`);
     if (d != null && dur > 0 && d > dur) add('meds', `${medName(m)} is on Day ${d}, past the planned ${fx(dur, 0)} days.`);
   });
   // blanks inside ticked chips
@@ -1390,15 +1464,15 @@ const REF_VALUES = [
   ['Bedside targets in the hospital', [
     ['MAP, septic shock', 'Start at 65 mmHg (within about 5); 60–65 if 65 or older', '', 'ssc26'],
     ['SpO₂, hypoxemic respiratory failure', 'Lower (about 90–93%) or higher (96% or more) target, by patient factors', '', 'ssc26'],
-    ['Urine output', '0.5 mL/kg/h or more. Below 0.5 for 6–12 h is AKI stage 1; 12 h or more, stage 2; below 0.3 for 24 h or none for 12 h, stage 3', '', 'kdigo'],
-    ['Blood glucose on insulin', '140–180 mg/dL for most patients', '7.8–10.0 mmol/L', 'ada26'],
-    ['When to start insulin', '180 mg/dL or more, twice in 24 h', '10.0 mmol/L', 'ada26'],
-    ['Hypoglycemia', 'Level 1 below 70; level 2 below 54 mg/dL', '3.9; 3.0 mmol/L', 'ada26'],
-    ['Tidal volume (ARDS)', '4–8 mL/kg predicted body weight; plateau pressure below 30 cmH₂O', '', 'ats'],
+    ['Urine output', '0.5 ml/kg/hr or more. Below 0.5 for 6–12H is AKI stage 1; 12H or more, stage 2; below 0.3 for 24H or none for 12H, stage 3', '', 'kdigo'],
+    ['Blood glucose on insulin', '140–180 mg/dl for most patients', '7.8–10.0 mmol/L', 'ada26'],
+    ['When to start insulin', '180 mg/dl or more, twice in 24H', '10.0 mmol/L', 'ada26'],
+    ['Hypoglycemia', 'Level 1 below 70; level 2 below 54 mg/dl', '3.9; 3.0 mmol/L', 'ada26'],
+    ['Tidal volume (ARDS)', '4–8 ml/kg predicted body weight; plateau pressure below 30 cmH₂O', '', 'ats'],
     ['Glasgow Coma Scale', '15', '', ''],
   ]],
   ['Complete blood count', [
-    ['Hemoglobin', 'F 12–16; M 14–18 g/dL', 'F 120–160; M 140–180 g/L', 'abim'],
+    ['Hemoglobin', 'F 12–16; M 14–18 g/dl', 'F 120–160; M 140–180 g/L', 'abim'],
     ['Hematocrit', 'F 37–47%; M 42–50%', 'F 0.37–0.47; M 0.42–0.50', 'abim'],
     ['White cell count', '4,000–11,000/µL', '4.0–11.0 × 10⁹/L', 'abim'],
     ['Absolute neutrophil count', '2,000–8,250/µL', '2.0–8.25 × 10⁹/L', 'abim'],
@@ -1412,34 +1486,34 @@ const REF_VALUES = [
     ['Chloride', '98–106 mEq/L', '98–106 mmol/L', 'abim'],
     ['Bicarbonate', '23–28 mEq/L', '23–28 mmol/L', 'abim'],
     ['Anion gap', '7–13 mEq/L', '', 'abim'],
-    ['BUN', '8–20 mg/dL', 'Urea 2.9–7.1 mmol/L', 'abim'],
-    ['Creatinine', 'F 0.50–1.10; M 0.70–1.30 mg/dL', 'F 44–97; M 62–115 µmol/L', 'abim'],
-    ['Glucose, fasting', '70–99 mg/dL', '3.9–5.5 mmol/L', 'abim'],
-    ['Calcium, total', '8.6–10.2 mg/dL', '2.15–2.55 mmol/L', 'abim'],
+    ['BUN', '8–20 mg/dl', 'Urea 2.9–7.1 mmol/L', 'abim'],
+    ['Creatinine', 'F 0.50–1.10; M 0.70–1.30 mg/dl', 'F 44–97; M 62–115 µmol/L', 'abim'],
+    ['Glucose, fasting', '70–99 mg/dl', '3.9–5.5 mmol/L', 'abim'],
+    ['Calcium, total', '8.6–10.2 mg/dl', '2.15–2.55 mmol/L', 'abim'],
     ['Calcium, ionized', '', '1.16–1.31 mmol/L', 'abim'],
-    ['Magnesium', '1.6–2.6 mg/dL', '0.66–1.07 mmol/L', 'abim'],
-    ['Phosphorus', '3.0–4.5 mg/dL', '0.97–1.45 mmol/L', 'abim'],
-    ['Uric acid', '3.0–7.0 mg/dL', '178–416 µmol/L', 'abim'],
+    ['Magnesium', '1.6–2.6 mg/dl', '0.66–1.07 mmol/L', 'abim'],
+    ['Phosphorus', '3.0–4.5 mg/dl', '0.97–1.45 mmol/L', 'abim'],
+    ['Uric acid', '3.0–7.0 mg/dl', '178–416 µmol/L', 'abim'],
     ['Osmolality', '275–295 mOsm/kg', '', 'abim'],
     ['Urine specific gravity', '1.002–1.030', '', 'abim'],
   ]],
   ['Liver and pancreas', [
-    ['Albumin', '3.5–5.5 g/dL', '35–55 g/L', 'abim'],
-    ['Total protein', '5.5–9.0 g/dL', '55–90 g/L', 'abim'],
+    ['Albumin', '3.5–5.5 g/dl', '35–55 g/L', 'abim'],
+    ['Total protein', '5.5–9.0 g/dl', '55–90 g/L', 'abim'],
     ['AST', '10–40 U/L', '', 'abim'],
     ['ALT', '10–40 U/L', '', 'abim'],
     ['Alkaline phosphatase', '30–120 U/L', '', 'abim'],
-    ['Bilirubin, total', '0.3–1.0 mg/dL', '5.1–17.1 µmol/L', 'abim'],
-    ['Bilirubin, direct', '0.1–0.3 mg/dL', '1.7–5.1 µmol/L', 'abim'],
+    ['Bilirubin, total', '0.3–1.0 mg/dl', '5.1–17.1 µmol/L', 'abim'],
+    ['Bilirubin, direct', '0.1–0.3 mg/dl', '1.7–5.1 µmol/L', 'abim'],
     ['Amylase', '25–125 U/L', '', 'abim'],
     ['Lipase', '10–140 U/L', '', 'abim'],
-    ['Ammonia', '40–70 µg/dL', '24–41 µmol/L', 'abim'],
+    ['Ammonia', '40–70 µg/dl', '24–41 µmol/L', 'abim'],
   ]],
   ['Coagulation', [
     ['Prothrombin time', '11–13 s', '', 'abim'],
     ['aPTT', '25–35 s', '', 'abim'],
-    ['Fibrinogen', '200–400 mg/dL', '2.0–4.0 g/L', 'abim'],
-    ['D-dimer', 'Below 0.5 µg/mL', '', 'abim'],
+    ['Fibrinogen', '200–400 mg/dl', '2.0–4.0 g/L', 'abim'],
+    ['D-dimer', 'Below 0.5 µg/ml', '', 'abim'],
   ]],
   ['Blood gas (arterial, room air) and lactate', [
     ['pH', '7.38–7.44', '', 'abim'],
@@ -1452,22 +1526,22 @@ const REF_VALUES = [
   ['Heart, inflammation and others', [
     ['Troponin I, high-sensitivity', 'F 15 or less; M 20 or less ng/L (depends on the assay)', '', 'abim'],
     ['Troponin T, high-sensitivity', 'F 10 or less; M 15 or less ng/L (depends on the assay)', '', 'abim'],
-    ['BNP', 'Below 100 pg/mL', '', 'abim'],
-    ['NT-proBNP', 'Heart failure unlikely at 300 or less; likely at 450 or more (18–49 y), 900 (50–75 y), 1,800 pg/mL (over 75 y)', '', 'abim'],
+    ['BNP', 'Below 100 pg/ml', '', 'abim'],
+    ['NT-proBNP', 'Heart failure unlikely at 300 or less; likely at 450 or more (18–49 y), 900 (50–75 y), 1,800 pg/ml (over 75 y)', '', 'abim'],
     ['Creatine kinase', 'F 30–135; M 55–170 U/L', '', 'abim'],
     ['LDH', '80–225 U/L', '', 'abim'],
-    ['Procalcitonin', '0.10 ng/mL or less', '', 'abim'],
-    ['C-reactive protein', '0.8 mg/dL or less', '8 mg/L or less', 'abim'],
-    ['ESR (Westergren)', 'F 0–20; M 0–15 mm/h', '', 'abim'],
+    ['Procalcitonin', '0.10 ng/ml or less', '', 'abim'],
+    ['C-reactive protein', '0.8 mg/dl or less', '8 mg/L or less', 'abim'],
+    ['ESR (Westergren)', 'F 0–20; M 0–15 mm/hr', '', 'abim'],
     ['HbA1c', '4.0–5.6%', '', 'abim'],
-    ['TSH', '0.5–4.0 µU/mL', '0.5–4.0 mU/L', 'abim'],
-    ['Free T4', '0.8–1.8 ng/dL', '10–23 pmol/L', 'abim'],
-    ['Cortisol, 8 AM', '5–25 µg/dL', '', 'abim'],
-    ['Ferritin', 'F 24–307; M 24–336 ng/mL', '', 'abim'],
-    ['Triglycerides, fasting', 'Normal below 150 mg/dL', 'Below 1.7 mmol/L', 'abim'],
-    ['LDL cholesterol', 'Optimal below 100 mg/dL', 'Below 2.6 mmol/L', 'abim'],
-    ['HDL cholesterol', 'Low: F below 50; M below 40 mg/dL', 'Low: F below 1.3; M below 1.0 mmol/L', 'abim'],
-    ['Total cholesterol', 'Desirable below 200 mg/dL', 'Below 5.2 mmol/L', 'abim'],
+    ['TSH', '0.5–4.0 µU/ml', '0.5–4.0 mU/L', 'abim'],
+    ['Free T4', '0.8–1.8 ng/dl', '10–23 pmol/L', 'abim'],
+    ['Cortisol, 8 AM', '5–25 µg/dl', '', 'abim'],
+    ['Ferritin', 'F 24–307; M 24–336 ng/ml', '', 'abim'],
+    ['Triglycerides, fasting', 'Normal below 150 mg/dl', 'Below 1.7 mmol/L', 'abim'],
+    ['LDL cholesterol', 'Optimal below 100 mg/dl', 'Below 2.6 mmol/L', 'abim'],
+    ['HDL cholesterol', 'Low: F below 50; M below 40 mg/dl', 'Low: F below 1.3; M below 1.0 mmol/L', 'abim'],
+    ['Total cholesterol', 'Desirable below 200 mg/dl', 'Below 5.2 mmol/L', 'abim'],
   ]],
 ];
 
@@ -1496,7 +1570,7 @@ const GUIDE = {
       'If atropine doesn’t work: transcutaneous pacing and/or a dopamine or epinephrine drip, titrated to response.'] },
     { k: 'anaph', n: 'Refractory anaphylaxis', start: [0.08, 0.17, MKM], s: ['rcuk'], t: [
       'Refractory: breathing or circulation problems persist after 2 doses of IM adrenaline.',
-      '1 mg in 100 mL (10 mcg/mL), started at 0.5–1 mL/kg/hour and titrated to response, with continuous monitoring. For experienced specialists.'] },
+      '1 mg in 100 cc (10 mcg/ml), started at 0.5–1 cc/kg/hr and titrated to response, with continuous monitoring. For experienced specialists.'] },
   ],
   Dopamine: [
     { k: 'brady', n: 'Symptomatic bradycardia', range: [5, 20, MKM], max: [50, MKM], s: ['aha25', 'label'], t: [
@@ -1559,7 +1633,9 @@ function doseText(a, b, u, du, w) {
 function doseGuide(p, i, c) {
   const r = p.rec, d = r.drips[i], dc = c.drips[i], G = d && GUIDE[d.drug];
   if (!G || !dc) return null;
-  const u = dc.m.u, w = c.w, v = dc.v, ind = G.find(x => x.k === d.ind) || null;
+  const u = dc.m.u, w = c.w, ind = G.find(x => x.k === d.ind) || null;
+  // Same rounding as the printed dose, so the status never disagrees with the number on screen.
+  const v = dc.v == null ? null : u === MKM ? +(dc.v < 0.1 ? dc.v.toFixed(3) : dc.v.toFixed(2)) : +sig(dc.v, 3);
   const out = { drug: d.drug, inds: G, ind, u, v, status: '', notes: [], lines: [] };
   if (!ind) return out;
   const C = (x, xu) => convDose(x, xu, u, w);
@@ -1666,7 +1742,7 @@ function startNewDay(p, db, today = todayISO()) {
   Object.keys(r.v).forEach(k => { if (k !== 'ranges') r.v[k] = ''; });
   r.cv.bp = [];
   r.en.cbg = [];
-  r.gi.bmN = '';
+  r.gi.bmN = ''; r.gi.bmChar = ''; r.gi.bristol = '';
   r.ar.req = '';
   delete r.chips.req;
   const moved = [], stuck = [];
@@ -1989,17 +2065,18 @@ BODY.hdr = () => {
 BODY.gs = () => `${chipsHtml('gs')}${H('Also in this summary')}<div class="calc pre" data-c="gsstars"></div>${OTH('gs')}`;
 BODY.fluid = () => {
   const r = curP().rec;
-  return `${H('24 hours')}<div class="grid">${F('Input', 'r.fl.in24', { t: 'num', unit: 'mL' })}${F('Output', 'r.fl.out24', { t: 'num', unit: 'mL' })}</div>${CALC('net24', 'big')}
-  ${H('Shift block')}<div class="grid">${F('Label', 'r.fl.shLabel', { ph: '4pm-12am' })}${F('Hours', 'r.fl.shHrs', { t: 'num' })}${F('Input', 'r.fl.shIn', { t: 'num', unit: 'mL' })}${F('Output', 'r.fl.shOut', { t: 'num', unit: 'mL' })}</div>${CALC('netSh', 'big')}
-  ${H('Output breakdown')}<div class="grid">${F('Urine', 'r.fl.urine', { t: 'num', unit: 'mL' })}${PAIR('Stool, approx.', 'r.fl.stLo', 'r.fl.stHi', 'cc')}${F('NGT', 'r.fl.ngt', { t: 'num', unit: 'mL' })}${F('Drain', 'r.fl.drain', { t: 'num', unit: 'mL' })}${F('Emesis', 'r.fl.emesis', { t: 'num', unit: 'mL' })}${F('Others', 'r.fl.othOut', { t: 'num', unit: 'mL' })}</div>
+  return `${H('24H')}<div class="grid">${F('Input', 'r.fl.in24', { t: 'num', unit: 'cc' })}${F('Output', 'r.fl.out24', { t: 'num', unit: 'cc' })}</div>${CALC('net24', 'big')}
+  ${H('Shift block')}<div class="grid">${F('Label', 'r.fl.shLabel', { ph: '4pm-12am' })}${F('Hours', 'r.fl.shHrs', { t: 'num' })}${F('Input', 'r.fl.shIn', { t: 'num', unit: 'cc' })}${F('Output', 'r.fl.shOut', { t: 'num', unit: 'cc' })}</div>${CALC('netSh', 'big')}
+  ${H('Output breakdown')}<div class="grid">${F('Urine', 'r.fl.urine', { t: 'num', unit: 'cc' })}${PAIR('Stool output, approx.', 'r.fl.stLo', 'r.fl.stHi', 'cc')}${F('NGT', 'r.fl.ngt', { t: 'num', unit: 'cc' })}${F('Drain', 'r.fl.drain', { t: 'num', unit: 'cc' })}${F('Emesis', 'r.fl.emesis', { t: 'num', unit: 'cc' })}${F('Others', 'r.fl.othOut', { t: 'num', unit: 'cc' })}</div>
   ${CALC('bd')}
-  ${H('24-hour urine output')}${CALC('uo', 'big')}${CALC('kdigo')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
+  ${H('24H urine output')}${CALC('uo', 'big')}${CALC('kdigo')}${CB('Also print the ml/kg/hr beside “Urine” in the breakdown', 'r.fl.uoLine')}
   ${H('Void log')}<div class="grid">${F('Collected via', 'r.fl.method', { t: 'sel', opts: URINE_METHODS })}${F('Last void before this log', 'r.fl.lastVoid', { t: 'time' })}</div>
   ${rowsHtml('r.fl.voids')}
   ${ADD('+ Add void', 'r.fl.voids', 'void', 'fluid')}
   <p class="hint">Each rate uses the time since the void before it, and times can cross midnight. The first row gets a rate only if you fill in the last void before the log.</p>
   ${H('Urine appearance')}${chipsHtml('urine')}${OTH('fluid')}`;
 };
+const DRIP_SHORT = { Norepinephrine: 'NE', Epinephrine: 'Epi', Dopamine: 'Dopa', Dobutamine: 'Dobu', Milrinone: 'Milri', Vasopressin: 'Vaso', Phenylephrine: 'Phenyl', Nitroglycerin: 'NTG', Nicardipine: 'Nicard', Furosemide: 'Furo', Midazolam: 'Midaz', Fentanyl: 'Fenta' };
 const SEV_TXT = { in: 'Within the usual range', lo: 'Below the usual range', hi: 'Above the usual range', max: 'Above the label maximum' };
 const guideSumm = x => [x.start && 'start ' + doseText(x.start[0], x.start[1], x.start[2]), x.range && 'usual ' + doseText(x.range[0], x.range[1], x.range[2]), x.max && 'label maximum ' + doseText(x.max[0], x.max[0], x.max[1])].filter(Boolean).join('; ');
 function dgHtml(p, i, c) {
@@ -2033,20 +2110,20 @@ BODY.support = () => {
 BODY.resp = () => {
   const rs = curP().rec.resp, n = (l, k, u) => F(l, 'r.resp.' + k, { t: 'num', unit: u });
   const f = { NC: n('Flow', 'nc', 'L/min'), FM: n('Flow', 'fm', 'L/min'), NRB: n('Flow', 'nrb', 'L/min'),
-    HFNC: n('Flow', 'hfFlow', 'L/min') + n('FiO2', 'hfFio2', '%'),
-    NIV: n('IPAP', 'ipap') + n('EPAP', 'epap') + n('FiO2', 'nivFio2', '%'),
-    MV: F('Mode', 'r.resp.mvMode', { list: 'dl-mv', ph: 'AC-VC', cap: 'characters' }) + n('VT', 'vt', 'mL') + n('RR', 'mvRr') + n('PEEP', 'peep') + n('FiO2', 'mvFio2', '%') }[rs.mode] || '';
+    HFNC: n('Flow', 'hfFlow', 'L/min') + n('FiO₂', 'hfFio2', '%'),
+    NIV: n('IPAP', 'ipap', 'cmH₂O') + n('EPAP', 'epap', 'cmH₂O') + n('FiO₂', 'nivFio2', '%'),
+    MV: F('Mode', 'r.resp.mvMode', { list: 'dl-mv', ph: 'AC-VC', cap: 'characters' }) + n('VT', 'vt', 'ml') + n('RR', 'mvRr', '/min') + n('PEEP', 'peep', 'cmH₂O') + n('FiO₂', 'mvFio2', '%') }[rs.mode] || '';
   return `<div class="grid">${F('Oxygen / ventilation', 'r.resp.mode', { t: 'sel', opts: RESP_MODES, rr: 'resp', cls: 'span2' })}${f}</div>${CALC('o2')}
   ${rs.mode === 'MV' ? CALC('vt') : ''}
   ${H('SpO₂')}<div class="grid g3">${F('Current', 'r.v.spo2', { t: 'num', unit: '%', nv: 'spo2' })}${F('24H low', 'r.v.spo2Lo', { t: 'num', unit: '%', nv: 'spo2' })}${F('24H high', 'r.v.spo2Hi', { t: 'num', unit: '%', nv: 'spo2' })}</div>
   ${H('Findings')}${chipsHtml('resp')}
   <p class="hint">The device always prints beside SpO₂ in Vital signs. This section prints on its own only for HFNC, NIV or mechanical ventilation, or when a chip or “Others” is filled in.</p>${OTH('resp')}`;
 };
-BODY.vitals = () => `<div class="grid g3">${F('T', 'r.v.t', { t: 'num', unit: '°C', nv: 't' })}${F('HR', 'r.v.hr', { t: 'num', unit: 'bpm', nv: 'hr' })}${F('RR', 'r.v.rr', { t: 'num', unit: '/min', nv: 'rr' })}${F('SBP', 'r.v.sbp', { t: 'num', nv: 'sbp' })}${F('DBP', 'r.v.dbp', { t: 'num', nv: 'dbp' })}${F('SpO₂', 'r.v.spo2', { t: 'num', unit: '%', nv: 'spo2' })}</div>
+BODY.vitals = () => `<div class="grid g3">${F('T', 'r.v.t', { t: 'num', unit: '°C', nv: 't' })}${F('HR', 'r.v.hr', { t: 'num', unit: 'bpm', nv: 'hr' })}${F('RR', 'r.v.rr', { t: 'num', unit: '/min', nv: 'rr' })}${F('SBP', 'r.v.sbp', { t: 'num', unit: 'mmHg', nv: 'sbp' })}${F('DBP', 'r.v.dbp', { t: 'num', unit: 'mmHg', nv: 'dbp' })}${F('SpO₂', 'r.v.spo2', { t: 'num', unit: '%', nv: 'spo2' })}</div>
   ${CALC('map', 'big')}${CALC('o2')}
-  ${H('24-hour ranges')}<div class="grid">${F('Tmax', 'r.v.tmax', { t: 'num', unit: '°C', nv: 't' })}${PAIR('HR', 'r.v.hrLo', 'r.v.hrHi', 'bpm', 'hr')}${PAIR('SBP', 'r.v.sbpLo', 'r.v.sbpHi', '', 'sbp')}${PAIR('DBP', 'r.v.dbpLo', 'r.v.dbpHi', '', 'dbp')}${PAIR('SpO₂', 'r.v.spo2Lo', 'r.v.spo2Hi', '%', 'spo2')}</div>
+  ${H('24H ranges')}<div class="grid">${F('Tmax', 'r.v.tmax', { t: 'num', unit: '°C', nv: 't' })}${PAIR('HR', 'r.v.hrLo', 'r.v.hrHi', 'bpm', 'hr')}${PAIR('SBP', 'r.v.sbpLo', 'r.v.sbpHi', 'mmHg', 'sbp')}${PAIR('DBP', 'r.v.dbpLo', 'r.v.dbpHi', 'mmHg', 'dbp')}${PAIR('SpO₂', 'r.v.spo2Lo', 'r.v.spo2Hi', '%', 'spo2')}</div>
   <div style="margin-top:10px">${F('Shift note', 'r.v.note', { ph: 'for the past 8H: 53-58bpm' })}</div>
-  ${CB('Print the 24-hour ranges in the message', 'r.v.ranges')}
+  ${CB('Print the 24H ranges in the message', 'r.v.ranges')}
   <p class="hint">The HR range also fills “episodes of bradycardia/tachycardia” in the General Survey, and T/Tmax fill Infectious disease. Normal values are for a healthy adult at rest (MedlinePlus; SpO₂ from ABIM 2026). <a class="lnk" href="#/ref">All normal values</a></p>${OTH('vitals')}`;
 function nihHtml() {
   return `<div class="nih"><div class="nih-h"><h3 class="sub">NIH Stroke Scale</h3><span class="calc big" data-c="nih"></span></div>
@@ -2086,7 +2163,7 @@ BODY.endo = () => {
   ${H('CBG log')}${rowsHtml('r.en.cbg')}
   ${ADD('+ Add CBG', 'r.en.cbg', 'cbg', 'endo')}${CALC('cbgr', 'big')}
   <p class="hint">Values below ${esc(S.cbgLow)} or above ${esc(S.cbgHigh)} mg/dl are flagged in red, and below ${esc(S.cbgLow2)} (level 2 hypoglycemia) in solid red (change these in Settings). The newest row prints with “-> latest”. Star a row that has an intervention to add it to the General Survey.</p>
-  ${CB('Print the 24-hour range', 'r.en.range')}
+  ${CB('Print the 24H range', 'r.en.range')}
   <div style="margin-top:10px">${F('Insulin regimen', 'r.en.insulin', { t: 'area', rows: 2 })}</div>${OTH('endo')}`;
 };
 BODY.id = () => `${CALC('fever', 'big')}<p class="hint">From Vital signs. Febrile at ${esc(curP().feverIcu ? db.settings.feverIcu : db.settings.fever)} \u00b0C or higher.</p>
@@ -2123,10 +2200,10 @@ BODY.meds = () => {
 
 const ROWS = {
   'p.counters': { card: 'hdr', tpl: 'counter', row: (x, i) => `<div class="row r-ctr">${F('Counter label', `p.counters.${i}.label`, { ph: 'Ictus' })}${F('Start date', `p.counters.${i}.date`, { t: 'date' })}${F('Start date counts as', `p.counters.${i}.base`, { t: 'sel', opts: BASE })}${DEL('p.counters', i, 'hdr')}</div>` },
-  'r.fl.voids': { card: 'fluid', tpl: 'void', row: (x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'mL' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>` },
+  'r.fl.voids': { card: 'fluid', tpl: 'void', row: (x, i) => `<div class="row r-void">${F('Time', `r.fl.voids.${i}.t`, { t: 'time' })}${F('Volume', `r.fl.voids.${i}.v`, { t: 'num', unit: 'cc' })}<div class="rate" data-c="void:${i}"></div>${DEL('r.fl.voids', i, 'fluid')}</div>` },
   'r.ivf': { card: 'support', tpl: 'ivf', row: (x, i) => `<div class="row r-ivf">${F('Fluid', `r.ivf.${i}.name`, { list: 'dl-ivf', ph: 'PNSS', cap: 'characters' })}${F('Rate', `r.ivf.${i}.rate`, { t: 'num', unit: 'cc/hr' })}${DEL('r.ivf', i, 'support')}</div>` },
   'r.drips': { card: 'support', tpl: 'drip', cls: 'drips', row: (d, i) => dripRow(d, i) },
-  'r.cv.bp': { card: 'cv', tpl: 'bp', row: (x, i) => `<div class="row r-bp">${F('Time', `r.cv.bp.${i}.t`, { t: 'time' })}${F('SBP', `r.cv.bp.${i}.s`, { t: 'num' })}${F('DBP', `r.cv.bp.${i}.d`, { t: 'num' })}<div class="rate" data-c="bpmap:${i}"></div>${DEL('r.cv.bp', i, 'cv')}</div>` },
+  'r.cv.bp': { card: 'cv', tpl: 'bp', row: (x, i) => `<div class="row r-bp">${F('Time', `r.cv.bp.${i}.t`, { t: 'time' })}${F('SBP', `r.cv.bp.${i}.s`, { t: 'num', unit: 'mmHg' })}${F('DBP', `r.cv.bp.${i}.d`, { t: 'num', unit: 'mmHg' })}<div class="rate" data-c="bpmap:${i}"></div>${DEL('r.cv.bp', i, 'cv')}</div>` },
   'r.en.cbg': { card: 'endo', tpl: 'cbg', row: (x, i) => `<div class="row r-cbg">${F('Time', `r.en.cbg.${i}.t`, { t: 'time' })}<label class="fld"><span class="lb">mg/dl</span><input class="in" type="text" inputmode="decimal" autocomplete="off" data-b="r.en.cbg.${i}.v" data-fl="cbg:${i}" value="${esc(x.v)}"></label>${F('Intervention', `r.en.cbg.${i}.iv`, { ph: 'if any' })}<button type="button" class="star${x.star ? ' on' : ''}" data-act="cbgstar" data-i="${i}" aria-pressed="${!!x.star}" aria-label="Add to General Survey">${x.star ? '★' : '☆'}</button>${DEL('r.en.cbg', i, 'endo')}</div>` },
 };
 const rowsHtml = path => { const R = ROWS[path]; return `<div class="${R.cls || 'rows'}" data-rows="${path}">${getv(path).map(R.row).join('')}</div>`; };
@@ -2145,7 +2222,7 @@ function summary(k, p, out) {
   switch (k) {
     case 'hdr': return c.counters.length ? c.counters.map(x => `${x.label === 'Hospital' ? 'HD' : x.label} ${x.day}`).join(', ') : str(p.surname) ? 'Add admission date' : 'Name, room, dates';
     case 'fluid': return [c.net24 != null && 'Net ' + signed(c.net24), c.uoRate != null && 'UO ' + f2(c.uoRate)].filter(Boolean).join(', ');
-    case 'support': { const d = r.drips.map((x, i) => c.drips[i] && c.drips[i].txt ? `${c.drips[i].m.name.slice(0, 4)}. ${c.drips[i].txt}` : '').filter(Boolean); return d.join(', ') || r.ivf.map(x => x.name).filter(Boolean).join(', '); }
+    case 'support': { const d = r.drips.map((x, i) => c.drips[i] && c.drips[i].txt ? `${DRIP_SHORT[c.drips[i].m.name] || c.drips[i].m.name} ${c.drips[i].txt}` : '').filter(Boolean); return d.join(', ') || r.ivf.map(x => x.name).filter(Boolean).join(', '); }
     case 'resp': return cap1(c.device) || 'Not set';
     case 'vitals': return [str(r.v.sbp) && `BP ${str(r.v.sbp)}/${str(r.v.dbp)}`, str(r.v.hr) && `HR ${str(r.v.hr)}`].filter(Boolean).join(', ');
     case 'neuro': return [c.gcs && 'GCS ' + c.gcs.txt.split(' ')[0], p.on.nihss && c.nihN && 'NIHSS ' + c.nihTotal].filter(Boolean).join(', ') || lines('neuro');
@@ -2164,7 +2241,7 @@ function calcText(key, p, out) {
     case 'counters': return c.counters.length ? c.counters.map(x => `${x.label} Day ${x.day}`).join(' | ') : 'Fill in the admission date to start the Hospital Day counter.';
     case 'net24': return c.net24 == null ? '' : 'Net balance: ' + signed(c.net24);
     case 'netSh': return c.netSh == null ? '' : 'Net balance: ' + signed(c.netSh);
-    case 'bd': return c.bdOk == null ? '' : c.bdOk ? 'Breakdown adds up to the 24-hour output.' : `Breakdown is ${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}, but the 24-hour output is ${str(r.fl.out24)}.`;
+    case 'bd': return c.bdOk == null ? '' : c.bdOk ? 'Breakdown adds up to the 24H output.' : `Breakdown is ${fx(c.bdSum)}${c.stool ? ' + stool ' + c.stool : ''}, but the 24H output is ${str(r.fl.out24)}.`;
     case 'uo': return c.uoRate != null ? `${f2(c.uoRate)} ml/kg/hr, ${c.uoGoal}` : c.hasW ? 'Enter the urine volume above.' : 'Needs the urine volume and the working weight.';
     case 'void': { const x = c.voids[+a]; return x == null ? '' : f2(x) + ' ml/kg/hr'; }
     case 'drip': { const d = c.drips[+a]; return !d ? '' : d.txt ? (d.txt.endsWith('mkm') ? d.txt.replace('mkm', ' mcg/kg/min') : d.txt) : d.why; }
@@ -2172,30 +2249,30 @@ function calcText(key, p, out) {
     case 'map': return c.map == null ? '' : 'MAP ' + c.map + (c.map < 65 ? ' \u00b7 below 65, the starting target in septic shock (SSC 2026)' : '');
     case 'vt': {
       const vt = num(r.resp.vt);
-      if (!(vt > 0)) return 'Enter VT to see mL/kg of predicted body weight.';
+      if (!(vt > 0)) return 'Enter VT to see ml/kg of predicted body weight.';
       if (!c.pbw) return 'Add height and sex in Patient details to see VT per kg of predicted body weight.';
       const k = c.vtKg;
-      return `VT ${vt} mL = ${fx(k, 1)} mL/kg predicted body weight (${fx(c.pbw, 1)} kg).` + (k > 8 ? ' Above the 4\u20138 mL/kg lung-protective range (ATS/ESICM/SCCM).' : k < 4 ? ' Below 4 mL/kg.' : ' Within 4\u20138 mL/kg (lung-protective range in ARDS).');
+      return `VT ${vt} ml = ${fx(k, 1)} ml/kg predicted body weight (${fx(c.pbw, 1)} kg).` + (k > 8 ? ' Above the 4\u20138 ml/kg lung-protective range (ATS/ESICM/SCCM).' : k < 4 ? ' Below 4 ml/kg.' : ' Within 4\u20138 ml/kg (lung-protective range in ARDS).');
     }
     case 'o2': return c.device ? `Oxygen: ${c.device}` : 'Set oxygen / ventilation in Respiratory support.';
     case 'gcs': return c.gcs ? 'GCS ' + c.gcs.txt : '';
     case 'nih': return c.nihN ? `${c.nihTotal} point${c.nihTotal === 1 ? '' : 's'}, ${c.nihN} of 15 scored` : 'No items scored';
     case 'kdigo': {
       const w = c.uoWin; if (!c.hasW) return '';
-      const parts = [w.r6 != null && `last 6 h ${f2(w.r6)}`, w.r12 != null && `last 12 h ${f2(w.r12)}`, w.r24 != null && `last 24 h ${f2(w.r24)}`].filter(Boolean);
-      const base = parts.length ? `From the void log: ${parts.join(', ')} ml/kg/h.` : w.span ? `The void log covers ${fx(w.span, 1)} h; the KDIGO windows need at least 6 h.` : '';
+      const parts = [w.r6 != null && `last 6H ${f2(w.r6)}`, w.r12 != null && `last 12H ${f2(w.r12)}`, w.r24 != null && `last 24H ${f2(w.r24)}`].filter(Boolean);
+      const base = parts.length ? `From the void log: ${parts.join(', ')} ml/kg/hr.` : w.span ? `The void log covers ${fx(w.span, 1)}H; the KDIGO windows need at least 6H.` : '';
       return [base, c.kdigo ? c.kdigo.t : ''].filter(Boolean).join(' ');
     }
     case 'cbgr': return c.cbgRange ? `24H range: ${c.cbgRange} mg/dl` : '';
     case 'hrv': return str(r.v.hr) ? str(r.v.hr) + ' bpm' : '—';
-    case 'fever': return c.febrile == null ? 'Enter T or Tmax in Vital signs.' : (c.febrile ? 'Febrile' : 'Afebrile') + ` (${[str(r.v.t) && 'T ' + str(r.v.t), str(r.v.tmax) && 'Tmax ' + str(r.v.tmax)].filter(Boolean).join(', ')})`;
-    case 'renal': return c.net24 == null ? 'The fluid balance line appears here once the 24-hour I&O is filled in.' : c.net24 > 0 ? `Positive fluid balance for the past 24H (${signed(c.net24)})` : c.net24 < 0 ? `Negative fluid balance for the past 24H (${signed(c.net24)})` : 'Even fluid balance for the past 24H';
+    case 'fever': return c.febrile == null ? 'Enter T or Tmax in Vital signs.' : (c.febrile ? 'Febrile' : 'Afebrile') + ` (${[str(r.v.t) && 'T: ' + str(r.v.t), str(r.v.tmax) && 'Tmax: ' + str(r.v.tmax)].filter(Boolean).join(', ')})`;
+    case 'renal': return c.net24 == null ? 'The fluid balance line appears here once the 24H I&O is filled in.' : c.net24 > 0 ? `Positive fluid balance for the past 24H (${signed(c.net24)})` : c.net24 < 0 ? `Negative fluid balance for the past 24H (${signed(c.net24)})` : 'Even fluid balance for the past 24H';
     case 'abx': return c.abx.length ? c.abx.map(m => medShort(m, abxInfo(m, r.date))).join('\n') : 'No medication is flagged as an antimicrobial.';
     case 'ac': return c.ac.length ? 'Anticoagulant on the med list: ' + c.ac.map(medShort).join('; ') : 'Flag a medication as an anticoagulant in Medications to fill “On anticoagulation”.';
     case 'gsstars': {
       const L = [];
       for (const g of Object.keys(GROUPS)) { const G = GROUPS[g]; if (!G.star || !p.on[G.sec]) continue; ticked(db, r, g, out.ctx).filter(s => s.star).forEach(s => L.push([s.at, '★ ' + cap1(s.text) + '  (' + SEC_NAME[G.sec] + ')'])); }
-      if (p.on.endo) r.en.cbg.forEach(x => { if (x.star) L.push([x.at || 0, str(x.iv) ? `★ CBG ${str(x.v)} mg/dl at ${fmtTime(x.t)} -> ${str(x.iv)}` : `★ CBG at ${fmtTime(x.t) || '__'} needs an intervention before it appears`]); });
+      if (p.on.endo) r.en.cbg.forEach(x => { if (x.star) L.push([x.at || 0, str(x.iv) ? `★ CBG ${str(x.v)} mg/dl${fmtTime(x.t) ? ' at ' + fmtTime(x.t) : ''} -> ${str(x.iv)}` : `★ CBG at ${fmtTime(x.t) || '__'} needs an intervention before it appears`]); });
       return L.length ? L.sort((x, y) => x[0] - y[0]).map(x => x[1]).join('\n') : 'Tap ☆ on a ticked chip in another section, or on a CBG entry with an intervention, to add it here. Items appear in the order you star them.';
     }
     case 'tok': return out.ctx.tok(a) || '__';
@@ -2398,7 +2475,7 @@ function vSettings() {
     <div class="grid" style="margin-top:10px">${F('Closing line', 's.closing')}${F('Your name and hospital', 's.signName', { ph: 'DELA CRUZ, IDH' })}</div>
     <div class="grid" style="margin-top:10px">${F('Label before requests', 's.reqLabel', { ph: 'For your input:' })}${F('Delete reminder after', 's.retainDays', { t: 'num', unit: 'days without an update' })}</div>
     ${CB('Use initials instead of full names for new patients', 's.initialsNew')}
-    ${H('Thresholds')}<div class="grid">${F('Febrile at or above', 's.fever', { t: 'num', unit: '\u00b0C' })}${F('ICU patients: febrile at or above', 's.feverIcu', { t: 'num', unit: '\u00b0C' })}${F('CBG flagged below', 's.cbgLow', { t: 'num', unit: 'mg/dl' })}${F('Level 2 hypoglycemia below', 's.cbgLow2', { t: 'num', unit: 'mg/dl' })}${F('CBG flagged above', 's.cbgHigh', { t: 'num', unit: 'mg/dl' })}<div></div>${F('Urine output goal from', 's.uoLow', { t: 'num', unit: 'ml/kg/h' })}${F('Urine output goal to', 's.uoHigh', { t: 'num', unit: 'ml/kg/h' })}</div>
+    ${H('Thresholds')}<div class="grid">${F('Febrile at or above', 's.fever', { t: 'num', unit: '\u00b0C' })}${F('ICU patients: febrile at or above', 's.feverIcu', { t: 'num', unit: '\u00b0C' })}${F('CBG flagged below', 's.cbgLow', { t: 'num', unit: 'mg/dl' })}${F('Level 2 hypoglycemia below', 's.cbgLow2', { t: 'num', unit: 'mg/dl' })}${F('CBG flagged above', 's.cbgHigh', { t: 'num', unit: 'mg/dl' })}<div></div>${F('Urine output goal from', 's.uoLow', { t: 'num', unit: 'ml/kg/hr' })}${F('Urine output goal to', 's.uoHigh', { t: 'num', unit: 'ml/kg/hr' })}</div>
   </div></section>
   <section class="card plain"><div class="card-b">${H('Chips')}<p class="hint">Add, edit, delete and reorder the phrases for each system. Changes apply to every patient.</p>${groups}</div></section>
   <section class="card plain"><div class="card-b">${H('Reference')}<p class="hint">Adult normal values (ABIM 2026, MedlinePlus) and usual drip doses by indication (SSC 2026, AHA 2025, package inserts).</p><div class="addrow"><a class="btn sm" href="#/ref">Normal values</a><a class="btn sm" href="#/ref/doses">Drip doses</a></div></div></section>
@@ -2504,7 +2581,7 @@ function render() {
   } else swap();
 }
 let rseq = 0, vtBusy = false, installEvt = null, updReady = false;
-const APP_VERSION = '2026.11.21-be01';
+const APP_VERSION = '2026.11.22-a872';
 window.addEventListener('hashchange', render);
 const go = h => { if (popSkip > 0) { pendingGo = h; return; } if (location.hash === h) render(); else location.hash = h; };
 
@@ -2699,7 +2776,7 @@ function send(kind, fromPreview) {
 function openMenu() {
   const p = curP();
   sheet(`<div class="sh-h"><h2>${esc(ptName(p))}</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div><div class="menu">
-    <button type="button" class="mi" data-act="newday"><b>Start new day</b><span>Carries ticks, meds and settings to the next day. Clears vitals, I&amp;O and the void, BP and CBG logs. Moves day counters and antibiotic dose numbers forward.</span></button>
+    <button type="button" class="mi" data-act="newday"><b>Start new day</b><span>Carries ticks, meds and settings to the next day. Clears vitals, I&amp;O, bowel movement details, requests, and the void, BP and CBG logs. Moves day counters and antibiotic dose numbers forward.</span></button>
     <button type="button" class="mi" data-act="sections"><b>Sections on/off</b><span>Choose which systems appear for this patient.</span></button>
     <button type="button" class="mi" data-act="goref"><b>Normal values and drip doses</b><span>Adult reference ranges, and usual vasopressor and inotrope doses by indication, with sources.</span></button>
     <button type="button" class="mi" data-act="hist"><b>History</b><span>${p.hist.length} saved message${p.hist.length === 1 ? '' : 's'}</span></button>
@@ -2717,7 +2794,7 @@ function openSections() {
 async function doNewDay() {
   const p = curP(), nd = nextDate(p.rec.date, todayISO());
   closeSheets();
-  const okd = await ask({ title: `Start the update for ${fmtDate(nd)}?`, body: `The ${fmtDate(p.rec.date)} message is saved to History. Ticks, meds and settings carry over. Vitals, I&O, and the void, BP and CBG logs are cleared. Day counters and antibiotic dose numbers move forward.`, ok: 'Start new day' });
+  const okd = await ask({ title: `Start the update for ${fmtDate(nd)}?`, body: `The ${fmtDate(p.rec.date)} message is saved to History. Ticks, meds and settings carry over. Vitals, I&O, bowel movement details, requests, and the void, BP and CBG logs are cleared. Day counters and antibiotic dose numbers move forward.`, ok: 'Start new day' });
   if (!okd) return;
   const snap = JSON.stringify(p), idx = db.patients.indexOf(p);
   const res = startNewDay(p, db);

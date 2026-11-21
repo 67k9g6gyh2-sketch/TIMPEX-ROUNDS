@@ -14,7 +14,9 @@ A phone-first web app for writing the daily patient update to consultants. Tick 
 
 ## What it checks before you send
 
-Missing weight, output breakdown that doesn't add up, implausible values, antibiotic dose numbers not moved forward, sections left empty, chips that contradict the numbers (for example "afebrile" with a Tmax of 39), hypoglycemia without an intervention (level 1 below 70, level 2 below 54 mg/dl), CBG of 180 or more twice with no insulin entered (ADA), urine output under KDIGO thresholds from the void log, and antimicrobials on Day 3 (48-72 h review), past their planned duration or without an indication.
+Missing weight, output breakdown that doesn't add up, implausible values, antibiotic dose numbers not moved forward, sections left empty, chips that contradict the numbers (for example "afebrile" with a Tmax of 39), hypoglycemia without an intervention (level 1 below 70, level 2 below 54 mg/dl), CBG of 180 or more twice with no insulin entered (ADA), urine output under KDIGO thresholds from the void log, antimicrobials on Day 3 (48-72H review), past their planned duration or without an indication, and an antimicrobial dose number that doesn't fit its day count.
+
+It also catches findings that contradict each other or the numbers: clear breath sounds ticked with wheezes or crackles, a productive and a non-productive cough, Foley inserted and not inserted, two urine colors, NPO with a diet, conversant or oriented with an intubated or confused GCS V, follows commands with M below 6, the rhythm against the heart rate, current vital signs outside their own 24H range, a void log larger than the 24H urine output, a shift label that doesn't match its hours, an ICU date before admission, ventilator and oxygen settings out of range, and the same drip listed twice.
 
 ## Also in the app
 
