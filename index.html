@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-HKCeVNf2EhFdVVqa5e6HOrb+KLEOVLGXwZ0WihgfVqY='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8eiKGiFRan9LOir+cc10asI9A7suPVuFAbavaNwe9M8='; style-src 'unsafe-inline'; img-src 'self' data:; worker-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#EEF2F0">
@@ -408,7 +408,9 @@ const ok = n => typeof n === 'number' && Number.isFinite(n);
 const fx = (n, d = 2) => { const f = 10 ** d; let s = (Math.round(n * f) / f).toFixed(d); if (d > 0) s = s.replace(/\.?0+$/, ''); return s === '-0' ? '0' : s; };
 const f2 = n => (Math.round(n * 100) / 100).toFixed(2);
 const signed = n => (n > 0 ? '+' : '') + fx(n, 2);
-const lc1 = s => (s && s.length > 1 && /[a-z]/.test(s[1]) ? s[0].toLowerCase() + s.slice(1) : s);
+// Names that keep their capital letter mid-sentence ("..., Foley catheter inserted").
+const KEEP_CAP = /^(Foley|Bristol|Babinski|Kernig|Brudzinski|Murphy|McBurney|Rovsing|Kussmaul|Cheyne|Glasgow|Romberg|Trousseau|Chvostek|Homans|Levine|Hoffmann|Cullen|Grey|Blumberg|Kehr|Austin|Graham|Gallavardin|Hamman|Kussmaul)\b/;
+const lc1 = s => (s && s.length > 1 && /[a-z]/.test(s[1]) && !KEEP_CAP.test(s) ? s[0].toLowerCase() + s.slice(1) : s);
 const cap1 = s => (s ? s[0].toUpperCase() + s.slice(1) : s);
 const rng = (a, b) => { a = str(a); b = str(b); return a && b ? a + '-' + b : a || b; };
 
@@ -483,7 +485,29 @@ const chipLabel = t => parseTpl(t).map(p => (p.k === 'txt' ? p.s : p.k === 'sel'
 const tplHasFields = t => parseTpl(t).some(p => p.k !== 'txt');
 
 const TRENDS = ['Still', 'Improved', 'Worsened', 'New', 'Resolved'];
-const NO_WITH = /^(with|on|in|no|not|nor|able|unable|afebrile|febrile|for|under|off|npo|being|awake|asleep|drowsy|still|tolerat\w*|hav\w*|receiv\w*|requir\w*|intubated|alert|conversant|coherent|oriented|without|at|seen|patient|noted|denies|dependent|follows)\b/i;
+const NO_WITH = /^(with|on|in|no|not|nor|able|unable|afebrile|febrile|for|under|off|npo|being|awake|asleep|drowsy|still|soft|tolerat\w*|hav\w*|receiv\w*|requir\w*|intubated|alert|conversant|coherent|oriented|without|at|seen|patient|noted|denies|dependent|follows)\b/i;
+// Which trend tags fit a chip. 'none': the phrase already carries it ("Still on vasopressor", "Improved verbal output").
+// 'still': a normal finding that can only persist. Anything that starts with a negation ("No dyspnea") also takes only "Still".
+const CHIP_TREND = {
+  gs_seen: 'none', gs_verbal: 'none', gs_vaso: 'none', gs_uo: 'none', ne_words: 'none', cv_cvp: 'none', ab_shape: 'none', re_foley: 'none', re_nofoley: 'none', he_tx: 'none',
+  gs_conv: 'still', gs_afeb: 'still', ne_conv: 'still', ne_coh: 'still', ne_cmd: 'still', pu_sym: 'still', pu_clear: 'still', cv_adyn: 'still', cv_pulse: 'still', cv_crt: 'still', ab_soft: 'still', ab_bs: 'still', he_ac: 'still',
+};
+const NEG_START = /^(no|not|nor|denies|without|negative|afebrile)\b|^non-/i;
+function trendsFor(def, text) {
+  const k = def.tr || CHIP_TREND[def.id];
+  if (k === 'none') return [];
+  if (k === 'still' || NEG_START.test(text || '')) return ['Still'];
+  return TRENDS;
+}
+// The values a chip prints with. Episodes of brady/tachycardia follow the HR range until you pick one yourself.
+function chipVals(def, st, ctx) {
+  const v = st && st.v && typeof st.v === 'object' ? Object.assign([], st.v) : [];
+  if (def.id === 'gs_hr' && v[0] == null && ctx) {
+    const m = /^(\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)$/.exec(String(ctx.tok('hr_range') || ''));
+    if (m && +m[1] >= 60 && +m[2] > 100) v[0] = 'tachycardia';
+  }
+  return v;
+}
 function applyTrend(text, tr) {
   if (!tr || !text) return text;
   if (tr === 'Still') return NO_WITH.test(text) ? 'Still ' + lc1(text) : 'Still with ' + lc1(text);
@@ -951,7 +975,7 @@ function isOn(def, st, ctx) {
   if (def.a) return st && typeof st.manual === 'boolean' ? st.manual : !!ctx.auto(def.a);
   return !!(st && st.on);
 }
-const chipPhrase = (def, st, ctx) => applyTrend(fillTpl(def.t, st && st.v, ctx), (st && st.tr) || '');
+const chipPhrase = (def, st, ctx) => { const text = fillTpl(def.t, chipVals(def, st, ctx), ctx), tr = (st && st.tr) || ''; return tr && trendsFor(def, text).includes(tr) ? applyTrend(text, tr) : text; };
 function ticked(db, r, g, ctx) {
   return chipDefs(db, g).filter(d => isOn(d, chipState(r, g, d.id), ctx)).map(d => {
     const st = chipState(r, g, d.id) || {};
@@ -1089,8 +1113,7 @@ function buildMessage(p, db, now = new Date()) {
     if (str(ne.pr) || str(ne.pl)) {
       const R = str(ne.pr) ? str(ne.pr) + 'mm' : '__', Lf = str(ne.pl) ? str(ne.pl) + 'mm' : '__';
       const long = { reactive: 'reactive to light', sluggish: 'sluggishly reactive to light', nonreactive: 'non-reactive to light' };
-      const short = { reactive: 'reactive', sluggish: 'sluggish', nonreactive: 'non-reactive' };
-      L.push(ne.prx === ne.plx ? `Pupils: Right ${R}, Left ${Lf}, ${long[ne.prx] || ''}`.replace(/, $/, '') : `Pupils: Right ${R} ${short[ne.prx] || ''}, Left ${Lf} ${short[ne.plx] || ''}`.trim());
+      L.push(ne.prx === ne.plx ? `Pupils: Right ${R}, Left ${Lf}, ${long[ne.prx] || ''}`.replace(/, $/, '') : `Pupils: Right ${R}, ${long[ne.prx] || ''}; Left ${Lf}, ${long[ne.plx] || ''}`.replace(/, ;/, ';').replace(/, $/, ''));
     }
     const mm = [['rue', 'RUE'], ['lue', 'LUE'], ['rle', 'RLE'], ['lle', 'LLE']].filter(([k]) => str(ne.mmt[k])).map(([k, l]) => `${l} ${str(ne.mmt[k])}/5`);
     if (mm.length) L.push('MMT: ' + mm.join(', '));
@@ -1261,6 +1284,7 @@ function preSend(p, db, c, ctx, out, text) {
     if (str(x.t) && tmin(x.t) == null) add('cv', `BP row ${i + 1}: time "${x.t}" isn’t a valid time.`);
   });
   chk(r.ne.pr, 1, 9, 'Right pupil size', 'neuro'); chk(r.ne.pl, 1, 9, 'Left pupil size', 'neuro');
+  if (on('neuro') && !!str(r.ne.pr) !== !!str(r.ne.pl)) add('neuro', `The ${str(r.ne.pr) ? 'left' : 'right'} pupil size is blank, so it prints as __.`);
   if (ok(num(v.t)) && ok(num(v.tmax)) && num(v.tmax) < num(v.t)) add('vitals', `Tmax (${str(v.tmax)}) is lower than the current T (${str(v.t)}).`);
   // counters
   c.counters.forEach(x => { if (x.day < 0) add('header', `${x.label} Day is ${x.day}: its start date is after the date of this update.`); else if (x.day > 365) add('header', `${x.label} Day is ${x.day}. Check the start date.`); });
@@ -1397,6 +1421,11 @@ function preSend(p, db, c, ctx, out, text) {
   if (empty.length === 1) add(empty[0][0], `${empty[0][1]} is on but empty. Fill it in or switch it off.`);
   else if (empty.length > 1) add('sections', `${empty.length} sections are on but empty: ${empty.map(x => x[1]).join(', ')}. Fill them in or switch them off.`);
   if (on('nihss') && !c.nihN) add('neuro', 'NIH Stroke Scale is on but no items are scored.');
+  else if (on('neuro') && on('nihss') && c.nihN < NIH.length) add('neuro', `NIH Stroke Scale: ${NIH.length - c.nihN} of ${NIH.length} items ${NIH.length - c.nihN === 1 ? 'isn\u2019t' : 'aren\u2019t'} scored, so the total (${c.nihTotal}) may be too low.`);
+  // half-filled GCS and blood pressure
+  const gcsParts = [['E', r.ne.e], ['V', r.ne.vv], ['M', r.ne.m]], gcsSet = gcsParts.filter(x => str(x[1]));
+  if (on('neuro') && gcsSet.length && gcsSet.length < 3) add('neuro', `GCS is incomplete (${gcsParts.filter(x => !str(x[1])).map(x => x[0]).join(' and ')} not set), so it isn\u2019t printed.`);
+  if (on('vitals') && !!str(v.sbp) !== !!str(v.dbp)) add('vitals', `${str(v.sbp) ? 'DBP' : 'SBP'} is blank, so BP prints as ${str(v.sbp) || '__'}/${str(v.dbp) || '__'} and MAP can\u2019t be worked out.`);
   return W;
 }
 
@@ -1797,7 +1826,7 @@ function demoPatient(today = todayISO()) {
   return p;
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = { sig, NV, nvState, nvCaption, pbw, REF_VALUES, REF_SRC, SRC_SHORT, GUIDE, doseGuide, convDose, doseText, DRUGS, splitMessage, snapOf, prevSnap, diffSnap, MSG_LIMIT, uoWindows, initialsOf, abxInfo, buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
+if (typeof module !== 'undefined' && module.exports) module.exports = { trendsFor, chipVals, chipPhrase, lc1, GROUPS, chipDefs, ticked, mkCtx, sig, NV, nvState, nvCaption, pbw, REF_VALUES, REF_SRC, SRC_SHORT, GUIDE, doseGuide, convDose, doseText, DRUGS, splitMessage, snapOf, prevSnap, diffSnap, MSG_LIMIT, uoWindows, initialsOf, abxInfo, buildMessage, calc, demoPatient, freshDB, normDB, newPatient, newRec, startNewDay, archive, normTime, fmtTime, dripCalc, dpd, parseTpl, fillTpl, applyTrend, joinSegs, DIVIDER, NIH, todayISO, addDays };
 
 /* ================= TIMPEX Rounds Update: interface ================= */
 const ICON = {
@@ -2009,14 +2038,15 @@ function chipItem(g, d, ctx) {
   const tag = d.a ? `<i class="auto">${typeof st.manual === 'boolean' ? 'set by you' : 'auto'}</i>` : '';
   const expand = on && (G.trend || G.star || tplHasFields(d.t));
   if (!expand) return `<button type="button" class="chip${on ? ' on' : ''}" data-chip="${key}" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${on}"${auto}>${esc(chipLabel(d.t))}${tag}</button>`;
-  const base = `r.chips.${g}.${esc(d.id)}`;
+  const base = `r.chips.${g}.${esc(d.id)}`, ev = chipVals(d, st, ctx);
+  const allowed = G.trend ? trendsFor(d, fillTpl(d.t, ev, ctx)) : [];
   const tx = parseTpl(d.t).map(pt => {
     if (pt.k === 'txt') return `<span>${esc(pt.s)}</span>`;
-    if (pt.k === 'sel') { const cur = st.v && pt.o.includes(st.v[pt.i]) ? st.v[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
+    if (pt.k === 'sel') { const cur = pt.o.includes(ev[pt.i]) ? ev[pt.i] : pt.o[0]; return `<select class="isel" data-b="${base}.v.${pt.i}" aria-label="Choose">${pt.o.map(o => `<option${o === cur ? ' selected' : ''}>${esc(o)}</option>`).join('')}</select>`; }
     if (pt.k === 'inp') { const val = st.v && st.v[pt.i] != null ? st.v[pt.i] : ''; return `<input class="iinp${pt.n ? ' n' : ''}" type="text"${pt.n ? ' inputmode="decimal"' : ' autocorrect="off" spellcheck="false"'} enterkeyhint="next" size="${Math.max(pt.n ? 3 : 6, String(val).length + 1)}" autocomplete="off" data-b="${base}.v.${pt.i}" value="${esc(val)}" placeholder="${esc(pt.ph)}" aria-label="${esc(pt.ph)}">`; }
     return `<span class="tok" data-c="tok:${pt.name}"></span>`;
   }).join('');
-  const ctl = (G.trend ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...TRENDS].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
+  const ctl = (allowed.length ? `<select class="trend" data-b="${base}.tr" aria-label="Trend">${['', ...allowed].map(t => `<option value="${t}"${(st.tr || '') === t ? ' selected' : ''}>${t || 'Trend'}</option>`).join('')}</select>` : '')
     + (G.star ? `<button type="button" class="star${st.star ? ' on' : ''}" data-act="star" data-g="${g}" data-id="${esc(d.id)}" aria-pressed="${!!st.star}" aria-label="Also show in General Survey">${st.star ? '★' : '☆'}</button>` : '');
   return `<div class="chiprow${st.star ? ' starred' : ''}" data-chip="${key}"${auto}><button type="button" class="tick" data-act="chip" data-g="${g}" data-id="${esc(d.id)}" aria-label="Untick">${ICON.check}</button><div class="tx">${tx}${tag}</div>${ctl ? `<div class="ctl">${ctl}</div>` : ''}${G.trend ? `<div class="say" data-c="chip:${key}"></div>` : ''}</div>`;
 }
@@ -2464,7 +2494,7 @@ function lockCard() {
   return `<p class="hint">Off. Set a PIN to encrypt the patient data saved on this phone and lock the app when you step away.</p><div class="addrow"><button type="button" class="btn sm pri" data-act="setpin">Set a PIN</button></div>${note}`;
 }
 function vSettings() {
-  const groups = Object.keys(GROUPS).map(g => `<a class="grp" href="#/chips/${g}" data-act="tochips"><b>${esc(GROUPS[g].name)}</b><span>${db.chips[g].length} chips</span></a>`).join('');
+  const groups = Object.keys(GROUPS).map(g => `<a class="grp" href="#/chips/${g}" data-act="tochips"><b>${esc(GROUPS[g].name)}</b><span>${db.chips[g].length} chip${db.chips[g].length === 1 ? '' : 's'}</span></a>`).join('');
   return bar(`<a class="ib" href="#/" aria-label="Back">${ICON.back}</a><div class="bar-t"><b>Settings</b><small>Applies to all patients</small></div>`) +
   `<main class="wrap">
   <section class="card plain"><div class="card-b">
@@ -2504,7 +2534,7 @@ function vChips() {
       <p><code>[a/b/c]</code> becomes a dropdown; the first option is the default.<br><code>[__]</code> or <code>[sputum]</code> becomes a text blank, and <code>[#]</code> a number blank.<br><code>{hr_range}</code> pulls a value from another section.</p>
       <p>Values you can pull in: ${TOKENS.map(t => `<code>{${t}}</code>`).join(' ')}</p>
       <p>“Continues the line above” joins a chip onto the bullet before it with a comma, as in “Patient seen asleep, not in cardiopulmonary distress”. Two joined “No … episodes” chips merge into “No hypotensive nor desaturation episodes”.</p>
-      <p>Trend tags go in front of the phrase: Still adds “with” where needed (“Still with bilateral fine crackles”).</p></div></section>
+      <p>Trend tags go in front of the phrase: Still adds “with” where needed (“Still with bilateral fine crackles”). A phrase that starts with No, Not or Denies only offers Still, since “Improved no dyspnea” doesn’t read right.</p></div></section>
   </main>`;
 }
 function vLock() {
@@ -2581,7 +2611,7 @@ function render() {
   } else swap();
 }
 let rseq = 0, vtBusy = false, installEvt = null, updReady = false;
-const APP_VERSION = '2026.11.22-a872';
+const APP_VERSION = '2026.11.22-4c21';
 window.addEventListener('hashchange', render);
 const go = h => { if (popSkip > 0) { pendingGo = h; return; } if (location.hash === h) render(); else location.hash = h; };
 
@@ -2787,7 +2817,7 @@ function openSections() {
   const p = curP(), snap = JSON.stringify(p.on);
   const SW = (n, k) => `<label class="tog"><input type="checkbox" data-b="p.on.${k}"${p.on[k] ? ' checked' : ''}><span>${esc(n)}</span></label>`;
   sheet(`<div class="sh-h"><h2>Sections for this patient</h2><button type="button" class="ib" data-act="close" aria-label="Close">${ICON.x}</button></div>
-    <div class="secs">${SECS.map(([k, n]) => SW(n, k)).join('')}${SW('NIH Stroke Scale (inside Neurologic)', 'nihss')}</div>
+    <div class="secs">${SECS.map(([k, n]) => SW(n, k)).join('')}${SW('NIH Stroke Scale (inside Neurologic)', 'nihss')}<label class="tog"><input type="checkbox" data-b="p.labs"${p.labs ? ' checked' : ''}><span>\u201cLaboratory flow sheet attached\u201d line</span></label></div>
     <p class="hint">Sections that are on but empty are left out of the message and flagged in the pre-send check.</p>
     <div class="sh-f"><button type="button" class="btn pri" data-act="close">Done</button></div>`, 'sections', () => { if (JSON.stringify(p.on) !== snap) render(); });
 }
@@ -2921,6 +2951,8 @@ document.addEventListener('change', e => {
   if (path === 's.theme') applyTheme();
   if (path.startsWith('p.on.') && path !== 'p.on.nihss' && !$('.sheet-bg:not(.closing) .sheet[data-kind="sections"]')) render();
   save();
+  const cm = /^r\.chips\.(\w+)\.([^.]+)\.v\.\d+$/.exec(path);
+  if (cm && el.tagName === 'SELECT' && GROUPS[cm[1]] && GROUPS[cm[1]].trend) setTimeout(() => updateChip(cm[1], cm[2]), 0);
   if (el.dataset.rr) rerender(el.dataset.rr);
   else if (ui.view === 'patient') refresh();
 });
